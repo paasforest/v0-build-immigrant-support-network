@@ -65,18 +65,55 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-lg overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Professional team member"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -left-6 bg-gold p-6 rounded-lg">
-                <p className="text-[#0a0a0a] font-semibold">Founded by Charles</p>
-                <p className="text-[#0a0a0a]/70 text-sm">Based in South Africa</p>
-              </div>
+            {/* What We Do Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  ),
+                  title: "Job Placement",
+                  desc: "Connect with verified employers",
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  ),
+                  title: "Visa Support",
+                  desc: "Guided application process",
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  ),
+                  title: "CV Services",
+                  desc: "European-standard CVs",
+                },
+                {
+                  icon: (
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  ),
+                  title: "Ongoing Support",
+                  desc: "Help throughout your journey",
+                },
+              ].map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-5 hover:border-gold/50 transition-all duration-300"
+                >
+                  <div className="text-gold mb-3">{item.icon}</div>
+                  <h3 className="text-white font-semibold mb-1">{item.title}</h3>
+                  <p className="text-white/50 text-sm">{item.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
