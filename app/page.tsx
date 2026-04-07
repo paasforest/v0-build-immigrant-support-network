@@ -1,0 +1,171 @@
+import Link from "next/link"
+import HeroSection from "@/components/HeroSection"
+import TrustBadges from "@/components/TrustBadges"
+import ServiceCard from "@/components/ServiceCard"
+import CountryCard from "@/components/CountryCard"
+
+const services = [
+  {
+    title: "Work Abroad Placements",
+    description: "Access legal employment opportunities in Europe and Canada with our vetted employer network.",
+    icon: "briefcase",
+  },
+  {
+    title: "Visa Application Assistance",
+    description: "Navigate the complex visa process with step-by-step guidance and document preparation support.",
+    icon: "document",
+  },
+  {
+    title: "Employer Recruitment Support",
+    description: "We help international employers find skilled, pre-screened candidates from Africa.",
+    icon: "users",
+  },
+]
+
+const countries = [
+  { name: "Poland", flag: "🇵🇱", jobs: ["Warehouse", "Food Production", "General Labour"] },
+  { name: "Romania", flag: "🇷🇴", jobs: ["Agriculture", "Factory Work"] },
+  { name: "Hungary", flag: "🇭🇺", jobs: ["Logistics", "Manufacturing"] },
+  { name: "United Kingdom", flag: "🇬🇧", jobs: ["Seasonal Agricultural Work"] },
+  { name: "Canada", flag: "🇨🇦", jobs: ["Drivers", "General Labour"] },
+]
+
+const steps = [
+  { number: "01", title: "Submit Your Application", description: "Fill out our online form with your details and job preferences." },
+  { number: "02", title: "Get Matched with Opportunities", description: "Our team reviews your profile and connects you with suitable employers." },
+  { number: "03", title: "Begin Your Journey", description: "Receive guidance on visa processes and prepare for your new opportunity." },
+]
+
+const testimonials = [
+  { name: "David M.", location: "Kenya", quote: "ISN helped me secure a position in Poland. The process was smooth and professional." },
+  { name: "Grace O.", location: "Nigeria", quote: "Their visa guidance was invaluable. I now work in Romania thanks to their support." },
+  { name: "Peter K.", location: "South Africa", quote: "Professional service from start to finish. Highly recommend to anyone seeking work abroad." },
+]
+
+export default function HomePage() {
+  return (
+    <>
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Trust Badges */}
+      <TrustBadges />
+
+      {/* Services Overview */}
+      <section className="py-20 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+              Our Services
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              Comprehensive support for your international career journey
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <ServiceCard key={index} {...service} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Countries Section */}
+      <section className="py-20 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+              Destination Countries
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              Explore opportunities in these countries
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {countries.map((country, index) => (
+              <CountryCard key={index} {...country} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+              How It Works
+            </h2>
+            <p className="text-white/60 max-w-2xl mx-auto">
+              Your journey to working abroad in three simple steps
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {steps.map((step, index) => (
+              <div key={index} className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gold/10 border-2 border-gold text-gold font-serif text-2xl font-bold mb-6 group-hover:bg-gold group-hover:text-[#0a0a0a] transition-all duration-300">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
+                <p className="text-white/60">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+              Success Stories
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-[#1a1a1a] p-6 rounded-lg border border-[#2a2a2a] hover:border-gold/50 transition-all duration-300"
+              >
+                <svg className="w-8 h-8 text-gold mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p className="text-white/80 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
+                <div className="text-gold font-semibold">{testimonial.name}</div>
+                <div className="text-white/40 text-sm">{testimonial.location}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section className="py-16 bg-gold">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#0a0a0a] mb-4">
+            Ready to Work Abroad?
+          </h2>
+          <p className="text-[#0a0a0a]/80 mb-8 max-w-2xl mx-auto">
+            Take the first step towards your international career today.
+          </p>
+          <Link
+            href="/apply"
+            className="inline-block bg-[#0a0a0a] text-white px-8 py-4 rounded font-semibold hover:bg-[#1a1a1a] transition-all duration-300"
+          >
+            Apply Now
+          </Link>
+        </div>
+      </section>
+
+      {/* Disclaimer */}
+      <section className="py-8 bg-[#0a0a0a] border-t border-[#2a2a2a]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-white/40 text-xs text-center">
+            Disclaimer: We do not guarantee job placement or visa approval. We provide recruitment and application support services.
+          </p>
+        </div>
+      </section>
+    </>
+  )
+}
