@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`} data-scroll-behavior="smooth">
       <body className="font-sans antialiased bg-[#0a0a0a] text-white min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-1">
