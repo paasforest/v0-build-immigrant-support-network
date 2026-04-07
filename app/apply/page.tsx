@@ -1,7 +1,16 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import ApplicationForm from "@/components/ApplicationForm"
+import Link from "next/link"
+
+function ApplicationFormWrapper({ onSubmit }: { onSubmit: () => void }) {
+  return (
+    <Suspense fallback={<div className="bg-white rounded-lg p-8 text-center text-gray-500">Loading form...</div>}>
+      <ApplicationForm onSubmit={onSubmit} />
+    </Suspense>
+  )
+}
 
 export default function ApplyPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -65,7 +74,7 @@ export default function ApplyPage() {
       {/* Form Section */}
       <section className="py-12 pb-20 bg-[#0a0a0a]">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ApplicationForm onSubmit={() => setSubmitted(true)} />
+          <ApplicationFormWrapper onSubmit={() => setSubmitted(true)} />
         </div>
       </section>
     </>

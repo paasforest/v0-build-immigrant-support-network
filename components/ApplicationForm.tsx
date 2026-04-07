@@ -1,26 +1,72 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
+import Link from "next/link"
+import { AlertCircle, FileText } from "lucide-react"
 
 interface ApplicationFormProps {
   onSubmit: () => void
 }
 
+// Available destinations and job types (matching jobs page)
+const destinations = [
+  { value: "", label: "Select destination country" },
+  { value: "Poland", label: "Poland" },
+  { value: "Romania", label: "Romania" },
+  { value: "Germany", label: "Germany" },
+  { value: "Netherlands", label: "Netherlands" },
+  { value: "Canada", label: "Canada" },
+]
+
+const jobTypes = [
+  { value: "", label: "Select job type" },
+  { value: "Agriculture", label: "Agriculture / Farm Work" },
+  { value: "Warehouse", label: "Warehouse / Logistics" },
+  { value: "Food Production", label: "Food Production" },
+  { value: "Construction", label: "Construction" },
+  { value: "Manufacturing", label: "Manufacturing / Factory" },
+  { value: "Hospitality", label: "Hospitality / Hotels" },
+  { value: "Healthcare", label: "Healthcare / Care Work" },
+  { value: "Transport", label: "Transport / Driving" },
+  { value: "Other", label: "Other" },
+]
+
 export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
+  const searchParams = useSearchParams()
   const [wasReferred, setWasReferred] = useState(false)
   const [formData, setFormData] = useState({
     fullName: "",
-    country: "",
+    residenceCountry: "",
     phone: "",
     email: "",
     hasPassport: "",
-    jobInterest: "",
+    destinationCountry: "",
+    jobType: "",
+    specificPosition: "",
     workExperience: "",
     hasCV: "",
+    needsCVHelp: "",
     workedAbroad: "",
     referrerName: "",
     referrerPhone: "",
   })
+
+  // Pre-fill from URL params (from jobs page)
+  useEffect(() => {
+    const country = searchParams.get("country")
+    const job = searchParams.get("job")
+    const position = searchParams.get("position")
+
+    if (country || job || position) {
+      setFormData((prev) => ({
+        ...prev,
+        destinationCountry: country || prev.destinationCountry,
+        jobType: job || prev.jobType,
+        specificPosition: position || prev.specificPosition,
+      }))
+    }
+  }, [searchParams])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -35,8 +81,19 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
     onSubmit()
   }
 
+  const showCVUpsell = formData.hasCV === "no" || formData.needsCVHelp === "yes"
+
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg p-6 md:p-8 shadow-xl">
+      {/* Pre-selected Job Notice */}
+      {formData.specificPosition && (
+        <div className="mb-6 bg-gold/10 border border-gold/30 rounded-lg p-4">
+          <p className="text-[#0a0a0a] text-sm">
+            <strong>Applying for:</strong> {formData.specificPosition} in {formData.destinationCountry}
+          </p>
+        </div>
+      )}
+
       {/* Personal Details */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-[#0a0a0a] mb-6 pb-2 border-b border-gray-200">
@@ -60,18 +117,18 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
           </div>
 
           <div>
-            <label htmlFor="country" className="block text-sm font-medium text-[#0a0a0a] mb-1">
+            <label htmlFor="residenceCountry" className="block text-sm font-medium text-[#0a0a0a] mb-1">
               Country of Residence <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
-              id="country"
-              name="country"
+              id="residenceCountry"
+              name="residenceCountry"
               required
-              value={formData.country}
+              value={formData.residenceCountry}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-[#0a0a0a] focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300"
-              placeholder="e.g., South Africa"
+              placeholder="e.g., South Africa, Kenya, Nigeria"
             />
           </div>
 
@@ -147,26 +204,66 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
         </h2>
         <div className="space-y-4">
           <div>
-            <label htmlFor="jobInterest" className="block text-sm font-medium text-[#0a0a0a] mb-1">
-              Job Interest <span className="text-red-500">*</span>
+            <label htmlFor="destinationCountry" className="block text-sm font-medium text-[#0a0a0a] mb-1">
+              Preferred Destination Country <span className="text-red-500">*</span>
             </label>
             <select
-              id="jobInterest"
-              name="jobInterest"
+              id="destinationCountry"
+              name="destinationCountry"
               required
-              value={formData.jobInterest}
+              value={formData.destinationCountry}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-[#0a0a0a] focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300 bg-white"
             >
-              <option value="">Select a job type</option>
-              <option value="warehouse">Warehouse Worker</option>
-              <option value="food-production">Food Production</option>
-              <option value="agriculture">Agriculture</option>
-              <option value="general-labour">General Labour</option>
-              <option value="driver">Driver</option>
-              <option value="other">Other</option>
+              {destinations.map((dest) => (
+                <option key={dest.value} value={dest.value}>
+                  {dest.label}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-gray-500 mt-1">
+              <Link href="/jobs" className="text-gold hover:underline">
+                View available jobs by country
+              </Link>
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="jobType" className="block text-sm font-medium text-[#0a0a0a] mb-1">
+              Job Type <span className="text-red-500">*</span>
+            </label>
+            <select
+              id="jobType"
+              name="jobType"
+              required
+              value={formData.jobType}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-[#0a0a0a] focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300 bg-white"
+            >
+              {jobTypes.map((job) => (
+                <option key={job.value} value={job.value}>
+                  {job.label}
+                </option>
+              ))}
             </select>
           </div>
+
+          {formData.specificPosition && (
+            <div>
+              <label htmlFor="specificPosition" className="block text-sm font-medium text-[#0a0a0a] mb-1">
+                Specific Position
+              </label>
+              <input
+                type="text"
+                id="specificPosition"
+                name="specificPosition"
+                value={formData.specificPosition}
+                onChange={handleChange}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 text-[#0a0a0a] bg-gray-50"
+                readOnly
+              />
+            </div>
+          )}
 
           <div>
             <label htmlFor="workExperience" className="block text-sm font-medium text-[#0a0a0a] mb-1">
@@ -181,37 +278,6 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-[#0a0a0a] focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300 resize-none"
               placeholder="Briefly describe your relevant work experience..."
             />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-[#0a0a0a] mb-2">
-              Do you have a CV? <span className="text-red-500">*</span>
-            </label>
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="hasCV"
-                  value="yes"
-                  required
-                  checked={formData.hasCV === "yes"}
-                  onChange={handleChange}
-                  className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
-                />
-                <span className="text-[#0a0a0a]">Yes</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="hasCV"
-                  value="no"
-                  checked={formData.hasCV === "no"}
-                  onChange={handleChange}
-                  className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
-                />
-                <span className="text-[#0a0a0a]">No</span>
-              </label>
-            </div>
           </div>
 
           <div>
@@ -243,6 +309,118 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
                 <span className="text-[#0a0a0a]">No</span>
               </label>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CV Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold text-[#0a0a0a] mb-6 pb-2 border-b border-gray-200">
+          CV / Resume
+        </h2>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-[#0a0a0a] mb-2">
+              Do you have a CV? <span className="text-red-500">*</span>
+            </label>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="hasCV"
+                  value="yes"
+                  required
+                  checked={formData.hasCV === "yes"}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
+                />
+                <span className="text-[#0a0a0a]">Yes</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="hasCV"
+                  value="no"
+                  checked={formData.hasCV === "no"}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
+                />
+                <span className="text-[#0a0a0a]">No</span>
+              </label>
+            </div>
+          </div>
+
+          {formData.hasCV === "yes" && (
+            <div className="animate-in slide-in-from-top-2 duration-300">
+              <label className="block text-sm font-medium text-[#0a0a0a] mb-2">
+                Would you like help making your CV European-standard?
+              </label>
+              <div className="flex gap-6">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="needsCVHelp"
+                    value="yes"
+                    checked={formData.needsCVHelp === "yes"}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
+                  />
+                  <span className="text-[#0a0a0a]">Yes, I&apos;d like professional help</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="needsCVHelp"
+                    value="no"
+                    checked={formData.needsCVHelp === "no"}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-gold focus:ring-gold border-gray-300"
+                  />
+                  <span className="text-[#0a0a0a]">No, my CV is ready</span>
+                </label>
+              </div>
+            </div>
+          )}
+
+          {/* CV Services Upsell */}
+          {showCVUpsell && (
+            <div className="mt-4 bg-gradient-to-r from-gold/10 to-gold/5 border border-gold/30 rounded-lg p-5 animate-in slide-in-from-top-2 duration-300">
+              <div className="flex items-start gap-3">
+                <FileText className="w-6 h-6 text-gold flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-[#0a0a0a] mb-1">
+                    {formData.hasCV === "no"
+                      ? "Need a Professional CV?"
+                      : "Upgrade Your CV to European Standard"}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-3">
+                    European employers expect CVs in a specific format. Our professional CV writing service
+                    creates a polished, European-standard CV that increases your chances of getting hired.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">From $29</span>
+                    <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">Fast Delivery</span>
+                    <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">ATS-Optimized</span>
+                  </div>
+                  <Link
+                    href="/cv-services"
+                    className="inline-flex items-center gap-2 text-gold font-semibold text-sm hover:underline"
+                  >
+                    View CV Services
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Important Notice */}
+          <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-800">
+              <strong>Note:</strong> A well-formatted European CV significantly increases your chances
+              of being selected. Many applications are rejected due to incorrect CV format.
+            </p>
           </div>
         </div>
       </div>
