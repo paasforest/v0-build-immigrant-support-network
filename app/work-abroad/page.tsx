@@ -194,6 +194,82 @@ export default function WorkAbroadPage() {
         </div>
       </section>
 
+      {/* CV Services Upsell */}
+      <section className="py-20 bg-[#111111]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-gold text-sm font-semibold uppercase tracking-wider">
+                Increase Your Chances
+              </span>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mt-2 mb-6">
+                Need a Professional CV?
+              </h2>
+              <p className="text-white/70 mb-6">
+                European employers expect CVs in a specific format. Our professional CV writing 
+                service creates European-standard CVs that get you noticed by employers.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "European format that employers recognize",
+                  "Professionally written by career experts",
+                  "Highlights your skills for international jobs",
+                  "Includes cover letter option",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-white/80">
+                    <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/cv-services"
+                  className="bg-gold text-[#0a0a0a] px-6 py-3 rounded font-semibold text-center hover:bg-gold-light transition-all duration-300"
+                >
+                  View CV Packages
+                </Link>
+                <Link
+                  href="/jobs"
+                  className="border border-white/20 text-white px-6 py-3 rounded font-semibold text-center hover:border-gold hover:text-gold transition-all duration-300"
+                >
+                  Browse Jobs First
+                </Link>
+              </div>
+            </div>
+            <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-8">
+              <h3 className="text-white font-semibold text-xl mb-6">CV Packages from R250</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center pb-4 border-b border-[#2a2a2a]">
+                  <div>
+                    <span className="text-white font-medium">Basic CV</span>
+                    <p className="text-white/50 text-sm">European format CV only</p>
+                  </div>
+                  <span className="text-gold font-bold">R250</span>
+                </div>
+                <div className="flex justify-between items-center pb-4 border-b border-[#2a2a2a]">
+                  <div>
+                    <span className="text-white font-medium">CV + Cover Letter</span>
+                    <span className="ml-2 text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">Popular</span>
+                    <p className="text-white/50 text-sm">Best for serious applicants</p>
+                  </div>
+                  <span className="text-gold font-bold">R400</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-white font-medium">Complete Package</span>
+                    <p className="text-white/50 text-sm">CV + Cover Letter + LinkedIn</p>
+                  </div>
+                  <span className="text-gold font-bold">R550</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-gold">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
