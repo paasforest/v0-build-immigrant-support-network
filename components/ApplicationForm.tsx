@@ -77,7 +77,39 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // UI only - no backend call
+    
+    // Format message for WhatsApp
+    const message = `*NEW JOB APPLICATION*
+
+*Personal Details:*
+Name: ${formData.fullName}
+Country: ${formData.residenceCountry}
+Phone: ${formData.phone}
+Email: ${formData.email}
+Has Passport: ${formData.hasPassport}
+
+*Job Preferences:*
+Destination: ${formData.destinationCountry}
+Job Type: ${formData.jobType}
+${formData.specificPosition ? `Position: ${formData.specificPosition}` : ''}
+Worked Abroad Before: ${formData.workedAbroad}
+
+*Experience:*
+${formData.workExperience || 'Not provided'}
+
+*CV Status:*
+Has CV: ${formData.hasCV}
+${formData.needsCVHelp === 'yes' ? 'Needs CV Help: Yes' : ''}
+
+${wasReferred ? `*Referral:*
+Referrer: ${formData.referrerName}
+Referrer Phone: ${formData.referrerPhone}` : ''}
+`
+
+    // Open WhatsApp with the message
+    const whatsappUrl = `https://wa.me/27774388845?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
+    
     onSubmit()
   }
 
@@ -398,7 +430,7 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
                     creates a polished, European-standard CV that increases your chances of getting hired.
                   </p>
                   <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">From $29</span>
+                    <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">From R250</span>
                     <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">Fast Delivery</span>
                     <span className="text-xs bg-gold/20 text-[#0a0a0a] px-2 py-1 rounded">ATS-Optimized</span>
                   </div>
@@ -493,6 +525,22 @@ export default function ApplicationForm({ onSubmit }: ApplicationFormProps) {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Registration Fee Notice */}
+      <div className="mb-8 bg-gradient-to-r from-gold/10 to-gold/5 border-2 border-gold rounded-lg p-5">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-[#0a0a0a] mb-2">
+            Application Registration Fee
+          </h3>
+          <div className="text-3xl font-bold text-gold mb-2">R300</div>
+          <p className="text-sm text-gray-600 mb-3">
+            This fee covers profile processing, job matching, and placement assistance.
+          </p>
+          <p className="text-xs text-gray-500">
+            Payment details will be provided after form submission.
+          </p>
         </div>
       </div>
 

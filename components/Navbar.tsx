@@ -22,10 +22,31 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-gold font-serif text-xl font-bold transition-all duration-300 group-hover:text-gold-light">
-              Immigrant Support Network
-            </span>
+          <Link href="/" className="flex items-center gap-3 group">
+            {/* Globe + ISN Logo */}
+            <svg
+              className="w-10 h-10 flex-shrink-0"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Globe */}
+              <circle cx="24" cy="24" r="20" stroke="#C9A84C" strokeWidth="2" fill="none" />
+              <ellipse cx="24" cy="24" rx="8" ry="20" stroke="#C9A84C" strokeWidth="1.5" fill="none" />
+              <path d="M4 24h40" stroke="#C9A84C" strokeWidth="1.5" />
+              <path d="M8 14h32" stroke="#C9A84C" strokeWidth="1" />
+              <path d="M8 34h32" stroke="#C9A84C" strokeWidth="1" />
+              {/* Plane accent */}
+              <path d="M34 12l4-2-1 3-3-1z" fill="#C9A84C" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="text-gold font-serif text-xl font-bold leading-tight transition-all duration-300 group-hover:text-gold-light">
+                ISN
+              </span>
+              <span className="text-white/80 text-xs leading-tight hidden sm:block">
+                Immigrant Support Network
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

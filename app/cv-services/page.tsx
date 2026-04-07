@@ -8,9 +8,9 @@ const packages = [
   {
     id: "basic",
     name: "Basic CV",
-    price: "$29",
-    originalPrice: "$49",
-    description: "Perfect for entry-level positions",
+    price: "R250",
+    originalPrice: "R400",
+    description: "European format CV only",
     features: [
       "European format CV",
       "Professional layout",
@@ -22,16 +22,16 @@ const packages = [
   },
   {
     id: "professional",
-    name: "Professional CV",
-    price: "$59",
-    originalPrice: "$99",
-    description: "Best for experienced workers",
+    name: "CV + Cover Letter",
+    price: "R400",
+    originalPrice: "R600",
+    description: "Best for serious applicants",
     features: [
       "European format CV",
       "Premium professional layout",
+      "Custom cover letter",
       "Unlimited revisions",
       "PDF & Word formats",
-      "Cover letter included",
       "LinkedIn optimization tips",
       "Delivered in 2-3 days",
       "Priority support",
@@ -40,17 +40,17 @@ const packages = [
   },
   {
     id: "premium",
-    name: "Premium Package",
-    price: "$99",
-    originalPrice: "$149",
-    description: "Complete job application package",
+    name: "Complete Package",
+    price: "R550",
+    originalPrice: "R800",
+    description: "CV + Cover Letter + LinkedIn",
     features: [
       "European format CV",
       "Executive-level design",
-      "Unlimited revisions",
-      "PDF & Word formats",
       "Custom cover letter",
       "LinkedIn profile rewrite",
+      "Unlimited revisions",
+      "PDF & Word formats",
       "Interview preparation guide",
       "Delivered in 24-48 hours",
       "1-on-1 consultation call",
@@ -84,7 +84,7 @@ const faqs = [
   {
     question: "What payment methods do you accept?",
     answer:
-      "We accept mobile money (M-Pesa, MTN Mobile Money, Airtel Money), bank transfers, and international payments through PayPal and card payments.",
+      "We accept EFT / bank transfers (South African banks) and mobile money. Payment details will be provided via WhatsApp after you place your order.",
   },
   {
     question: "Is my information kept confidential?",
@@ -123,7 +123,7 @@ export default function CVServicesPage() {
     // In production, this would redirect to payment or WhatsApp
     const pkg = packages.find((p) => p.id === packageId)
     const message = `Hi! I'm interested in ordering the ${pkg?.name} (${pkg?.price}). Please send me the details.`
-    window.open(`https://wa.me/27123456789?text=${encodeURIComponent(message)}`, "_blank")
+    window.open(`https://wa.me/27774388845?text=${encodeURIComponent(message)}`, "_blank")
   }
 
   return (
@@ -257,7 +257,7 @@ export default function CVServicesPage() {
           </div>
 
           <p className="text-center text-white/50 text-sm mt-8">
-            Payment via Mobile Money, Bank Transfer, or PayPal accepted
+            Payment via EFT / Bank Transfer or Mobile Money accepted
           </p>
         </div>
       </section>
