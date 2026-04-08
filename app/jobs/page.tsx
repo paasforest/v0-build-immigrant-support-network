@@ -33,7 +33,7 @@ const jobsData = {
         requirements: ["Valid passport", "Ability to work in farm environment", "Physical stamina"],
         description: "Harvesting and handling mushrooms in controlled growing facilities.",
         imageUrl:
-          "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
+          "https://images.unsplash.com/photo-1512595594595-82b7f049313b?auto=format&fit=crop&w=900&q=80",
       },
       {
         id: "pl-mush-2",
@@ -45,7 +45,7 @@ const jobsData = {
         requirements: ["Valid passport", "Attention to detail", "Hygiene awareness"],
         description: "Sorting and grading mushrooms for packaging and distribution.",
         imageUrl:
-          "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80",
+          "https://images.unsplash.com/photo-1512595765784-5ebad80772a3?auto=format&fit=crop&w=900&q=80",
       },
       {
         id: "pl-hotel-1",
