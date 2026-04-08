@@ -28,10 +28,29 @@ const jobsData = {
         title: "Mushroom picker",
         type: "Agriculture",
         location: "Poland",
-        salary: "Competitive — discussed at interview",
-        duration: "Seasonal or long-term (role-dependent)",
-        requirements: ["Valid passport", "Ability to work in farm environment", "Physical stamina"],
-        description: "Harvesting and handling mushrooms in controlled growing facilities.",
+        salary: "32 PLN gross/h (~23.11 net) — rates per employer",
+        duration: "~180–200 h/month (employer indicative)",
+        requirements: [
+          "Medical certificate for sanitary and epidemiological purposes — required before employment; the employer indicates support can be arranged to help you obtain it beforehand",
+          "Valid passport and any permits required for lawful work in Poland",
+          "Physical stamina and suitability for work in mushroom production",
+        ],
+        description:
+          "Mushroom picking and quality control with a major Polish mushroom producer. We assist your application as a recruitment agency; the employer hires and pays you.",
+        bodyParagraphs: [
+          "Immigrant Support Network is a recruitment agency: we help candidates apply to third-party employers. We are not the hiring company, we do not sign your work contract ourselves, and we do not pay your wages. The summary below reflects information supplied by the employer for this vacancy.",
+          "The employer describes their business as a leader in mushroom production and processing in Poland, with quality and work standards that allow products to be supplied to customers worldwide. They present themselves as a significant producer and supplier of processed mushrooms, with a brand that has been on the market since 1992.",
+          "Main responsibilities (employer): picking mushrooms and controlling their quality.",
+        ],
+        employerOfferBullets: [
+          "Contract of mandate (umowa zlecenie)",
+          "32.00 PLN gross per hour (~23.11 PLN net per hour)",
+          "Food allowance: 0.81 PLN net per hour",
+          "Accommodation fee: 250 PLN per month",
+          "Extra bonus depending on quality and quantity of mushrooms collected",
+          "Approximately 180–200 hours per month",
+          "Work clothes and laundry service at the factory",
+        ],
         imageUrl:
           "https://images.unsplash.com/photo-1512595594595-82b7f049313b?auto=format&fit=crop&w=900&q=80",
       },
@@ -527,7 +546,39 @@ export default function JobsPage() {
                   }`}
                 >
                   <div className="border-t border-[#2a2a2a] px-6 pb-6 pt-4">
-                    <p className="text-white/70 mb-4">{job.description}</p>
+                    {"bodyParagraphs" in job &&
+                    Array.isArray(job.bodyParagraphs) &&
+                    job.bodyParagraphs.length > 0 ? (
+                      <div className="mb-4 space-y-3">
+                        {job.bodyParagraphs.map((paragraph, index) => (
+                          <p key={index} className="text-white/70 text-sm leading-relaxed">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-white/70 mb-4">{job.description}</p>
+                    )}
+                    {"employerOfferBullets" in job &&
+                      Array.isArray(job.employerOfferBullets) &&
+                      job.employerOfferBullets.length > 0 && (
+                        <div className="mb-6">
+                          <h4 className="text-sm font-semibold text-white mb-2">
+                            What the employer offers (details from the employer)
+                          </h4>
+                          <ul className="space-y-1">
+                            {job.employerOfferBullets.map((item, index) => (
+                              <li
+                                key={index}
+                                className="text-white/60 text-sm flex items-start gap-2"
+                              >
+                                <span className="mt-1.5 w-1.5 h-1.5 shrink-0 bg-gold rounded-full" />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     <div className="mb-6">
                       <h4 className="text-sm font-semibold text-white mb-2">Requirements:</h4>
                       <ul className="space-y-1">
