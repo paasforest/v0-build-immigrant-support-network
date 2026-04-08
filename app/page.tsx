@@ -41,11 +41,41 @@ const testimonials = [
 ]
 
 const countries = [
-  { name: "Poland", flag: "🇵🇱", jobs: ["Warehouse", "Food Production", "General Labour"] },
-  { name: "Romania", flag: "🇷🇴", jobs: ["Agriculture", "Factory Work"] },
-  { name: "Hungary", flag: "🇭🇺", jobs: ["Logistics", "Manufacturing"] },
-  { name: "United Kingdom", flag: "🇬🇧", jobs: ["Seasonal Agricultural Work"] },
-  { name: "Canada", flag: "🇨🇦", jobs: ["Drivers", "General Labour"] },
+  {
+    name: "Poland",
+    flag: "🇵🇱",
+    jobs: ["Warehouse", "Food Production", "General Labour"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Romania",
+    flag: "🇷🇴",
+    jobs: ["Agriculture", "Factory Work"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Hungary",
+    flag: "🇭🇺",
+    jobs: ["Logistics", "Manufacturing"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "United Kingdom",
+    flag: "🇬🇧",
+    jobs: ["Seasonal Agricultural Work"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1464226184884-fa008b63c4d3?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Canada",
+    flag: "🇨🇦",
+    jobs: ["Drivers", "General Labour"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
+  },
 ]
 
 const steps = [

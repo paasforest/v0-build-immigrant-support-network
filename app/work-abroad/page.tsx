@@ -12,61 +12,69 @@ const countries = [
     flag: "🇵🇱",
     jobs: ["Warehouse Operations", "Food Production", "General Labour", "Factory Work"],
     description: "Poland offers numerous opportunities in manufacturing and logistics sectors with competitive wages.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Romania",
     flag: "🇷🇴",
     jobs: ["Agriculture", "Factory Work", "Food Processing", "Construction"],
     description: "Romania has growing demand for workers in agriculture and manufacturing industries.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Hungary",
     flag: "🇭🇺",
     jobs: ["Logistics", "Manufacturing", "Assembly Line", "Warehouse"],
     description: "Hungary offers stable employment in its thriving manufacturing and logistics sectors.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "United Kingdom",
     flag: "🇬🇧",
     jobs: ["Seasonal Agricultural Work", "Food Packing", "Farm Work"],
     description: "The UK provides seasonal opportunities in agriculture with established worker programs.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1464226184884-fa008b63c4d3?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Canada",
     flag: "🇨🇦",
     jobs: ["Drivers", "General Labour", "Warehouse", "Construction Support"],
     description: "Canada offers diverse opportunities with pathways to permanent residency.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
   },
 ]
 
 export default function WorkAbroadPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative py-24 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              International Work <span className="text-gold">Opportunities</span>
-            </h1>
-            <p className="text-lg text-white/70 max-w-3xl mx-auto">
-              We connect pre-screened African candidates with legal employment opportunities 
-              in Europe and Canada. All placements follow proper work permit and visa procedures.
-            </p>
-          </div>
+      {/* Full-width warehouse banner + headline */}
+      <section className="relative flex min-h-[42vh] items-center justify-center py-20 md:min-h-[48vh]">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2400&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 bg-[#0a0a0a]/78" />
+        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="mb-6 font-serif text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+            International Work <span className="text-gold">Opportunities</span>
+          </h1>
+          <p className="mx-auto max-w-3xl text-lg text-white/85">
+            We connect pre-screened African candidates with legal employment opportunities in Europe and Canada. All
+            placements follow proper work permit and visa procedures.
+          </p>
         </div>
       </section>
 
-      {/* Intro Section with Background Image */}
-      <section 
-        className="relative py-20"
-        style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-[#0a0a0a]/85" />
+      {/* Why Work Abroad */}
+      <section className="relative bg-[#111111] py-20">
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="font-serif text-3xl font-bold text-white mb-6">
@@ -93,7 +101,7 @@ export default function WorkAbroadPage() {
       </section>
 
       {/* Countries Grid */}
-      <section className="py-20 bg-[#111111]">
+      <section className="border-t border-[#2a2a2a] bg-[#0a0a0a] py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
@@ -107,18 +115,25 @@ export default function WorkAbroadPage() {
             {countries.map((country, index) => (
               <div
                 key={index}
-                className="bg-[#1a1a1a] rounded-lg border border-[#2a2a2a] overflow-hidden hover:border-gold/50 transition-all duration-300 group"
+                className="overflow-hidden rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] hover:border-gold/50 transition-all duration-300 group"
               >
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-4xl">{country.flag}</span>
-                    <h3 className="text-2xl font-semibold text-white group-hover:text-gold transition-all duration-300">
+                <div className="relative h-44 w-full overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style={{ backgroundImage: `url('${country.imageUrl}')` }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/95 via-[#0a0a0a]/55 to-[#0a0a0a]/25" />
+                  <div className="absolute bottom-0 left-0 flex items-center gap-3 p-5">
+                    <span className="text-4xl drop-shadow" aria-hidden>
+                      {country.flag}
+                    </span>
+                    <h3 className="text-2xl font-semibold text-white drop-shadow-sm group-hover:text-gold transition-all duration-300">
                       {country.name}
                     </h3>
                   </div>
-                  <p className="text-white/60 mb-6 text-sm">
-                    {country.description}
-                  </p>
+                </div>
+                <div className="p-6">
+                  <p className="text-white/60 mb-6 text-sm">{country.description}</p>
                   <div className="mb-6">
                     <h4 className="text-gold text-sm font-semibold mb-3 uppercase tracking-wider">
                       Available Positions
