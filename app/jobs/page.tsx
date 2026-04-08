@@ -116,10 +116,20 @@ const jobsData = {
         title: "Warehouse worker (Mazowieckie voivodeship)",
         type: "Warehouse",
         location: "Mazowieckie voivodeship, Poland",
-        salary: "Competitive — discussed at interview",
-        duration: "12+ months typical",
-        requirements: ["Valid passport", "Warehouse or logistics experience a plus", "Safety awareness"],
-        description: "Receiving, storing, and dispatching goods in a warehouse in the Mazowieckie region.",
+        salary: "Discussed at interview — employer terms",
+        duration: "12+ months typical (employer indicative)",
+        requirements: [
+          "Warehouse or logistics experience a plus (employer)",
+          "Safety awareness (employer)",
+          "Valid passport and any permits required for lawful work in Poland",
+        ],
+        description:
+          "Warehouse work in Mazowieckie. We assist your application as a recruitment agency; the employer hires and pays you.",
+        bodyParagraphs: [
+          "Immigrant Support Network is a recruitment agency: we help candidates apply to third-party employers. We are not the hiring company, we do not sign your work contract ourselves, and we do not pay your wages. The summary below reflects information supplied by the employer or typical expectations for this type of role.",
+          "We are supporting applications for warehouse worker roles with an employer client in the Mazowieckie region.",
+          "Role summary (employer / vacancy): receiving, storing, and dispatching goods in a warehouse in the Mazowieckie region.",
+        ],
         imageUrl:
           "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=900&q=80",
       },
