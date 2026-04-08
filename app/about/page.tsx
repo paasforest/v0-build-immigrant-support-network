@@ -64,15 +64,14 @@ export default function AboutPage() {
                   wages, safe working conditions, and legal employment contracts.
                 </p>
                 <p className="text-white/90">
-                  Founded by <span className="text-gold font-medium">Charles</span> in South Africa, we are
-                  committed to integrity, opportunity, and support at every step.
+                  We are committed to integrity, opportunity, and support at every step.
                 </p>
               </div>
             </div>
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-[#2a2a2a] shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80"
-                alt="Professional at work"
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+                alt="Team collaboration"
                 className="h-full w-full object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
