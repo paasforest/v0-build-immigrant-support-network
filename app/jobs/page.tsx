@@ -97,13 +97,21 @@ const jobsData = {
       },
       {
         id: "pl-meat-1",
-        title: "Meat Cutter and Packer (Wielkopolskie voivodeship)",
+        title: "Meat Cutter and Packer — 20 vacancies (Wielkopolskie voivodeship)",
         type: "Food Production",
         location: "Wielkopolskie voivodeship, Poland",
         salary: "Competitive — discussed at interview",
         duration: "12+ months typical",
-        requirements: ["Valid passport", "Hygiene standards", "Ability to work in controlled temperatures"],
-        description: "Cutting, trimming, and packing meat products in a Wielkopolskie processing facility.",
+        requirements: [
+          "No visa sponsorship — employer does not sponsor visas; you need existing right to work or your own visa route",
+          "At least 1 year as production worker, butcher, or manual packer in the meat industry",
+          "Willingness to work long hours and with meat products",
+          "Able to work in a chilled area (3–7°C) and on your feet for long periods",
+          "Physical endurance, responsibility, and accuracy",
+          "Sanitary / hygiene certificates — if you do not have them, support can be provided to obtain them",
+        ],
+        description:
+          "For a client company specializing in meat processing and packaging in Wielkopolskie, we are recruiting 20 meat cutters and packers. Your main tasks: cutting, trimming, and portioning meat to production standards; packing finished products; weighing, labeling, and preparing goods for shipment; keeping your workstation clean; and following hygiene and safety rules. The work is in a chilled production area, requires physical stamina, and strict sanitary standards.",
         imageUrl:
           "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=900&q=80",
       },
