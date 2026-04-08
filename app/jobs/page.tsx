@@ -312,6 +312,114 @@ const jobsData = {
       },
     ],
   },
+  hungary: {
+    country: "Hungary",
+    flag: "🇭🇺",
+    jobs: [
+      {
+        id: "hu-wh-1",
+        title: "Warehouse Associate",
+        type: "Warehouse",
+        location: "Budapest, Hungary",
+        salary: "€750 - €1,000/month",
+        duration: "12+ months",
+        requirements: ["Basic English", "Physical fitness", "Valid passport"],
+        description: "Receiving, picking, and dispatch in distribution centers serving domestic and regional routes.",
+      },
+      {
+        id: "hu-factory-1",
+        title: "Production Line Worker",
+        type: "Manufacturing",
+        location: "Debrecen, Hungary",
+        salary: "€700 - €950/month",
+        duration: "12+ months",
+        requirements: ["Attention to detail", "Shift flexibility", "Valid passport"],
+        description: "Assembly and packaging roles in automotive and electronics supplier plants.",
+      },
+      {
+        id: "hu-log-1",
+        title: "Logistics Operative",
+        type: "Warehouse",
+        location: "Győr, Hungary",
+        salary: "€780 - €1,050/month",
+        duration: "12+ months",
+        requirements: ["Forklift licence a plus", "Safety awareness", "Valid passport"],
+        description: "Loading, unloading, and stock control in a busy logistics hub.",
+      },
+    ],
+  },
+  lithuania: {
+    country: "Lithuania",
+    flag: "🇱🇹",
+    jobs: [
+      {
+        id: "lt-log-1",
+        title: "Logistics & Warehouse Worker",
+        type: "Warehouse",
+        location: "Vilnius, Lithuania",
+        salary: "€900 - €1,200/month",
+        duration: "12+ months",
+        requirements: ["Basic English", "Physical stamina", "Valid passport"],
+        description: "Order picking, packing, and inventory support for regional distribution clients.",
+      },
+      {
+        id: "lt-mfg-1",
+        title: "Manufacturing Operative",
+        type: "Manufacturing",
+        location: "Kaunas, Lithuania",
+        salary: "€850 - €1,100/month",
+        duration: "12+ months",
+        requirements: ["Teamwork", "Quality focus", "Valid passport"],
+        description: "Production and assembly work in manufacturing facilities with EU-standard processes.",
+      },
+      {
+        id: "lt-food-1",
+        title: "Food Production Worker",
+        type: "Food Production",
+        location: "Klaipėda, Lithuania",
+        salary: "€800 - €1,050/month",
+        duration: "12+ months",
+        requirements: ["Hygiene awareness", "Early shifts", "Valid passport"],
+        description: "Processing and packing roles in food production with cold-chain and safety training.",
+      },
+    ],
+  },
+  latvia: {
+    country: "Latvia",
+    flag: "🇱🇻",
+    jobs: [
+      {
+        id: "lv-wh-1",
+        title: "Warehouse Worker",
+        type: "Warehouse",
+        location: "Riga, Latvia",
+        salary: "€800 - €1,100/month",
+        duration: "12+ months",
+        requirements: ["Basic English or Russian helpful", "Reliability", "Valid passport"],
+        description: "Storage, picking, and loading in warehouse operations near the capital.",
+      },
+      {
+        id: "lv-hosp-1",
+        title: "Hospitality Support",
+        type: "Hospitality",
+        location: "Jūrmala, Latvia",
+        salary: "€700 - €950/month",
+        duration: "Seasonal (4-8 months)",
+        requirements: ["Customer service attitude", "English basics", "Valid passport"],
+        description: "Seasonal hotel and resort support — housekeeping, kitchen help, and guest services.",
+      },
+      {
+        id: "lv-transport-1",
+        title: "Delivery / Logistics Support",
+        type: "Transport",
+        location: "Riga, Latvia",
+        salary: "€850 - €1,150/month",
+        duration: "12+ months",
+        requirements: ["Driving licence a plus", "Local route knowledge helpful", "Valid passport"],
+        description: "Last-mile delivery and logistics support for courier and retail networks.",
+      },
+    ],
+  },
   germany: {
     country: "Germany",
     flag: "🇩🇪",
@@ -435,7 +543,17 @@ const jobTypes = [
   "Childcare & Domestic",
 ]
 
-const countries = ["All Countries", "Poland", "Romania", "Germany", "Netherlands", "Canada"]
+const countries = [
+  "All Countries",
+  "Poland",
+  "Romania",
+  "Hungary",
+  "Lithuania",
+  "Latvia",
+  "Germany",
+  "Netherlands",
+  "Canada",
+]
 
 export default function JobsPage() {
   const [selectedCountry, setSelectedCountry] = useState("All Countries")

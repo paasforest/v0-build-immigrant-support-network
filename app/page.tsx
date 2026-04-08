@@ -63,6 +63,20 @@ const countries = [
       "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80",
   },
   {
+    name: "Lithuania",
+    flag: "🇱🇹",
+    jobs: ["Logistics", "Manufacturing", "General Labour"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    name: "Latvia",
+    flag: "🇱🇻",
+    jobs: ["Warehouse", "Food Production", "Services"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+  },
+  {
     name: "United Kingdom",
     flag: "🇬🇧",
     jobs: ["Seasonal Agricultural Work"],

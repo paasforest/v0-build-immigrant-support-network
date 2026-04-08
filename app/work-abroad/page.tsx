@@ -3,7 +3,8 @@ import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Work Abroad | Immigrant Support Network",
-  description: "Explore legal work opportunities in Poland, Romania, Hungary, UK, and Canada. Find warehouse, agriculture, and general labour positions.",
+  description:
+    "Explore legal work opportunities in Poland, Romania, Hungary, Lithuania, Latvia, the UK, and Canada. Find warehouse, agriculture, and general labour positions.",
 }
 
 const countries = [
@@ -30,6 +31,24 @@ const countries = [
     description: "Hungary offers stable employment in its thriving manufacturing and logistics sectors.",
     imageUrl:
       "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "Lithuania",
+    flag: "🇱🇹",
+    jobs: ["Logistics", "Manufacturing", "Warehouse", "Food Processing"],
+    description:
+      "Lithuania’s growing logistics and manufacturing sectors offer opportunities for reliable workers in EU-regulated environments.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "Latvia",
+    flag: "🇱🇻",
+    jobs: ["Warehouse", "Transport Support", "Hospitality", "Food Production"],
+    description:
+      "Latvia provides roles in logistics, services, and food-related industries, with demand in urban and coastal areas.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "United Kingdom",
