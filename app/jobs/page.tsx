@@ -122,24 +122,22 @@ const jobsData = {
         salary: "Discussed at interview — employer terms",
         duration: "12+ months typical (employer indicative)",
         requirements: [
-          "At least 1 year as a production worker, butcher, or manual packer in the meat industry (employer requirement)",
-          "Willingness to work long hours and with meat products (employer)",
-          "Able to work in a chilled area (about 3–7°C) and on your feet for extended periods (employer)",
-          "Responsibility, accuracy, and physical endurance (employer)",
-          "Sanitary / hygiene certificates as required — employer indicates support can be provided to obtain them if you do not already have them",
-          "Legal right to work in Poland without employer visa sponsorship — this employer does not sponsor visas",
+          "No visa sponsorship — employer does not sponsor visas; you need existing right to work or your own visa route",
+          "At least 1 year as production worker, butcher, or manual packer in the meat industry",
+          "Willingness to work long hours and with meat products",
+          "Able to work in a chilled area (3–7°C) and on your feet for long periods",
+          "Physical endurance, responsibility, and accuracy",
         ],
         description:
           "Meat cutting and packing with a Wielkopolskie meat processing employer. We assist your application as a recruitment agency; the employer hires and pays you.",
         bodyParagraphs: [
           "Immigrant Support Network is a recruitment agency: we help candidates apply to third-party employers. We are not the hiring company, we do not sign your work contract ourselves, and we do not pay your wages. The summary below reflects information supplied by the employer for this vacancy.",
-          "The employer is seeking twenty (20) meat cutters and packers for their meat processing and packaging operations in Wielkopolskie. The employer states that they do not offer visa sponsorship.",
-          "Main tasks (employer): cutting, trimming, and portioning meat products according to production standards; packing finished meat products; weighing, labeling, and preparing goods for shipment; maintaining cleanliness at your workstation; following hygiene and safety rules.",
-          "Work environment (employer): work takes place in a chilled production area, requires physical endurance, and adherence to sanitary standards.",
+          "For a client company specializing in meat processing and packaging in Wielkopolskie, we are recruiting 20 meat cutters and packers.",
+          "Your main tasks: cutting, trimming, and portioning meat to production standards; packing finished products; weighing, labeling, and preparing goods for shipment; keeping your workstation clean; and following hygiene and safety rules.",
+          "The work is in a chilled production area, requires physical stamina, and strict sanitary standards.",
         ],
         employerOfferBullets: [
-          "20 positions (employer)",
-          "Chilled production area — employer requires tolerance of roughly 3–7°C and standing work",
+          "20 positions for this employer client in Wielkopolskie",
           "Pay, schedule, and contract details: confirmed with the employer at interview",
         ],
         imageUrl:
