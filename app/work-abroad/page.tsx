@@ -37,7 +37,7 @@ const countries = [
     jobs: ["Seasonal Agricultural Work", "Food Packing", "Farm Work"],
     description: "The UK provides seasonal opportunities in agriculture with established worker programs.",
     imageUrl:
-      "https://images.unsplash.com/photo-1464226184884-fa008b63c4d3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Canada",

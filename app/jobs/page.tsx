@@ -33,7 +33,7 @@ const jobsData = {
         requirements: ["Valid passport", "Ability to work in farm environment", "Physical stamina"],
         description: "Harvesting and handling mushrooms in controlled growing facilities.",
         imageUrl:
-          "https://images.unsplash.com/photo-1464226184884-fa008b63c4d3?auto=format&fit=crop&w=900&q=80",
+          "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=900&q=80",
       },
       {
         id: "pl-mush-2",
