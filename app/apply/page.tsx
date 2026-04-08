@@ -47,17 +47,21 @@ export default function ApplyPage() {
             <div className="bg-[#0a0a0a] border border-gold/30 rounded-lg p-6 mb-8">
               <h3 className="text-lg font-semibold text-gold mb-4 text-center">Registration Fee: R300</h3>
               <div className="space-y-3 text-white/80 text-sm">
-                <div className="flex justify-between border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60">Bank:</span>
-                  <span className="font-medium">[Bank Name]</span>
+                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
+                  <span className="text-white/60 shrink-0">Bank</span>
+                  <span className="font-medium text-right">Absa</span>
                 </div>
-                <div className="flex justify-between border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60">Account Number:</span>
-                  <span className="font-medium">[Account Number]</span>
+                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
+                  <span className="text-white/60 shrink-0">Account name</span>
+                  <span className="font-medium text-right">Immigrant Support Network</span>
                 </div>
-                <div className="flex justify-between border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60">Branch Code:</span>
-                  <span className="font-medium">[Branch Code]</span>
+                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
+                  <span className="text-white/60 shrink-0">Account number</span>
+                  <span className="font-medium text-right tabular-nums">4115223741</span>
+                </div>
+                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
+                  <span className="text-white/60 shrink-0">Branch code</span>
+                  <span className="font-medium text-right tabular-nums">632005</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/60">Reference:</span>
