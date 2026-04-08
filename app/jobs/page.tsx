@@ -11,44 +11,185 @@ const jobsData = {
     flag: "🇵🇱",
     jobs: [
       {
-        id: "pl-farm-1",
-        title: "Farm Worker - Fruit Picking",
-        type: "Agriculture",
-        location: "Various regions, Poland",
-        salary: "€800 - €1,200/month",
-        duration: "Seasonal (3-6 months)",
-        requirements: ["No experience needed", "Physical fitness", "Valid passport"],
-        description: "Seasonal work picking apples, strawberries, and other fruits on Polish farms. Accommodation provided.",
+        id: "pl-prod-1",
+        title: "Production Worker",
+        type: "Manufacturing",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Long-term contracts available",
+        requirements: ["Valid passport", "Physical fitness", "Reliability"],
+        description:
+          "General production roles in manufacturing facilities. Training is often provided on site.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80",
       },
       {
-        id: "pl-farm-2",
-        title: "Greenhouse Worker",
+        id: "pl-mush-1",
+        title: "Mushroom picker",
         type: "Agriculture",
-        location: "Mazovia, Poland",
-        salary: "€900 - €1,100/month",
-        duration: "6-12 months",
-        requirements: ["Basic farming knowledge preferred", "Willingness to learn", "Valid passport"],
-        description: "Work in modern greenhouses growing vegetables. Climate-controlled environment.",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Seasonal or long-term (role-dependent)",
+        requirements: ["Valid passport", "Ability to work in farm environment", "Physical stamina"],
+        description: "Harvesting and handling mushrooms in controlled growing facilities.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1464226184884-fa008b63c4d3?auto=format&fit=crop&w=900&q=80",
       },
       {
-        id: "pl-warehouse-1",
-        title: "Warehouse Operative",
+        id: "pl-mush-2",
+        title: "Mushroom sorter",
+        type: "Agriculture",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Seasonal or long-term (role-dependent)",
+        requirements: ["Valid passport", "Attention to detail", "Hygiene awareness"],
+        description: "Sorting and grading mushrooms for packaging and distribution.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-hotel-1",
+        title: "Hotel restaurant - waiter / waitress",
+        type: "Hospitality",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Customer service attitude", "Basic English helpful"],
+        description: "Front-of-house service in hotel restaurants — taking orders, serving guests, teamwork.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-sort-1",
+        title: "Sorter box collector - Service Man",
         type: "Warehouse",
-        location: "Warsaw, Poland",
-        salary: "€1,000 - €1,400/month",
-        duration: "12+ months",
-        requirements: ["Forklift license preferred", "Shift work flexibility", "Valid passport"],
-        description: "Picking, packing, and shipping goods in large distribution centers.",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Physical fitness", "Shift flexibility"],
+        description: "Sorting, collecting boxes, and supporting logistics operations in a service role.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80",
       },
       {
-        id: "pl-food-1",
-        title: "Food Production Worker",
+        id: "pl-wh-1",
+        title: "Warehouse worker (Mazowieckie voivodeship)",
+        type: "Warehouse",
+        location: "Mazowieckie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Warehouse or logistics experience a plus", "Safety awareness"],
+        description: "Receiving, storing, and dispatching goods in a warehouse in the Mazowieckie region.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1565514020126-678c2ecc3008?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-wh-2",
+        title: "Order picker - warehouse worker (Śląskie voivodeship)",
+        type: "Warehouse",
+        location: "Śląskie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Accuracy and pace", "RF scanner training often provided"],
+        description: "Picking and preparing orders for shipment in a Śląskie warehouse environment.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-meat-1",
+        title: "Meat Cutter and Packer (Wielkopolskie voivodeship)",
         type: "Food Production",
-        location: "Lodz, Poland",
-        salary: "€950 - €1,200/month",
-        duration: "12+ months",
-        requirements: ["Hygiene certificate (provided)", "Ability to work in cold environments", "Valid passport"],
-        description: "Work in meat processing or food packaging facilities.",
+        location: "Wielkopolskie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Hygiene standards", "Ability to work in controlled temperatures"],
+        description: "Cutting, trimming, and packing meat products in a Wielkopolskie processing facility.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-meat-2",
+        title: "Manual Packer - meat industry (Małopolskie voivodeship)",
+        type: "Food Production",
+        location: "Małopolskie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Food hygiene awareness", "Physical stamina"],
+        description: "Manual packing and labelling in the meat industry in Małopolskie.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1585659722983-d3cd295b01b1?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-meat-3",
+        title: "Production Worker - meat industry (Śląskie voivodeship)",
+        type: "Food Production",
+        location: "Śląskie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Hygiene and safety compliance", "Teamwork"],
+        description: "Production line work in meat processing in the Śląskie region.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-meat-4",
+        title: "Manual packer - meat industry (Dolnośląskie voivodeship)",
+        type: "Food Production",
+        location: "Dolnośląskie voivodeship, Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Food industry hygiene", "Reliability"],
+        description: "Manual packing roles in meat industry facilities in Dolnośląskie.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-child-1",
+        title: "Live-in Childcare & Household Assistant",
+        type: "Childcare & Domestic",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Typically live-in, long-term",
+        requirements: ["Valid passport", "Experience with children preferred", "References may be required"],
+        description: "Live-in support combining childcare and light household duties for a family residence.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-dom-1",
+        title: "Domestic Helper (Live-in)",
+        type: "Childcare & Domestic",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Live-in, long-term",
+        requirements: ["Valid passport", "Domestic or care experience helpful", "Trustworthiness"],
+        description: "Live-in domestic assistance including cleaning, cooking support, and household tasks.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-hotel-gen-1",
+        title: "Job offers in Hotels and Restaurants",
+        type: "Hospitality",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "Varies by employer",
+        requirements: ["Valid passport", "Hospitality interest", "English or local language a plus"],
+        description: "Various roles across hotels and restaurants — kitchen, service, housekeeping, and more.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=80",
+      },
+      {
+        id: "pl-cook-1",
+        title: "Cook - Italian restaurant",
+        type: "Hospitality",
+        location: "Poland",
+        salary: "Competitive — discussed at interview",
+        duration: "12+ months typical",
+        requirements: ["Valid passport", "Cooking experience", "Food safety awareness"],
+        description: "Preparing Italian cuisine in a restaurant setting — teamwork in a busy kitchen.",
+        imageUrl:
+          "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80",
       },
     ],
   },
@@ -208,6 +349,7 @@ const jobTypes = [
   "Hospitality",
   "Healthcare",
   "Transport",
+  "Childcare & Domestic",
 ]
 
 const countries = ["All Countries", "Poland", "Romania", "Germany", "Netherlands", "Canada"]
@@ -322,36 +464,47 @@ export default function JobsPage() {
                 className="bg-[#111111] border border-[#2a2a2a] rounded-lg overflow-hidden hover:border-gold/50 transition-all duration-300"
               >
                 <button
+                  type="button"
                   onClick={() => setExpandedJob(expandedJob === job.id ? null : job.id)}
-                  className="w-full text-left p-6"
+                  className="w-full text-left"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{job.flag}</span>
-                        <span className="text-xs font-medium text-gold bg-gold/10 px-2 py-1 rounded">
-                          {job.type}
-                        </span>
+                  <div className="flex flex-col sm:flex-row sm:items-stretch">
+                    {"imageUrl" in job && (job as { imageUrl?: string }).imageUrl ? (
+                      <div className="relative h-48 w-full shrink-0 sm:h-auto sm:w-56 md:w-64">
+                        <img
+                          src={(job as { imageUrl: string }).imageUrl}
+                          alt=""
+                          className="h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent sm:bg-gradient-to-t sm:from-black/40 sm:to-transparent" />
                       </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{job.title}</h3>
-                      <div className="flex flex-wrap gap-4 text-sm text-white/60">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-4 h-4" />
-                          {job.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Euro className="w-4 h-4" />
-                          {job.salary}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-4 h-4" />
-                          {job.duration}
-                        </span>
+                    ) : null}
+                    <div className="flex flex-1 flex-col justify-between gap-4 p-6 lg:flex-row lg:items-center">
+                      <div className="min-w-0 flex-1">
+                        <div className="mb-2 flex flex-wrap items-center gap-3">
+                          <span className="text-2xl">{job.flag}</span>
+                          <span className="rounded bg-gold/10 px-2 py-1 text-xs font-medium text-gold">
+                            {job.type}
+                          </span>
+                        </div>
+                        <h3 className="mb-2 text-lg font-semibold text-white sm:text-xl">{job.title}</h3>
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-white/60">
+                          <span className="flex items-center gap-1">
+                            <MapPin className="h-4 w-4 shrink-0" />
+                            {job.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Euro className="h-4 w-4 shrink-0" />
+                            {job.salary}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-4 w-4 shrink-0" />
+                            {job.duration}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4">
                       <ChevronDown
-                        className={`w-6 h-6 text-gold transition-transform duration-300 ${
+                        className={`h-6 w-6 shrink-0 text-gold transition-transform duration-300 self-end sm:self-center ${
                           expandedJob === job.id ? "rotate-180" : ""
                         }`}
                       />
@@ -362,10 +515,10 @@ export default function JobsPage() {
                 {/* Expanded Details */}
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
-                    expandedJob === job.id ? "max-h-96" : "max-h-0"
+                    expandedJob === job.id ? "max-h-[min(85vh,28rem)] sm:max-h-[32rem]" : "max-h-0"
                   }`}
                 >
-                  <div className="px-6 pb-6 border-t border-[#2a2a2a] pt-4">
+                  <div className="border-t border-[#2a2a2a] px-6 pb-6 pt-4">
                     <p className="text-white/70 mb-4">{job.description}</p>
                     <div className="mb-6">
                       <h4 className="text-sm font-semibold text-white mb-2">Requirements:</h4>
