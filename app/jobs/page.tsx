@@ -100,7 +100,7 @@ const jobsData = {
         requirements: ["Valid passport", "Warehouse or logistics experience a plus", "Safety awareness"],
         description: "Receiving, storing, and dispatching goods in a warehouse in the Mazowieckie region.",
         imageUrl:
-          "https://images.unsplash.com/photo-1565514020126-678c2ecc3008?auto=format&fit=crop&w=900&q=80",
+          "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=900&q=80",
       },
       {
         id: "pl-wh-2",
