@@ -6,12 +6,13 @@ import Link from "next/link"
 import emailjs from "@emailjs/browser"
 import { AlertCircle, FileText, Loader2 } from "lucide-react"
 
+/** Env vars override these; see Vercel → Environment Variables. */
 const YOUR_SERVICE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "YOUR_SERVICE_ID"
+  process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "service_yyl4r2x"
 const YOUR_TEMPLATE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "YOUR_TEMPLATE_ID"
+  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_k6228dm"
 const YOUR_PUBLIC_KEY =
-  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "YOUR_PUBLIC_KEY"
+  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ?? "2M_IQHoiSJ7LUbLWJ"
 
 interface ApplicationFormProps {
   onSuccess: (payload: { fullName: string }) => void
