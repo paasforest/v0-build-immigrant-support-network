@@ -126,7 +126,7 @@ const jobsData = {
           "Good physical condition (employer)",
           "Able to work on your feet for extended periods (employer)",
           "Responsibility and accuracy in tasks performed (employer)",
-          "Knowledge of English — minimum level as set by the employer (confirm when applying)",
+          "Knowledge of English — minimum B1 level (employer)",
           "Valid passport and any permits required for lawful work in Poland",
         ],
         description:
