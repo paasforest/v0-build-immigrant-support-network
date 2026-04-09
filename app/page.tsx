@@ -1,5 +1,7 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import HeroSection from "@/components/HeroSection"
+import { siteConfig, siteUrl } from "@/lib/site-config"
 import TrustBadges from "@/components/TrustBadges"
 import ServiceCard from "@/components/ServiceCard"
 import CountryCard from "@/components/CountryCard"
@@ -97,6 +99,19 @@ const steps = [
   { number: "02", title: "Get Matched with Opportunities", description: "Our team reviews your profile and connects you with suitable employers." },
   { number: "03", title: "Begin Your Journey", description: "Receive guidance on visa processes and prepare for your new opportunity." },
 ]
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "Immigrant Support Network | Work Abroad & Visa Assistance",
+  },
+  description: siteConfig.shortDescription,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Immigrant Support Network | Work Abroad & Visa Assistance",
+    description: siteConfig.shortDescription,
+    url: siteUrl,
+  },
+}
 
 export default function HomePage() {
   return (

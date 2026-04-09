@@ -1,8 +1,15 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "About Us | Immigrant Support Network",
-  description: "Learn about Immigrant Support Network - connecting African talent with international employers since our founding.",
+  title: "About Us",
+  description:
+    "Learn about Immigrant Support Network: a recruitment agency connecting African talent with international employers in Europe and Canada.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About Immigrant Support Network",
+    description:
+      "Our mission, values, and commitment to ethical recruitment and visa support for international work.",
+  },
 }
 
 const values = [

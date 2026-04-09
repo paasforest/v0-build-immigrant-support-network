@@ -22,8 +22,10 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { href: "/", label: "Home" },
+                { href: "/jobs", label: "Jobs" },
                 { href: "/work-abroad", label: "Work Abroad" },
                 { href: "/visa-services", label: "Visa Services" },
+                { href: "/cv-services", label: "CV Services" },
                 { href: "/apply", label: "Apply" },
                 { href: "/about", label: "About Us" },
                 { href: "/contact", label: "Contact" },

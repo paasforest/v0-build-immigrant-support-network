@@ -2,9 +2,15 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Work Abroad | Immigrant Support Network",
+  title: "Work Abroad",
   description:
     "Explore legal work opportunities in Poland, Romania, Hungary, Lithuania, Latvia, the UK, and Canada. Find warehouse, agriculture, and general labour positions.",
+  alternates: { canonical: "/work-abroad" },
+  openGraph: {
+    title: "Work Abroad Opportunities",
+    description:
+      "Legal employment in Europe and Canada: Poland, Romania, Hungary, Baltics, UK, and more — with agency support.",
+  },
 }
 
 const countries = [
