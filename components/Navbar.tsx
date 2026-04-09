@@ -13,10 +13,14 @@ export default function Navbar() {
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/jobs", label: "Jobs" },
+    { href: "/guides", label: "Guides" },
+    { href: "/blog", label: "Blog" },
     { href: "/apply", label: "Apply" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ]
+
+  const navBeforeServices = 4
 
   const serviceLinks = [
     { href: "/work-abroad", label: "Work Abroad", description: "Job placements in Europe & Canada" },
@@ -63,7 +67,7 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
-            {navLinks.slice(0, 2).map((link) => (
+            {navLinks.slice(0, navBeforeServices).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -104,7 +108,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {navLinks.slice(2).map((link) => (
+            {navLinks.slice(navBeforeServices).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -140,11 +144,11 @@ export default function Navbar() {
 
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+            isOpen ? "max-h-[620px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <div className="py-4 space-y-1 border-t border-[#2a2a2a]">
-            {navLinks.slice(0, 2).map((link) => (
+            {navLinks.slice(0, navBeforeServices).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -185,7 +189,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {navLinks.slice(2).map((link) => (
+            {navLinks.slice(navBeforeServices).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}

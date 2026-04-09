@@ -133,7 +133,15 @@ export default function WorkAbroadPage() {
               Available Destinations
             </h2>
             <p className="text-white/60 max-w-2xl mx-auto">
-              Explore opportunities by country
+              Explore opportunities by country. For step-by-step help on visas and applications, see our{" "}
+              <Link href="/guides" className="text-gold hover:underline">
+                guides
+              </Link>{" "}
+              and{" "}
+              <Link href="/apply" className="text-gold hover:underline">
+                apply
+              </Link>{" "}
+              when you are ready.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -160,6 +160,49 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SEO: internal links to guides (jobs, visas, Europe from Africa) */}
+      <section className="border-y border-[#2a2a2a] bg-[#0a0a0a] py-16">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <h2 className="font-serif text-2xl font-bold text-white md:text-3xl">
+            Free guides: <span className="text-gold">jobs & visas</span>
+          </h2>
+          <p className="mt-4 text-white/70">
+            Searching for{" "}
+            <Link href="/guides/jobs-in-poland-for-africans-2026" className="text-gold hover:underline">
+              jobs in Poland for Africans
+            </Link>
+            ,{" "}
+            <Link href="/guides/how-to-get-a-job-in-romania-from-africa" className="text-gold hover:underline">
+              work in Romania from Africa
+            </Link>
+            ,{" "}
+            <Link href="/guides/poland-work-visa-cost" className="text-gold hover:underline">
+              Poland work visa costs
+            </Link>
+            , or the{" "}
+            <Link href="/guides/easiest-europe-countries-for-africans" className="text-gold hover:underline">
+              easiest countries in Europe for Africans
+            </Link>
+            ? Read plain-language guides — then{" "}
+            <Link href="/apply" className="text-gold hover:underline">
+              apply here
+            </Link>
+            .
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/guides"
+              className="rounded border border-gold px-6 py-2 text-sm font-semibold text-gold hover:bg-gold/10"
+            >
+              All guides
+            </Link>
+            <Link href="/blog" className="rounded border border-white/20 px-6 py-2 text-sm font-semibold text-white hover:border-gold">
+              Blog
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works */}
       <section className="py-20 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

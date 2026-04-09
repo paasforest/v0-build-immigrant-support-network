@@ -23,6 +23,8 @@ export default function Footer() {
               {[
                 { href: "/", label: "Home" },
                 { href: "/jobs", label: "Jobs" },
+                { href: "/guides", label: "Guides" },
+                { href: "/blog", label: "Blog" },
                 { href: "/work-abroad", label: "Work Abroad" },
                 { href: "/visa-services", label: "Visa Services" },
                 { href: "/cv-services", label: "CV Services" },
