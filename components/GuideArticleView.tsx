@@ -10,6 +10,8 @@ import {
   headingToAnchorId,
 } from "@/lib/guides-data"
 
+const WHATSAPP_URL = "https://wa.me/27774388845"
+
 type GuideArticleViewProps = {
   guide: Guide
   slug: string
@@ -42,11 +44,11 @@ function SupportHighlightsCard({ intro, points }: { intro: string; points: Suppo
   return (
     <div className="mt-4 rounded-xl border border-[#2a2a2a] bg-[#131313] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] md:p-8">
       <p className="text-[15px] leading-relaxed text-white/78">{intro}</p>
-      <ul className="mt-8 space-y-7">
+      <ul className="mt-8 space-y-6">
         {points.map((pt) => (
           <li key={pt.title} className="flex gap-3.5">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={2.5} aria-hidden />
-              <div className="min-w-0">
+            <div className="min-w-0">
               <p className="font-medium text-white">{pt.title}</p>
               <div className="mt-1.5 [&_p]:mb-0 [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/68">
                 <RichParagraph text={pt.body} />
@@ -67,16 +69,31 @@ function SupportHighlightsCard({ intro, points }: { intro: string; points: Suppo
   )
 }
 
-function ProcessStartApplyCta() {
+function QuickAnswerBox({ title, bullets }: { title: string; bullets: string[] }) {
   return (
-    <div className="mt-10 rounded-lg border border-white/[0.08] bg-[#0f0f0f] px-6 py-8 text-center md:px-8">
-      <p className="text-base text-white/80">Ready to start your process?</p>
-      <Link
-        href="/apply"
-        className="mt-5 inline-flex rounded-md bg-gold px-10 py-3 text-[15px] font-semibold text-[#0a0a0a] transition-colors hover:bg-gold-light"
+    <div className="my-8 rounded-xl border border-gold/25 bg-[#141414] p-5 md:p-6">
+      <h2 className="font-serif text-lg font-semibold text-gold md:text-xl">{title}</h2>
+      <ol className="mt-4 list-decimal space-y-2 pl-5 text-[15px] leading-relaxed text-white/78">
+        {bullets.map((b) => (
+          <li key={b}>{b}</li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+function WhatsAppInlineCta() {
+  return (
+    <div className="mt-8 rounded-lg border border-[#25D366]/35 bg-[#0c1410] px-5 py-6 text-center md:px-8">
+      <p className="text-sm text-white/80 md:text-[15px]">Have questions? Chat with us on WhatsApp for faster help.</p>
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-4 inline-flex items-center justify-center rounded-md bg-[#25D366] px-8 py-3 text-[15px] font-semibold text-white transition-opacity hover:opacity-95"
       >
-        Apply Now
-      </Link>
+        Chat on WhatsApp
+      </a>
     </div>
   )
 }
@@ -93,7 +110,7 @@ function ApplyNowCta({ className = "" }: { className?: string }) {
         Apply Now
       </Link>
       <p className="mt-3 text-sm text-white/60">
-        Apply today — we respond within 24 hours (business days). Fill in all details so we can help you faster.
+        We aim to respond within 24 hours (business days) when your application is complete.
       </p>
     </div>
   )
@@ -113,6 +130,8 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
   const showToc = guide.showTableOfContents === true
   const showFooterCard = guide.showDefaultFooterApplyCard !== false
 
+  const introBlocks = guide.introParagraphs?.length ? guide.introParagraphs : [guide.intro]
+
   const tocHeadings = guide.sections.map((s) => ({
     id: headingToAnchorId(s.h2),
     title: s.h2,
@@ -120,13 +139,22 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
 
   const mainCard = (
     <div className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-6 md:p-8">
-      <RichParagraph text={guide.intro} />
+      {guide.powerLine ? (
+        <blockquote className="mb-8 border-l-4 border-gold/50 pl-4 text-[15px] italic leading-relaxed text-white/85 md:text-base">
+          {guide.powerLine}
+        </blockquote>
+      ) : null}
+
+      {introBlocks.map((para, i) => (
+        <RichParagraph key={i} text={para} />
+      ))}
+
+      {guide.quickAnswer ? (
+        <QuickAnswerBox title={guide.quickAnswer.title} bullets={guide.quickAnswer.bullets} />
+      ) : null}
 
       <div className="my-8 flex flex-wrap gap-3 border-y border-[#2a2a2a] py-6">
         <span className="text-sm text-white/50">Quick links:</span>
-        <Link href="/apply" className="text-sm font-medium text-gold hover:underline">
-          Apply
-        </Link>
         <Link href="/jobs" className="text-sm font-medium text-gold hover:underline">
           Jobs
         </Link>
@@ -147,14 +175,9 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
           <section key={section.h2} id={anchor} className="mb-10 scroll-mt-28">
             <h2 className="font-serif text-xl font-semibold text-gold md:text-2xl">{section.h2}</h2>
             {section.supportCard ? (
-              <>
-                <SupportHighlightsCard intro={section.supportCard.intro} points={section.supportCard.points} />
-                <ProcessStartApplyCta />
-              </>
+              <SupportHighlightsCard intro={section.supportCard.intro} points={section.supportCard.points} />
             ) : (
-              section.paragraphs.map((p, i) => (
-                <RichParagraph key={i} text={p} />
-              ))
+              section.paragraphs.map((p, i) => <RichParagraph key={i} text={p} />)
             )}
             {section.image ? (
               <figure className="my-8 overflow-hidden rounded-lg border border-[#2a2a2a]">
@@ -169,6 +192,7 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
                 />
               </figure>
             ) : null}
+            {section.whatsappCta ? <WhatsAppInlineCta /> : null}
             {section.customCtas && section.customCtas.length > 0 ? (
               <SectionCtaButtons buttons={section.customCtas} />
             ) : null}

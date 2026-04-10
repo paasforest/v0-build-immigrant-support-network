@@ -176,7 +176,7 @@ export default function HomePage() {
               jobs in Poland for Africans
             </Link>
             ,{" "}
-            <Link href="/blog/how-to-get-a-job-in-romania-from-africa" className="text-gold hover:underline">
+            <Link href="/blog/jobs-in-romania-for-africans-2026" className="text-gold hover:underline">
               work in Romania from Africa
             </Link>
             ,{" "}
