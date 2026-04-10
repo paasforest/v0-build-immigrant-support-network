@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 const prioritySlugs = new Set([
   "how-to-apply-work-abroad-from-africa",
+  "easiest-europe-countries-for-africans",
   "jobs-in-poland-for-africans-2026",
   "jobs-in-romania-for-africans-2026",
   "jobs-in-hungary-for-foreign-workers",
