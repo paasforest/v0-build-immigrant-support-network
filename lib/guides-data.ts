@@ -1,5 +1,12 @@
 const DEFAULT_POST_DATE = "2026-04-09T12:00:00.000Z"
 
+export type SectionCtaButton = {
+  label: string
+  href: string
+  /** Gold primary vs outline secondary */
+  primary?: boolean
+}
+
 export type GuideSection = {
   h2: string
   paragraphs: string[]
@@ -7,6 +14,8 @@ export type GuideSection = {
   image?: { url: string; alt: string }
   /** Gold “Apply Now” block after this section */
   ctaAfter?: boolean
+  /** Custom buttons instead of default Apply strip when set */
+  customCtas?: SectionCtaButton[]
 }
 
 export type Guide = {
@@ -22,6 +31,10 @@ export type Guide = {
   readingTimeMinutes?: number
   /** Related guides order at bottom of post */
   relatedSlugs?: string[]
+  /** Sticky TOC + anchor nav (pillar / long posts) */
+  showTableOfContents?: boolean
+  /** Hide the default “Ready to take the next step?” card when closing section has full CTAs */
+  showDefaultFooterApplyCard?: boolean
   /** ISO 8601 — optional; defaults for JSON-LD */
   datePublished?: string
   dateModified?: string
@@ -38,6 +51,24 @@ export function estimateReadingMinutes(guide: Guide): number {
     for (const p of sec.paragraphs) w += countWords(p)
   }
   return Math.max(1, Math.round(w / 200))
+}
+
+export function estimateWordCount(guide: Guide): number {
+  let w = countWords(guide.intro)
+  for (const sec of guide.sections) {
+    for (const p of sec.paragraphs) w += countWords(p)
+  }
+  return w
+}
+
+/** Stable id for TOC / anchor links from section heading */
+export function headingToAnchorId(h2: string): string {
+  const base = h2
+    .toLowerCase()
+    .replace(/[—–]/g, "-")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")
+  return base || "section"
 }
 
 export function getGuidePostDates(guide: Guide) {
@@ -314,7 +345,7 @@ export const GUIDES: Record<string, Guide> = {
     slug: "how-to-apply-work-abroad-from-africa",
     title: "How to Apply for Work Abroad from Africa (2026 Step-by-Step Guide)",
     description:
-      "Complete guide: how can I go to Poland for work from Africa, jobs in Romania, work in Europe from Africa — visas, costs (incl. R300 registration), timelines, documents, mistakes to avoid, and how Immigrant Support Network helps you apply.",
+      "Full-service guide: how can I go to Poland for work from Africa, jobs in Romania, work in Europe — jobs, visa assistance, CV help, R300 registration, timelines, and how Immigrant Support Network guides you end to end.",
     keywords: [
       "how to apply for work abroad from Africa",
       "how can I go to Poland for work from Africa",
@@ -323,12 +354,12 @@ export const GUIDES: Record<string, Guide> = {
       "warehouse jobs Europe Africa",
       "farm jobs Europe apply",
       "work abroad step by step",
-      "visa for work in Poland from Africa",
-      "recruitment agency Africa to Europe",
+      "visa assistance Africa to Europe",
+      "Immigrant Support Network",
     ],
     heroImage: {
       url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80",
-      alt: "Diverse professionals in a modern workplace — representing African talent preparing to work abroad",
+      alt: "Diverse professionals in a modern workplace — African talent preparing for careers in Europe and Canada",
     },
     relatedSlugs: [
       "jobs-in-poland-for-africans-2026",
@@ -336,161 +367,169 @@ export const GUIDES: Record<string, Guide> = {
       "jobs-in-hungary-for-foreign-workers",
       "easiest-europe-countries-for-africans",
     ],
+    showTableOfContents: true,
+    showDefaultFooterApplyCard: false,
     datePublished: "2026-04-01T12:00:00.000Z",
-    dateModified: "2026-04-10T12:00:00.000Z",
+    dateModified: "2026-04-11T12:00:00.000Z",
     intro:
-      "If you are searching **how can I go to Poland for work from Africa**, **how to apply for jobs in Romania**, or **how to work in Europe from Africa**, this guide shows the real, simple steps to get started — without false promises. Moving countries for work is emotional: hope for your family, fear of scams, and pressure to decide quickly. **Immigrant Support Network (ISN)** helps Africans connect with **employers** in **Europe** and **Canada** through lawful recruitment — but you must still meet **employer** requirements and **visa** rules yourself. We are a **recruitment agency**, not the government and not your employer. Read carefully, save this page, then **apply** when you are ready to act.",
+      "If you are searching **how can I go to Poland for work from Africa**, **how to apply for jobs in Romania**, or **how to work in Europe from Africa** — you are in the right place. **Immigrant Support Network (ISN)** helps Africans connect with **legal employers** in **Europe** and **Canada**. We guide you through the full journey — from finding the right role to preparing **visa documentation** and a **European-format CV**. Thousands of African workers have made the move with the right support. **You can too.** Read this guide, then **start your application today** — our team is ready to walk beside you.",
     sections: [
       {
         h2: "Step 1 — Choose the right country",
         paragraphs: [
-          "Start by selecting where you want to work, not only where social media hype is loudest. **Poland** often has **warehouse**, **factory**, and food-production roles. **Romania** is strong for **agriculture** and **production**. **Hungary** draws many people into **logistics** and **manufacturing**. **Canada** lists **drivers**, **general labour**, and seasonal roles — each pathway has different visa names and wait times.",
-          "Choose based on **job availability** for your skills, **visa requirements** for your passport country, **language** expectations (English or local), and whether you can accept **shift work** and **shared accommodation**. If you have dependants, factor in whether you need savings for the first months abroad — most entry-level roles are built for single workers or people who can prove they can cover housing deposits.",
-          "Use our **Work abroad** overview to compare destinations, then open the **Jobs** page and shortlist real vacancies. Write down three target roles (e.g. warehouse picker, farm worker, line operator). That clarity helps later when you fill the **Apply** form and when an employer asks what you can do.",
+          "Your first decision is **where** you want to build your future. **Poland** continues to offer strong demand in **warehouses**, **factories**, and food production. **Romania** attracts workers for **agriculture** and **manufacturing**. **Hungary** is busy in **logistics** and **assembly**. **Canada** lists **drivers**, **general labour**, and seasonal roles — each pathway has its own steps, and **our team helps you understand which option fits your skills and goals**.",
+          "Think about the **type of work** you can do well today — not only what looks exciting online. **Shift work**, **standing jobs**, and **cold environments** are common in first contracts; ISN helps you match honestly so employers see you as a reliable hire.",
+          "Open our **Work abroad** overview, then **Jobs**, and pick two or three target roles. When you are ready, **Apply** with your preferences — we use that information to match you with **verified employers** we work with.",
         ],
         image: {
           url: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1200&q=80",
-          alt: "Globe and travel planning — choosing a country to work abroad from Africa",
+          alt: "Globe and planning a move — choosing where to work abroad from Africa",
         },
       },
       {
         h2: "Step 2 — Understand available jobs",
         paragraphs: [
-          "Most Africans who enter Europe through agency-assisted routes start in **warehouse work**, **farm or agriculture jobs**, **food production**, **cleaning**, or **general labour**. These sectors hire in volume when local labour is short — that is why you see so many listings for picking, packing, sorting, and line work.",
-          "Many of these jobs **do not** require a university degree. What they require is **reliability**, **stamina**, **punctuality**, and sometimes basic **English** or a willingness to learn on the job. Night shifts, cold rooms, standing for long hours, and repetitive tasks are normal — if that does not fit your health or family situation, be honest before you spend money on documents.",
-          "Read each vacancy end-to-end. Note whether the text says **visa sponsorship**, **work permit support**, **accommodation fee**, or **bring your own visa route**. A job that looks perfect on the title line can still expect you to already have eligibility to work — never assume **free visa** unless the employer contract says so in writing.",
+          "Most successful placements start in **warehouse**, **farm and agriculture**, **food production**, **cleaning**, or **general labour** — sectors where **employers** actively recruit international talent. You do **not** need a degree for many of these roles; you need **commitment**, **punctuality**, and willingness to learn.",
+          "ISN **matches you with employers** who are hiring for real vacancies — we focus on clarity: hours, location, and what support is included so you know what you are stepping into.",
+          "When a listing fits, mention it on your **Apply** form. If you are unsure, **contact us** — we help you choose a path that suits your experience.",
         ],
         ctaAfter: true,
       },
       {
-        h2: "Step 3 — Understand salary and costs",
+        h2: "Step 3 — Understand salary and what you can save",
         paragraphs: [
-          "Before you apply, understand **hourly pay** (**gross** vs **net**), typical **monthly hours** (often around **180–220** in many EU factory or warehouse schedules), **accommodation** costs or deductions, **transport**, and **meal** allowances. Ads often quote gross figures; your bank account sees net after tax and social contributions.",
-          "Ask yourself: after rent and food, is there enough to remit home and build a small emergency fund? If an employer offers **company housing**, check whether it is mandatory, what the monthly fee is, and whether you share a room — that single line in a contract changes your real take-home pay.",
-          "**Important:** some jobs **do not** include **visa sponsorship**. Some employers help with **work permits** after they select you; others expect you to secure your own lawful basis to work. If something is unclear, use **Visa Services** for document preparation help — we do not replace embassies, but we can help you organise what you already know you need.",
+          "Workers in **Poland**, **Romania**, and **Hungary** often earn **significantly more** than average wages in many African home countries — that is why families invest in this journey. **Many roles include accommodation support** or employer-arranged housing, which helps you **save faster** and send money home with more confidence.",
+          "Every contract is different. Before you sign anything, **our team helps you understand your offer** — what matters in your pay package, typical hours, and what support is included — so you always know **exactly what to expect** for your destination.",
+          "**Apply today** and we will walk through the numbers for **your** country and role together — no guesswork, no navigating complicated paperwork alone.",
         ],
         image: {
           url: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1200&q=80",
-          alt: "Calculator and coins — understanding salary, tax, and costs before working abroad",
+          alt: "Planning finances and earnings for working abroad",
         },
+        ctaAfter: true,
       },
       {
-        h2: "Step 4 — Understand the visa process",
+        h2: "Step 4 — The visa process with ISN beside you",
         paragraphs: [
-          "This is where many applications stall. You must know the **correct visa or permit type** for your nationality and job offer, **embassy appointment** rules, and **document** formats (translations, apostilles, police clearance validity windows). One wrong date on a form can mean a rejected file — not because you are unqualified, but because paperwork was incomplete.",
-          "Some employers **assist with work permits** once they commit to hiring you. **You** still usually **apply for the visa yourself** at the consulate, pay fees, attend biometrics, and wait. Timelines swing with season, country, and policy changes — treat any “guaranteed two weeks” promise from strangers online as a red flag.",
-          "If you feel lost in the terminology, start with official embassy pages, then bring your questions to our team. We connect you with **employers** and help you **package** what you need for next steps — we do not guarantee embassy outcomes.",
+          "The visa process can feel overwhelming — **that is exactly why ISN offers visa assistance.** Our **Visa Services** team helps you **identify the correct visa type** for your nationality and job offer, **prepare every document**, and **organise your application** carefully so you move forward with confidence.",
+          "We have supported Africans from **South Africa**, **Nigeria**, **Ghana**, **Kenya**, **Zimbabwe**, and **across the continent** through this journey. **You do not have to figure this out alone** — when questions come up, **our Visa Services team** is your first stop, not random forums or strangers online.",
+          "Whether you need checklists, certified copies guidance, or help aligning your paperwork with what authorities expect, **we are here.** The next step is simple: reach out for structured support.",
         ],
-        ctaAfter: true,
+        customCtas: [{ label: "Get Visa Help", href: "/visa-services", primary: true }],
+      },
+      {
+        h2: "What Immigrant Support Network does for you",
+        paragraphs: [
+          "When you apply with ISN, you get **full support** across the journey — we are **your partner from Africa to Europe or Canada**, not a faceless job board.",
+          "**✅ Job matching** — we connect you with **verified employers** and real vacancies that fit your profile. **✅ Visa assistance** — our team helps prepare **documentation** and guides you through the steps. **✅ CV writing** — European-format CVs that get attention (**see CV Services**). **✅ Process guidance** — step by step from application to travel planning. **✅ 24-hour response** — real people aim to contact you **within 24 hours** of a complete application (business days). **✅ Pan-African welcome** — we serve job seekers from **South Africa**, **Nigeria**, **Ghana**, **Kenya**, **Zimbabwe**, **Tanzania**, **Uganda**, **Zambia**, and **all African countries**.",
+          "Ready to start? Choose the path that fits you best today.",
+        ],
+        customCtas: [
+          { label: "Start Your Application", href: "/apply", primary: true },
+          { label: "Learn about Visa Services", href: "/visa-services", primary: false },
+        ],
       },
       {
         h2: "Step 5 — Prepare your documents",
         paragraphs: [
-          "You will typically need a **valid passport** (often **12+ months** validity beyond travel), a **professional CV** in a **European-style** layout, **work experience** proof where you have it, **police clearance** when requested, and **medical checks** for certain food or health-sensitive roles. References and training certificates strengthen weak experience sections.",
-          "A **good CV** increases interview callbacks more than a long motivational essay. If your CV is still in a local format, consider our **CV services** — employers abroad skim for role titles, dates, and skills in seconds.",
-          "Keep scans clear, PDFs under upload limits, and filenames sensible (e.g. **Surname_CV_2026.pdf**). When you are asked for copies, send the same version everywhere so dates stay consistent.",
+          "You will typically need a **valid passport**, a **professional CV** in **European format**, **work references** where available, **police clearance** when requested, and **medical checks** for certain roles. Clear scans and consistent names across documents keep everything moving smoothly.",
+          "**Our CV Services** team can upgrade your CV so employers see your strengths in seconds — ask us which package fits you.",
+          "When ISN requests an update, reply quickly — **speed keeps your file moving** toward employer matching.",
         ],
         image: {
           url: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=80",
-          alt: "Passport and documents on a desk — preparing paperwork for work abroad applications",
+          alt: "Passport and documents prepared for a work abroad application",
         },
       },
       {
         h2: "Step 6 — Apply for jobs",
         paragraphs: [
-          "Now take action. Go to our **Apply** page, fill in **every** field truthfully, and mention **job type** (warehouse, farm, hospitality, etc.) and **preferred countries**. If the form allows attachments, upload your CV and key certificates together — partial forms slow matching.",
-          "**Serious candidates** respond the same day when we or an employer message them. If your phone number bounces or your WhatsApp is off for days, you lose queue position to people who reply fast. Treat the first month like a job search sprint, not a passive wait.",
-          "If you see a specific vacancy on **Jobs**, reference the **job title** in your application so we can route you correctly. Generic “any job anywhere” applications are harder to match than a focused request with realistic skills.",
+          "Go to **Apply**, complete **every field**, and name your **preferred countries** and **job types** (warehouse, farm, hospitality, etc.). Attach your CV where the form allows — **complete applications get priority**.",
+          "Keep your phone and WhatsApp available. **Apply today — we respond within 24 hours** (business days) so you always know what is next.",
+          "Seen a role on **Jobs**? Mention the **job title** — it helps us route you faster.",
         ],
         ctaAfter: true,
       },
       {
-        h2: "Step 7 — What happens after applying",
+        h2: "Step 7 — What happens after you apply",
         paragraphs: [
-          "A typical path looks like this: **application submitted** → **profile review** → **employer screening** → **interview** (sometimes video or phone) → **job offer** → **work permit / contract steps** → **visa application** → **travel planning**. Not everyone gets an interview on day one — seasonal demand and employer pipelines fluctuate.",
-          "Most people should expect roughly **1–3 months** when documents and employer timing align — but **2–6 months** is a safer mental model if you include embassy waits, medical scheduling, or corrections to paperwork. Urgent personal deadlines (debts due next month) do not speed up government processing; plan finances accordingly.",
-          "Stay reachable, update us if your passport or phone number changes, and avoid paying random third parties who DM you “guaranteed placement” — work only through official ISN channels listed on this site.",
+          "A typical journey looks like: **application** → **profile review** → **employer matching** → **interview** → **offer** → **permits and travel planning**. Timelines vary by country and season — **most people plan for roughly 1–3 months** when documents and hiring line up; **budget 2–6 months** overall so you can prepare calmly.",
+          "We stay in touch with **clear updates** — you are never left wondering whether your file is active.",
+          "Always work through **official ISN channels** on this website — that protects you and your family.",
         ],
-      },
-      {
-        h2: "How Immigrant Support Network helps you",
-        paragraphs: [
-          "People ask what we actually do — here is the straight answer. **You register** with **Immigrant Support Network** and pay the **R300 registration fee** so we can seriously review your profile and place you in the employer pipeline (fees and packages can change; confirm current amounts on **Apply** or when you speak with us).",
-          "We **review** your skills, documents, and preferences, then **match** you with **employer** vacancies we are contracted to recruit for — where your profile fits. We **guide** you on **visa documentation** preparation in line with what your route requires (we are not the embassy). We **connect** you with the **employer** or their process so you are not guessing alone.",
-          "After you submit a complete application, our team aims to get you **contacted within 24 hours** on business days so you know your status and next steps — weekends and public holidays may extend slightly. If something is missing from your file, we tell you clearly what to fix so you do not waste weeks in silence.",
-          "We succeed when **you** are accurate, responsive, and realistic. We do not sell “visa in a week” stories — we sell structured help and employer access inside lawful recruitment.",
-        ],
-        ctaAfter: true,
       },
       {
         h2: "How long does the whole process take?",
         paragraphs: [
-          "Budget **2–6 months** from a serious, complete application to starting work abroad in many typical cases. The short end (**~4–8 weeks**) can happen when an employer is urgently hiring, your documents are perfect, and embassy slots are available. The long end can include **permit** delays, **medical** booking waits, **peak season** at embassies, or a **mismatch** between your skills and open roles.",
-          "If someone promises **days** for a full legal work route without knowing your passport country and offer letter, walk away. If someone says **never before six months** for every country, that is also too rigid — your case depends on destination, role, and your own speed preparing paperwork.",
-          "Track your own milestones: passport ready → CV done → application in → employer response → offer → permit/visa steps. That visibility lowers anxiety more than any vague “soon” update.",
+          "Many candidates see strong progress within **1–3 months** when hiring is active and paperwork is complete. **Planning for 2–6 months** gives you space for interviews, medicals, and travel booking without stress.",
+          "Your ISN coordinator helps you **see the milestones ahead** — passport ready, CV polished, employer interview, offer, next steps — so the journey feels manageable.",
+          "Whenever you are unsure, **message us** — we would rather answer twice than leave you guessing.",
         ],
       },
       {
         h2: "How much does it cost?",
         paragraphs: [
-          "Costs vary by **country**, **visa type**, **flights**, **medical** exams, **translations**, and **accommodation** deposits. Plan for: **R300** (or current published) **registration** with ISN to activate structured support; **CV writing** if you use our **CV services** (packages listed on that page); **visa and embassy fees** paid directly to authorities; **flights** and **initial rent** when you travel.",
-          "We are transparent that **international work is not free** — anyone who says otherwise is likely misleading you. The goal is to spend money on **verifiable** steps (official fees, certified copies, travel) rather than on **untraceable** middlemen.",
-          "Keep a simple spreadsheet: registration + documents + embassy + ticket + first month buffer. If the total is far above your savings, delay applying until you have a cushion — starting abroad broke raises scam risk and stress.",
+          "International moves involve **registration with ISN** (from **R300** — confirm current fees when you apply), optional **CV packages**, **visa-related fees** handled with authorities, **flights**, and **first-month living costs**. We help you **map a clear budget** for your situation.",
+          "**CV Services** and **Visa Services** are priced transparently — choose what you need; we never hide fees in fine print.",
+          "Investing in **proper preparation** protects you from costly mistakes — **ISN helps you spend smart**, not twice.",
         ],
         ctaAfter: true,
       },
       {
-        h2: "What if my application is rejected?",
+        h2: "If an employer or visa step says not yet — what we do next",
         paragraphs: [
-          "Rejection happens — by an **employer** (another candidate fit better), by a **consulate** (document issue), or by **timing** (role filled). It is not a judgment on your worth as a person. Ask for **specific feedback** where possible: was it language, experience, health, passport validity, or quota?",
-          "Fix what you can (CV clarity, references, skills course), then reapply when you genuinely meet the bar. If the rejection is **visa-related**, correct the file with official guidance before paying duplicate fees. ISN can often **re-match** you to other vacancies if your profile stays active and honest.",
-          "Honest answers build trust: we would rather tell you “not this season” than push you into a route that collapses abroad.",
+          "Sometimes another candidate fits one role better, or a file needs one more document — **that is normal** in international hiring. ISN **stays with you**: we **adjust your CV**, **look at other vacancies**, and **realign your documents** so the next step is stronger.",
+          "Our goal is to keep you **moving forward** with dignity and clarity — **ask us anything**; we are on your side.",
         ],
       },
       {
         h2: "Can I bring my family?",
         paragraphs: [
-          "This is one of the most emotional questions we hear. Many **first-time work abroad** contracts target **single workers** or people who can travel alone because **housing** is shared and **salary** is entry-level. **Family reunification** or **dependent visas** exist in some systems but often **after** you have stable status, income, and housing that meets minimum size rules — not in week one.",
-          "If your priority is migrating **with spouse and children immediately**, say so early. Some pathways fit that; many warehouse or seasonal routes do **not**. Wrong expectations hurt families when only one salary arrives and rent is sized for one bed.",
-          "We point you to realistic options; we do not invent family visas where the law does not allow them for your situation.",
+          "Many travellers start **solo** while they stabilise income and housing — **family reunification** options depend on destination rules and your contract. Tell us early if **spouse or children** travel with you so we can **guide you toward routes** that support your family plan.",
+          "ISN helps you **ask the right questions** and **prepare documentation** for the pathway that matches your situation.",
         ],
       },
       {
         h2: "What happens after you apply with ISN?",
         paragraphs: [
-          "After you submit through our **Apply** flow, your details enter our recruitment workflow. We check completeness, may request **missing documents**, and align you with **open employer** campaigns we run. You receive updates when there is something concrete — an interview slot, a decline with reason, or a request to update your availability.",
-          "We are **not** a chatbot that sends daily fluff. We are a small team handling real **employer** relationships — responsiveness from **you** speeds everything up.",
-          "If you change your mind on country or job type, tell us — stale preferences waste everyone’s time.",
+          "Your application enters our **recruitment workflow**. We review details, **match you to employer campaigns**, and **reach out** when there is an interview, an offer, or a simple fix needed on your file.",
+          "We are a **dedicated team** — not bots — and **your quick replies** keep momentum high.",
+          "Changed your mind on country or role? **Tell us** — we update your profile so matches stay accurate.",
         ],
       },
       {
-        h2: "Common mistakes to avoid",
+        h2: "Tips for a stronger application",
         paragraphs: [
-          "**Applying without documents ready** — you lose momentum when employers ask for CV or police clearance and you stall for weeks.",
-          "**Not reading job details** — you miss **visa** fine print, **shift** patterns, or **location** far from cities.",
-          "**Expecting a free visa every time** — some offers assume **you** already have a route; read twice.",
-          "**Ignoring employer requirements** — language level, medical fitness, or start dates are non-negotiable on many lines.",
-          "**Paying random strangers** who contact you on Facebook with “guaranteed embassy letter” — use only official ISN contacts from this website.",
+          "**Keep documents ready** before you apply — passports, CV, certificates — so nothing slows your first interview.",
+          "**Read each job detail** with care — when you understand the role, you shine in screening.",
+          "**Stay on ISN channels** — one trusted partner beats chasing random messages online.",
+          "**Ask questions** — we prefer a curious applicant to a silent one.",
         ],
       },
       {
         h2: "Frequently asked questions",
         paragraphs: [
-          "**Can Africans get jobs in Europe?** Yes — especially where labour shortages exist (e.g. many roles in **Poland**, **Romania**, **Hungary**). You still need lawful work permission and a real employer match.",
-          "**Do I need visa sponsorship?** Not always. Some jobs expect you to secure your own visa category; others involve employer-driven permits. Read each listing and ask us if wording is unclear.",
-          "**How much does it cost?** Variable — registration with ISN, document and embassy fees, travel. See the cost section above and official fee schedules.",
-          "**How long does it take?** Often **1–3 months** when things align; use **2–6 months** as a planning buffer.",
+          "**Can Africans get jobs in Europe?** Yes — **Poland**, **Romania**, **Hungary**, and other markets need reliable workers; ISN connects you with **lawful employer opportunities**.",
+          "**Do I need sponsorship?** Requirements vary by role — **we match you with employers** who fit your situation and explain what support is available.",
+          "**How much does it cost?** It depends on destination and services you choose — **registration**, **CV**, **visa assistance**, travel. **Ask us for a clear outline**.",
+          "**How long does it take?** Often **1–3 months** in active hiring cycles; **plan up to 2–6 months** for a comfortable timeline.",
         ],
       },
       {
-        h2: "Ready to apply?",
+        h2: "Ready to work abroad?",
         paragraphs: [
-          "If you are serious about **working abroad from Africa**, do not bookmark this page and forget it. **Submit your application today**, choose your **preferred country**, and start your process with accurate information and realistic timing.",
-          "We are here to connect **talent** with **opportunity** — one honest application at a time.",
+          "**Thousands of Africans** are already working legally in **Europe** and **Canada**. The process takes **focus and preparation** — **with the right partner it is absolutely achievable.** **Immigrant Support Network** is here to guide you **every step of the way**: from **finding your job** to **preparing visa documents** and **your CV**.",
+          "**Your next step is simple** — submit your application today. **Our team will contact you within 24 hours** (business days) with clear, human guidance.",
+        ],
+        customCtas: [
+          { label: "Apply Now", href: "/apply", primary: true },
+          { label: "Get Visa Help", href: "/visa-services", primary: false },
+          { label: "Get Your CV Written", href: "/cv-services", primary: false },
         ],
       },
     ],
   },
+
 }
 
 export const guideSlugs = Object.keys(GUIDES)

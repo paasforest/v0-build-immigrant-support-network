@@ -1,11 +1,40 @@
 import Link from "next/link"
 import RichParagraph from "@/components/RichParagraph"
-import type { Guide } from "@/lib/guides-data"
-import { estimateReadingMinutes, guidesList } from "@/lib/guides-data"
+import GuideTableOfContents from "@/components/GuideTableOfContents"
+import type { Guide, SectionCtaButton } from "@/lib/guides-data"
+import {
+  estimateReadingMinutes,
+  estimateWordCount,
+  guidesList,
+  headingToAnchorId,
+} from "@/lib/guides-data"
 
 type GuideArticleViewProps = {
   guide: Guide
   slug: string
+}
+
+function SectionCtaButtons({ buttons }: { buttons: SectionCtaButton[] }) {
+  return (
+    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+      {buttons.map((b) => {
+        const primary = b.primary !== false
+        return (
+          <Link
+            key={`${b.href}-${b.label}`}
+            href={b.href}
+            className={
+              primary
+                ? "inline-flex min-w-[200px] justify-center rounded bg-gold px-8 py-3 font-semibold text-[#0a0a0a] hover:bg-gold-light"
+                : "inline-flex min-w-[200px] justify-center rounded border border-gold/50 px-6 py-3 font-semibold text-gold hover:bg-gold/10"
+            }
+          >
+            {b.label}
+          </Link>
+        )
+      })}
+    </div>
+  )
 }
 
 function ApplyNowCta({ className = "" }: { className?: string }) {
@@ -20,7 +49,7 @@ function ApplyNowCta({ className = "" }: { className?: string }) {
         Apply Now
       </Link>
       <p className="mt-3 text-sm text-white/60">
-        Serious applicants only — fill in all details and respond quickly when we contact you.
+        Apply today — we respond within 24 hours (business days). Fill in all details so we can help you faster.
       </p>
     </div>
   )
@@ -35,6 +64,103 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
     pinned && pinned.length > 0 ? pinned : guidesList.filter((g) => g.slug !== slug).slice(0, 4)
 
   const minutes = guide.readingTimeMinutes ?? estimateReadingMinutes(guide)
+  const wordCount = estimateWordCount(guide)
+  const wordsLabel = wordCount.toLocaleString("en-ZA")
+  const showToc = guide.showTableOfContents === true
+  const showFooterCard = guide.showDefaultFooterApplyCard !== false
+
+  const tocHeadings = guide.sections.map((s) => ({
+    id: headingToAnchorId(s.h2),
+    title: s.h2,
+  }))
+
+  const mainCard = (
+    <div className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-6 md:p-8">
+      <RichParagraph text={guide.intro} />
+
+      <div className="my-8 flex flex-wrap gap-3 border-y border-[#2a2a2a] py-6">
+        <span className="text-sm text-white/50">Quick links:</span>
+        <Link href="/apply" className="text-sm font-medium text-gold hover:underline">
+          Apply
+        </Link>
+        <Link href="/jobs" className="text-sm font-medium text-gold hover:underline">
+          Jobs
+        </Link>
+        <Link href="/visa-services" className="text-sm font-medium text-gold hover:underline">
+          Visa services
+        </Link>
+        <Link href="/work-abroad" className="text-sm font-medium text-gold hover:underline">
+          Work abroad
+        </Link>
+        <Link href="/cv-services" className="text-sm font-medium text-gold hover:underline">
+          CV services
+        </Link>
+      </div>
+
+      {guide.sections.map((section) => {
+        const anchor = headingToAnchorId(section.h2)
+        return (
+          <section key={section.h2} id={anchor} className="mb-10 scroll-mt-28">
+            <h2 className="font-serif text-xl font-semibold text-gold md:text-2xl">{section.h2}</h2>
+            {section.paragraphs.map((p, i) => (
+              <RichParagraph key={i} text={p} />
+            ))}
+            {section.image ? (
+              <figure className="my-8 overflow-hidden rounded-lg border border-[#2a2a2a]">
+                <img
+                  src={section.image.url}
+                  alt={section.image.alt}
+                  width={1200}
+                  height={800}
+                  className="max-h-[380px] w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            ) : null}
+            {section.customCtas && section.customCtas.length > 0 ? (
+              <SectionCtaButtons buttons={section.customCtas} />
+            ) : null}
+            {(!section.customCtas || section.customCtas.length === 0) && section.ctaAfter ? (
+              <ApplyNowCta className="mt-8" />
+            ) : null}
+          </section>
+        )
+      })}
+
+      {showFooterCard ? (
+        <div className="rounded-lg bg-gold/10 p-6 md:p-8">
+          <h2 className="font-serif text-xl font-semibold text-white">Ready to take the next step?</h2>
+          <p className="mt-2 text-white/75">
+            Submit your details and preferred destination — we help you connect with employers and prepare your
+            application.
+          </p>
+          <Link
+            href="/apply"
+            className="mt-6 inline-block rounded bg-gold px-8 py-3 font-semibold text-[#0a0a0a] hover:bg-gold-light"
+          >
+            Apply here
+          </Link>
+        </div>
+      ) : null}
+    </div>
+  )
+
+  const relatedBlock =
+    related.length > 0 ? (
+      <div className="mt-12">
+        <h2 className="font-serif text-xl font-semibold text-white">Related guides</h2>
+        <ul className="mt-4 space-y-3">
+          {related.map((g) => (
+            <li key={g.slug}>
+              <Link href={`/blog/${g.slug}`} className="text-gold hover:underline">
+                {g.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : null
 
   return (
     <article className="min-h-screen bg-[#0a0a0a]">
@@ -49,8 +175,8 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
           </nav>
           <h1 className="mt-4 font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">{guide.title}</h1>
           <p className="mt-3 text-lg text-white/65">{guide.description}</p>
-          <p className="mt-2 text-sm text-white/45" aria-label="Estimated reading time">
-            {minutes} min read
+          <p className="mt-2 text-sm text-white/45" aria-label="Word count and estimated reading time">
+            {wordsLabel} words · {minutes} min read
           </p>
         </div>
       </div>
@@ -71,82 +197,22 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
         </figure>
       ) : null}
 
-      <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-6 md:p-8">
-          <RichParagraph text={guide.intro} />
-
-          <div className="my-8 flex flex-wrap gap-3 border-y border-[#2a2a2a] py-6">
-            <span className="text-sm text-white/50">Quick links:</span>
-            <Link href="/apply" className="text-sm font-medium text-gold hover:underline">
-              Apply
-            </Link>
-            <Link href="/jobs" className="text-sm font-medium text-gold hover:underline">
-              Jobs
-            </Link>
-            <Link href="/visa-services" className="text-sm font-medium text-gold hover:underline">
-              Visa services
-            </Link>
-            <Link href="/work-abroad" className="text-sm font-medium text-gold hover:underline">
-              Work abroad
-            </Link>
-            <Link href="/cv-services" className="text-sm font-medium text-gold hover:underline">
-              CV services
-            </Link>
-          </div>
-
-          {guide.sections.map((section) => (
-            <section key={section.h2} className="mb-10 scroll-mt-24">
-              <h2 className="font-serif text-xl font-semibold text-gold md:text-2xl">{section.h2}</h2>
-              {section.paragraphs.map((p, i) => (
-                <RichParagraph key={i} text={p} />
-              ))}
-              {section.image ? (
-                <figure className="my-8 overflow-hidden rounded-lg border border-[#2a2a2a]">
-                  <img
-                    src={section.image.url}
-                    alt={section.image.alt}
-                    width={1200}
-                    height={800}
-                    className="max-h-[380px] w-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </figure>
-              ) : null}
-              {section.ctaAfter ? <ApplyNowCta className="mt-8" /> : null}
-            </section>
-          ))}
-
-          <div className="rounded-lg bg-gold/10 p-6 md:p-8">
-            <h2 className="font-serif text-xl font-semibold text-white">Ready to take the next step?</h2>
-            <p className="mt-2 text-white/75">
-              Submit your details and preferred destination — we help you connect with employers and prepare your
-              application.
-            </p>
-            <Link
-              href="/apply"
-              className="mt-6 inline-block rounded bg-gold px-8 py-3 font-semibold text-[#0a0a0a] hover:bg-gold-light"
-            >
-              Apply here
-            </Link>
+      {showToc ? (
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="lg:grid lg:grid-cols-[minmax(200px,260px)_minmax(0,1fr)] lg:items-start lg:gap-10">
+            <GuideTableOfContents headings={tocHeadings} />
+            <div className="min-w-0">
+              {mainCard}
+              {relatedBlock}
+            </div>
           </div>
         </div>
-
-        {related.length > 0 && (
-          <div className="mt-12">
-            <h2 className="font-serif text-xl font-semibold text-white">Related guides</h2>
-            <ul className="mt-4 space-y-3">
-              {related.map((g) => (
-                <li key={g.slug}>
-                  <Link href={`/blog/${g.slug}`} className="text-gold hover:underline">
-                    {g.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      ) : (
+        <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+          {mainCard}
+          {relatedBlock}
+        </div>
+      )}
     </article>
   )
 }
