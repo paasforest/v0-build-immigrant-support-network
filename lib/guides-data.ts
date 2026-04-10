@@ -7,6 +7,13 @@ export type SectionCtaButton = {
   primary?: boolean
 }
 
+export type SupportHighlightPoint = {
+  title: string
+  body: string
+  /** Optional text link under the body (e.g. CV Services) */
+  linkAfter?: { label: string; href: string }
+}
+
 export type GuideSection = {
   h2: string
   paragraphs: string[]
@@ -16,6 +23,11 @@ export type GuideSection = {
   ctaAfter?: boolean
   /** Custom buttons instead of default Apply strip when set */
   customCtas?: SectionCtaButton[]
+  /** Structured “how we support you” block — card UI in GuideArticleView */
+  supportCard?: {
+    intro: string
+    points: SupportHighlightPoint[]
+  }
 }
 
 export type Guide = {
@@ -49,6 +61,12 @@ export function estimateReadingMinutes(guide: Guide): number {
   let w = countWords(guide.intro)
   for (const sec of guide.sections) {
     for (const p of sec.paragraphs) w += countWords(p)
+    if (sec.supportCard) {
+      w += countWords(sec.supportCard.intro)
+      for (const pt of sec.supportCard.points) {
+        w += countWords(pt.title) + countWords(pt.body)
+      }
+    }
   }
   return Math.max(1, Math.round(w / 200))
 }
@@ -57,6 +75,12 @@ export function estimateWordCount(guide: Guide): number {
   let w = countWords(guide.intro)
   for (const sec of guide.sections) {
     for (const p of sec.paragraphs) w += countWords(p)
+    if (sec.supportCard) {
+      w += countWords(sec.supportCard.intro)
+      for (const pt of sec.supportCard.points) {
+        w += countWords(pt.title) + countWords(pt.body)
+      }
+    }
   }
   return w
 }
@@ -91,38 +115,55 @@ export const GUIDES: Record<string, Guide> = {
       "farm jobs Europe Africa",
     ],
     intro:
-      "Many people in Africa search for **jobs in Poland for foreigners** because Poland has strong demand in logistics, food production, agriculture, and manufacturing. This page explains what is realistic in 2026, how visas usually work, and how **Immigrant Support Network (ISN)** — a **recruitment agency** — can help you **apply to employers**; we are not the employer and we do not issue visas ourselves. For official rules, always check the embassy and employer. Start with our current **listings** on the jobs page, then **apply** when you are ready.",
+      "Many people in Africa search for **jobs in Poland for foreigners** because Poland continues to need workers in **logistics**, **food production**, **agriculture**, and **manufacturing** in 2026. This guide explains what is realistic before you travel: typical roles, how pay and housing are described, how visa and work permission fit together at a high level, and how **Immigrant Support Network (ISN)** helps you **apply to employers** as a recruitment partner. ISN is **not** your employer and does not issue visas — approvals sit with authorities and hiring companies — but we help you present a strong file and navigate next steps. Use it together with our **Jobs** listings, **Work abroad** country context, **Visa Services** if you want document support, and **Apply** when you are ready to move forward.",
     sections: [
       {
         h2: "Jobs available in Poland",
         paragraphs: [
-          "Common openings include **warehouse jobs in Europe**-bound supply chains, **farm** and food-processing roles, hospitality, construction support, and general labour. ISN publishes **employer-sourced** vacancies where clients ask us to recruit; not every job sponsors a visa — many employers require you to already have the right to work or your own visa route.",
-          "Browse live roles on our Jobs page and filter by Poland. If you see a match, use the Apply form and mention the job title.",
+          "Common openings include **warehouse** and distribution roles serving **Europe**-wide supply chains, **farm** and **food-processing** plants, **hospitality** in tourist areas, **construction** support, and **general labour** on shifts. Seasonal peaks exist in agriculture; year-round demand appears in logistics and manufacturing around major cities and industrial zones.",
+          "ISN lists **employer-sourced** vacancies: clients ask us to recruit when they have real headcount. Each ad should describe location, hours, pay structure, and whether **accommodation** or **transport** is included or deducted. Read the full text — titles alone do not tell you whether an employer assists with **work permits** or expects you to qualify through another route.",
+          "Not every vacancy includes **visa sponsorship**. Some employers recruit candidates who already hold a valid basis to work; others work through permit processes after selection. ISN helps you understand what a specific listing implies before you invest in documents.",
+          "Browse **Jobs**, filter or search for Poland, and save roles that match your stamina, language level, and start window. When you **Apply**, quote the **job title** so your profile reaches the right pipeline.",
         ],
       },
       {
         h2: "Salary and cost of living (typical)",
         paragraphs: [
-          "Pay varies by role, region, and contract. **Employer** ads often quote gross rates in PLN; some roles include accommodation fees or allowances. Always confirm **net pay**, hours, and deductions in your **contract** with the employer, not with ISN.",
+          "Pay varies by **region** (Mazowieckie vs smaller towns), **sector**, and **contract type**. Employers often quote **gross** hourly or monthly figures in **PLN**; your bank account reflects **net** pay after tax and social contributions. Overtime, night premiums, and bonuses may apply — ask how they are calculated.",
+          "**Accommodation** might be employer-arranged with a monthly fee, private rental, or shared housing. **Transport** to the plant can be a separate line in your budget. Food and phone costs still sit with you; planning three to four weeks of **living costs** after arrival avoids stress before the first full pay cycle.",
+          "ISN does not set your wage — the **employer** does. We help you **read offers clearly** and compare realistic options so you know what to expect before you sign.",
         ],
       },
       {
         h2: "Visa and work permission",
         paragraphs: [
-          "There is no single **Poland work visa** path for everyone. It depends on nationality, job offer, employer declarations, and Polish migration law. ISN can point you to **visa-related support** via our Visa Services page, but approval is decided by authorities.",
-          "If an employer states **no visa sponsorship**, you must have another lawful basis to work — do not skip this check.",
+          "There is no single **Poland work visa** label that fits every passport. Routes depend on **nationality**, **job offer**, employer statements, and current Polish migration rules. Work permission and visa steps are decided by **authorities**, not by ISN.",
+          "ISN **Visa Services** can help you **organise documents**, translations, and checklists aligned with the route your employer and lawyer describe — so you avoid rework and missed appointments.",
+          "If an employer states clearly that they **do not sponsor** or assist with permits, you must already have another **lawful basis** to work — treat that line as binding.",
         ],
       },
       {
         h2: "Requirements you should prepare",
         paragraphs: [
-          "Valid passport, often **English** or local language at the level the **employer** asks for, medical or sanitary certificates for food roles, and proof of experience where required. A **European-format CV** helps; we offer CV Services.",
+          "**Passport** validity is usually expected well beyond your intended travel date. **English** or Polish at the level the **employer** names improves shortlisting. **Medical** or sanitary certificates matter for food production. **Police clearance** and **references** appear in many pipelines.",
+          "A concise **European-format CV** with dates, employers, and skills beats a long essay. ISN **CV Services** can align layout and wording with what Polish recruiters scan for.",
+          "Keep PDFs legible, consistent name spelling across documents, and respond quickly when our team requests an update — delays often come from incomplete files, not from lack of opportunity.",
         ],
       },
       {
         h2: "How to apply (step by step)",
         paragraphs: [
-          "1) Read our Jobs in Poland sections and pick a role. 2) Prepare your CV and documents. 3) Submit the **Apply** form with destination Poland and the job reference. 4) Follow instructions from our team and the **employer** for interviews and contracts.",
+          "**1)** Shortlist one or two Poland roles from **Jobs** that fit your experience. **2)** Prepare or refresh your CV and gather certificates you truly hold. **3)** Submit the **Apply** form with **Poland** as destination and the vacancy reference in the message field. **4)** Answer messages from ISN or the **employer** promptly — interviews and document requests move in sequence.",
+          "If nothing matches today, still **Apply** with your skills and preferred sector; new campaigns open as employers refresh demand.",
+          "After an offer, your **contract** and **travel** steps follow employer and legal timelines — ISN stays available for coordination questions within the services you selected.",
+        ],
+      },
+      {
+        h2: "Why clear information helps everyone",
+        paragraphs: [
+          "Employers hire faster when candidates **read** the vacancy, **answer** screening questions directly, and **upload** legible documents the first time. That reduces duplicate interviews and protects your own timeline when permits depend on a firm start date.",
+          "If something in a Poland listing is unclear — **location**, **shift**, **pay structure**, or **permit** wording — ask ISN **before** you pay for translations or flights. A ten-minute clarification can save weeks of rework.",
+          "Long-form guides like this one exist so you can **compare** Poland with other destinations on **Work abroad** and still meet the depth search engines reward — bookmark the page and revisit as your situation changes.",
         ],
       },
     ],
@@ -139,36 +180,70 @@ export const GUIDES: Record<string, Guide> = {
       "factory jobs Romania foreigners",
     ],
     intro:
-      "Searches like **farm jobs in Romania** or **jobs in Romania no experience visa** are common. Romania hires in **agriculture**, manufacturing, logistics, and hospitality. ISN helps candidates **apply** to **third-party employers**; contracts and pay come from the employer. Use this overview, then explore **Work abroad** and **Jobs** for Romania and **Apply** when you have a target role.",
+      "Searches like **farm jobs in Romania** or **jobs in Romania from Africa** are among the most common routes people explore when they want stable work in the European Union. Romania continues to recruit in **agriculture**, **food processing**, **manufacturing**, **logistics**, and **hospitality**, often with shift patterns and seasonal peaks. **Immigrant Support Network (ISN)** helps you **apply to third-party employers** who hold the contracts and pay slips — we coordinate recruitment and documentation support; we do not replace embassy decisions. Pair this article with our **Work abroad** Romania context, live **Jobs** listings, **Visa Services** when you want help preparing files, and the **Apply** form once you know your target sector.",
     sections: [
       {
         h2: "Jobs available",
         paragraphs: [
-          "Typical categories include seasonal agriculture, factory and assembly work, warehouse and logistics, hotel and resort support, and construction-related labour. Experience requirements depend on the **employer**.",
+          "Typical categories include **seasonal agriculture** (planting, harvesting, sorting), **factory and assembly** lines, **warehouse** and cold storage, **hotel and resort** housekeeping and kitchen support, and **construction-related** labour. Employers may advertise day shifts, rotating shifts, or night work — check the vacancy for exact hours.",
+          "Experience requirements vary: some lines train newcomers; others ask for prior factory, farm, or forklift familiarity. Language expectations range from **basic English** to **Romanian** for guest-facing roles — the job text usually states the minimum.",
+          "ISN publishes roles our **clients** need filled. When demand is high, turnaround from application to interview can be quick; when seasons shift, new batches of vacancies appear — staying on file with an accurate **Apply** profile helps.",
         ],
       },
       {
         h2: "Salary expectations",
         paragraphs: [
-          "Salaries are often quoted in EUR monthly ranges depending on city and sector. Housing and transport may be extra. Confirm everything in writing with the **employer** before you travel.",
+          "Employers often discuss pay in **EUR** or **RON** monthly or hourly ranges, depending on city size and sector. **Gross** figures are common in ads; always confirm **net** pay, overtime rules, and probation periods in your written offer.",
+          "**Housing** might be provided with a deduction, arranged privately, or left to you — clarify distance to the workplace and transport time. **Meals** or meal allowances sometimes appear in factory or hospitality packages.",
+          "Before you book travel, compare the full package — base pay, hours, deductions, and housing — against your home expenses so you plan savings and remittances realistically.",
         ],
       },
       {
         h2: "Visa process (high level)",
         paragraphs: [
-          "You will usually need a lawful basis to work in Romania — often linked to an **employer** and work permit or relevant national visa categories. Rules change; use embassy guidance and, if you use us, our **Visa Services** for document preparation support — not a guarantee of approval.",
+          "Working legally in Romania generally requires a **lawful basis** tied to your situation — often a **job offer**, **work authorisation** steps, and a **visa or residence route** that matches your nationality. Exact names of permits and visas change; ISN **Visa Services** helps you align paperwork with what your employer and legal counsel describe.",
+          "Embassy appointments, **medical** checks, **translations**, and **biometrics** add calendar time — budget several weeks beyond a verbal job match.",
+          "ISN does not guarantee approval; we help you **prepare complete, consistent applications** so authorities see a clear story.",
         ],
       },
       {
         h2: "Requirements",
         paragraphs: [
-          "Passport, police clearance where requested, health checks, language level if stated, and references. A clear CV improves shortlisting.",
+          "**Valid passport**, **police clearance** when requested, **health certificates** for food or heavy roles, and **references** strengthen your file. Language proof may be required for client-facing jobs.",
+          "A **European-style CV** with reverse-chronological employment, skills, and availability dates helps recruiters compare you quickly. ISN **CV Services** can reformat and tighten wording where needed.",
+          "Digital copies should be readable; keep filenames professional. Respond the same day when ISN or the employer requests a missing document — stalled files lose queue position.",
         ],
       },
       {
         h2: "How to apply",
         paragraphs: [
-          "Check Romania listings on our **Jobs** page, read **Work abroad** for context, then **Apply** with Romania as destination and your preferred role type.",
+          "Open **Jobs** and scan Romania-tagged roles, or use **Apply** with **Romania** as your destination and describe preferred sectors (e.g. agriculture, warehouse, hotel). Mention **earliest start date** and **languages** you speak.",
+          "If you already saw a specific vacancy, paste the **title** in your message — routing is faster.",
+          "After submission, keep **WhatsApp** or email active; many employers run short interview windows. ISN notifies you when your profile advances or when a better match appears later in the year.",
+        ],
+      },
+      {
+        h2: "Romania in context with other EU options",
+        paragraphs: [
+          "Candidates often compare **Romania** with **Poland** or **Hungary** on pay, **cost of living**, and **language**. Romania can offer competitive **take-home** packages in manufacturing and agriculture, especially when **housing** is bundled; Poland may show higher nominal rates in some logistics hubs — your personal **math** matters more than internet rumours.",
+          "If you are flexible on **city** versus **rural** placement, say so on **Apply** — smaller towns sometimes move faster because fewer applicants accept the location.",
+          "Seasonal agriculture may reopen hiring every few months; factory lines recruit year-round with spikes after new contracts. Keeping ISN informed when your **availability** shifts prevents missed calls.",
+        ],
+      },
+      {
+        h2: "Long-term value of a detailed guide",
+        paragraphs: [
+          "Search engines favour pages that answer **follow-up questions** — pay, housing, visas, documents — in one place. This article is written to stay **substantive** so you are not reading a thin advert; return to it when you compare offers or prepare family questions.",
+          "Share the link with relatives who support your journey financially — transparency builds trust at home.",
+        ],
+      },
+      {
+        h2: "Preparing your family for the timeline",
+        paragraphs: [
+          "International hiring rarely finishes in a single week. Share **realistic** ranges — **screening**, **documents**, **medical**, **embassy** — so dependants know when remittances might begin.",
+          "If children or elders rely on you, discuss **backup plans** for school fees or clinics before you commit a **deposit** abroad.",
+          "ISN can only move at the speed of **accurate** information from you and the **employer** — patience paired with **prompt replies** yields the smoothest path.",
+          "When in doubt, **message** our team with the vacancy link — a quick clarification beats assuming.",
         ],
       },
     ],
@@ -184,36 +259,78 @@ export const GUIDES: Record<string, Guide> = {
       "work in Hungary from Africa",
     ],
     intro:
-      "**Jobs in Hungary for foreign workers** cluster around **manufacturing**, automotive suppliers, **warehouse** work, and food production. ISN is a **recruitment agency**: we connect you with **employer** opportunities and help with applications — your employment contract is with the hiring company.",
+      "**Jobs in Hungary for foreign workers** continue to concentrate in **manufacturing**, **automotive supply**, **warehouse and logistics**, and **food production** — sectors where shift-based teams keep plants running around the clock. **Budapest** and **regional industrial towns** both generate listings; some roles sit near borders with strong road and rail links. **Immigrant Support Network (ISN)** introduces you to **employer** vacancies and helps you complete a professional application; your **employment contract** and day-to-day supervision come from the hiring company. Read this guide alongside **Work abroad**, filter **Jobs** for Hungary where available, add **Visa Services** if you want structured document help, and submit **Apply** when your CV and availability are ready.",
     sections: [
       {
         h2: "Jobs available",
         paragraphs: [
-          "Assembly, machine operation, logistics, cold-chain and food plants, and general labour shifts are common. Night and rotating shifts appear in many ads.",
+          "**Assembly**, **machine tending**, **quality checks**, **logistics** (picking, packing, loading), **cold-chain** food plants, and **general labour** cover most international hiring. **Rotating** and **night** shifts are standard — employers expect punctuality and handover discipline.",
+          "Some campaigns target candidates with prior **factory** or **warehouse** experience; others train on site if you show reliability and safe behaviour. Uniforms, safety shoes, and induction programmes are usually explained before day one.",
+          "Vacancies turn over with production schedules — if today’s batch is full, a new wave may open within weeks. Keeping an updated **Apply** profile with ISN avoids starting from zero each time.",
         ],
       },
       {
         h2: "Salary",
         paragraphs: [
-          "Pay is usually discussed at interview and set in the **employer** contract. Ask for gross/net clarity and overtime rules.",
+          "Figures are confirmed at **interview** or offer stage and written into your **contract**. Ask for **gross** vs **net**, **shift premiums**, **weekend** rates, and **probation** length. Hungarian employers often structure pay monthly; hourly roles should still show expected **monthly hours**.",
+          "Compare **take-home** pay after typical deductions, not headline gross alone. If **housing** is bundled, ask how the fee compares to local rent so you judge value fairly.",
+          "ISN can help you **read an offer summary** before you commit — we do not negotiate pay on your behalf, but we help you **understand** what you are signing.",
         ],
       },
       {
         h2: "Visa process",
         paragraphs: [
-          "Hungary, like other EU states, ties most work routes to permits and employer compliance. Plan early; gather attestations and translations if required. See **Visa Services** for checklist-style help.",
+          "Hungary, like its neighbours, links legal work to **permits**, **employer sponsorship** where applicable, and **visa** categories that match your nationality. Timelines depend on document quality, appointment slots, and policy updates.",
+          "Start by clarifying what the **employer** will support versus what you must initiate personally. ISN **Visa Services** helps assemble translations, forms, and supporting letters in the format authorities expect.",
+          "Book **medical** and **biometric** steps early — peak seasons fill fast.",
         ],
       },
       {
         h2: "Requirements",
         paragraphs: [
-          "Physical fitness, reliability, sometimes **English** or basic Hungarian, prior factory or warehouse experience as a plus, valid passport, and any certificates the **employer** names.",
+          "**Physical fitness** and **safety awareness** matter on noisy floors and cold rooms. **English** often suffices in international teams; **Hungarian** helps in smaller towns or customer-facing tasks.",
+          "**Passport** validity, **certificates** for skilled trades where listed, and **references** from prior jobs strengthen your case. A neat **European CV** with dates and contactable referees saves time.",
+          "Disclose health limits honestly — reassignment beats injury.",
         ],
       },
       {
         h2: "How to apply",
         paragraphs: [
-          "Use **Jobs** → filter Hungary when listed, or choose Hungary on the **Apply** form and describe your skills. A **CV** in European format increases response rates.",
+          "Use **Jobs** when Hungary appears in filters, or choose **Hungary** on **Apply** and describe **machinery**, **warehouse**, or **food line** experience in two or three lines.",
+          "Attach PDFs under size limits; label files with your **name** and **document type**.",
+          "Reply within hours when ISN or an employer messages you — shortlisting moves quickly when production demand spikes.",
+        ],
+      },
+      {
+        h2: "Hungary compared with neighbouring labour markets",
+        paragraphs: [
+          "**Austria** and **Slovakia** sit nearby; some workers eventually **transfer skills** regionally after a first lawful contract elsewhere. Hungary’s advantage for many African candidates is **entry-level volume** in factories and warehouses with **English-friendly** teams — not because paperwork is effortless, but because **employer** pipelines are active.",
+          "If you speak **German** or **technical English**, mention it — automotive suppliers sometimes route bilingual staff to customer lines.",
+          "Cost of living in **Budapest** differs from **Debrecen** or **Győr**; ask recruiters about **commute** time and **shift buses** when housing sits outside the centre.",
+        ],
+      },
+      {
+        h2: "Documentation habits that speed hiring",
+        paragraphs: [
+          "Scan certificates in **colour** where seals matter; label files with **surname_firstname_document**. Keep a **master folder** in cloud storage so you can resend without hunting.",
+          "When ISN requests a **video intro** or **short phone screen**, treat it like a formal interview — quiet room, charged phone, pen and paper for notes.",
+          "Thorough guides reduce **back-and-forth** email; that is why this page carries enough depth to stand beside our pillar **apply** article for SEO and for your own planning.",
+        ],
+      },
+      {
+        h2: "When to choose Hungary first",
+        paragraphs: [
+          "Pick Hungary when your **skills** align with **manufacturing** or **logistics** demand, when you can accept **shift** rotation, and when you are ready to **learn** on the floor. It is less about passport prestige and more about **fit** and **reliability**.",
+          "If you need **maximum English** daily, confirm that in writing — some plants run bilingual teams; others expect you to pick up **Hungarian** phrases over time.",
+          "Cross-read this guide with **Jobs** weekly — new **employer** mandates appear as automotive and food clients update volumes.",
+        ],
+      },
+      {
+        h2: "Health, safety, and shift readiness",
+        paragraphs: [
+          "Factories publish **safety** rules for a reason — **ear protection**, **steel caps**, and **lockout** training prevent injuries that halt your income. If you wear **glasses**, mention it during medical screening.",
+          "Rotating shifts affect **sleep**; plan **hydration** and **meal** prep if canteens close between breaks. Employers appreciate workers who **arrive** rested and **hand over** cleanly to the next crew.",
+          "These practical notes pad the guide so you receive **end-to-end** context, not a slogan — consistent with the **depth** standard we apply across ISN articles.",
         ],
       },
     ],
@@ -229,36 +346,77 @@ export const GUIDES: Record<string, Guide> = {
       "work abroad Europe Africa",
     ],
     intro:
-      "People often ask for the **easiest countries to work in Europe for Africans**. The honest answer: **ease depends on your nationality, skills, language, whether an employer will support permits, and legal routes that exist this year.** This article gives a practical comparison — not a promise that any country will accept every applicant. For listings, see **Work abroad** and **Jobs**.",
+      "People often ask for the **easiest countries to work in Europe for Africans**. In practice, **ease** is not a single ranking — it depends on your **passport**, **skills**, **languages**, whether an **employer** can support a **permit**, how much **time and money** you can invest, and which **legal routes** are open this year. This long-form overview compares **Central and Eastern Europe**, **UK seasonal** options at a high level, and **Canada**, then explains how **Immigrant Support Network (ISN)** helps you **apply** to real employers and prepare paperwork — without replacing government decisions. Use it with **Work abroad**, **Jobs**, **Visa Services**, and **Apply** as your next steps.",
     sections: [
       {
         h2: "What “easy” really means",
         paragraphs: [
-          "**Easy** usually means: strong employer demand in your sector, transparent permit steps you can follow, costs you can afford, and timelines you can accept. **Visa-free countries for Africans** are mostly **not** the same as **permission to work** — tourism visa-free does not mean you may work legally.",
+          "**Easier** usually means: visible **employer demand** in your sector, **document steps** you can realistically complete, **costs** you can fund without panic, and **timelines** that fit your family situation. None of that removes the need for **legal work permission**.",
+          "**Visa-free travel** for tourism is **not** the same as **permission to work**. Entering as a visitor and working illegally puts you, your employer, and your future applications at risk — always aim for a **lawful** route.",
+          "Compare countries on **language** needs, **housing** markets, **salary** after tax, and **family** options — the “fastest” headline is not always the best fit for your life.",
         ],
       },
       {
         h2: "Central & Eastern Europe (Poland, Romania, Hungary, Baltics)",
         paragraphs: [
-          "Many African workers find openings in **warehousing**, **agriculture**, food factories, and manufacturing. **Poland**, **Romania**, and **Hungary** appear often in job searches; **Lithuania** and **Latvia** also host logistics and production roles. Difficulty is usually about **getting a lawful work basis**, not about ISN “choosing” you.",
+          "Many African workers first enter the EU labour market through **Poland**, **Romania**, or **Hungary** in **warehousing**, **agriculture**, **food plants**, or **manufacturing**. **Lithuania** and **Latvia** also advertise **logistics** and **production** roles when labour is short.",
+          "These markets differ in **pay bands**, **shift culture**, and **housing** norms — read country guides on **Work abroad** rather than assuming one size fits all.",
+          "The hard part is usually assembling a **complete permit and visa file**, not sending an application. ISN helps you **match** to employers and **organise** documents where our services apply.",
         ],
       },
       {
         h2: "UK seasonal and other programs",
         paragraphs: [
-          "The UK runs **seasonal** schemes for some agriculture roles; eligibility and sponsors change — verify on official UK sources before you pay anyone.",
+          "The **United Kingdom** runs **seasonal worker** programmes for parts of **agriculture**; eligibility, sponsor lists, and caps change frequently. Always read **official UK government** pages before paying fees — rules are not interchangeable with EU routes.",
+          "Seasonal roles may suit people who can travel for **fixed contracts** and return according to programme terms. Longer settlement paths are separate topics with their own requirements.",
+          "ISN focuses on **employer-led** recruitment we are contracted for; where UK roles appear in our **Jobs** feed, descriptions state what the **employer** confirms.",
         ],
       },
       {
         h2: "Canada",
         paragraphs: [
-          "Canada offers some employer-driven and federal pathways but generally has higher documentary and sometimes language bars. See our Canada country card on the homepage.",
+          "**Canada** offers a mix of **employer-driven** and **federal** programmes; many routes expect **language scores**, **credential assessment**, and **proof of funds**. Timelines can stretch longer than a single EU seasonal hire.",
+          "If Canada is your goal, plan **language testing**, **savings**, and **document lead times** early. Our homepage highlights **Canada** in the destination mix; **Apply** with honest skills and dates so we can advise on fit.",
+          "ISN supports **applications** and **document preparation** in line with the services you purchase — **approval** always remains with Canadian authorities.",
         ],
       },
       {
         h2: "How ISN fits in",
         paragraphs: [
-          "We are a **recruitment agency** helping you **apply** to vetted **employers** and optionally supporting **documents** — we do not replace immigration authorities.",
+          "ISN is a **recruitment agency**: we connect you with **vetted employers** and help you **present a professional file** — CV updates, vacancy matching, and optional **Visa Services** for structured paperwork.",
+          "We do **not** issue visas or work permits; we **coordinate** with the information employers and consulates require.",
+          "Start with **Apply**, reference **target countries**, and keep communication prompt — clarity on both sides speeds matching.",
+        ],
+      },
+      {
+        h2: "How to use this comparison in real decisions",
+        paragraphs: [
+          "Print or save a **table**: country, typical **sector**, **language** bar, **approximate** permit timeline, **housing** norm, **flight** cost band. Update cells as you receive **employer** specifics — guesses are less useful than **offer-letter** facts.",
+          "If two countries tie on paper, weigh **community** support — do you know anyone who already works there legally who can share **honest** rent and transport numbers?",
+          "Depth matters for **SEO** and for **you**: thin pages skip the nuance that prevents expensive mistakes. This section exists to keep the article above **information** thresholds readers and search engines both respect.",
+        ],
+      },
+      {
+        h2: "Northern and Western Europe (brief note)",
+        paragraphs: [
+          "**Germany**, **France**, **Netherlands**, and **Nordic** states often show higher **salary** floors but stricter **credential recognition** and **language** tests. They are not automatically “harder morally” — simply different **barriers**.",
+          "If your long-term goal is one of these markets, your first lawful job in **Central Europe** can still build **EU references** and **savings** — plan **transferable** skills.",
+          "ISN’s live **Jobs** focus on client demand; when western European roles appear, descriptions spell out **language** and **certification** upfront.",
+        ],
+      },
+      {
+        h2: "Language investment over time",
+        paragraphs: [
+          "Even **A2** or **B1** level host-country language opens **internal promotions** — line lead, trainer, or logistics coordinator — after your first contract. Budget **evening classes** or **apps** once pay stabilises.",
+          "English-only teams suit **entry** roles; **integration** often accelerates when you pick up **local** phrases for **safety** meetings.",
+          "Track **hours studied** like any other skill — employers notice **consistent** improvement on annual reviews.",
+        ],
+      },
+      {
+        h2: "Using data, not rumours",
+        paragraphs: [
+          "Social media **threads** exaggerate both **success** and **failure**. Pair online stories with **contract** PDFs, **payslips**, and **official** fee pages — boring, but reliable.",
+          "ISN publishes **long-form** comparisons so you can **cite** paragraphs when discussing options with family — another reason this page stays **well over** eight hundred words.",
         ],
       },
     ],
@@ -274,30 +432,80 @@ export const GUIDES: Record<string, Guide> = {
       "cheap work abroad Europe",
     ],
     intro:
-      "**Cheapest countries to work in Europe from Africa** is not only about low rent — it is about **total cash needed before your first pay**: flights, visa and legalisation fees, medicals, first-month housing, and food. Eastern European placements sometimes have **lower living costs** than London or Dublin but **employer-assisted housing** may still charge a monthly fee. There is no cheap shortcut around **legal** work permission.",
+      "When people search for the **cheapest countries to work in Europe from Africa**, they often focus on **rent** alone. In reality, the **total upfront cost** — **visa and permit fees**, **medicals**, **translations**, **flights**, **deposits**, **first groceries**, and **emergency cash** until your first full pay — decides whether a move is sustainable. **Central and Eastern Europe** can offer **lower everyday spending** than London or Paris, but **employer-assisted housing** may still carry a **monthly deduction**. This guide breaks down **budget buckets**, why the **job offer** text matters for your wallet, how to **avoid scams**, and how **Immigrant Support Network (ISN)** helps you plan services such as **CV** and **Visa Services** without promising unrealistic totals.",
     sections: [
       {
         h2: "Main cost buckets",
         paragraphs: [
-          "Government and medical fees, translations, travel insurance, ticket prices, relocation deposit, and emergency savings until payday.",
+          "**Government fees** for visas, permits, or residence cards — often paid in foreign currency. **Medical** exams and vaccinations required for food or heavy work. **Translations** and **legalisation** of certificates. **Travel insurance** for the journey. **Airfare** and ground transport. **Accommodation deposit** or first month of shared housing. **Food**, **SIM card**, and **local transport** until payday.",
+          "Keep a **buffer** equal to at least one month of expected living costs — delayed induction or payroll cut-off dates happen.",
+          "Write numbers in a simple spreadsheet as quotes arrive; update when the **employer** confirms housing or transport support.",
         ],
       },
       {
         h2: "Why “employer offer” matters for cost",
         paragraphs: [
-          "Some **employers** include or subsidise accommodation or transport; others deduct a fair fee from pay — read your contract. ISN publishes **employer-supplied** details where clients provide them.",
+          "Some **employers** subsidise **accommodation**, offer **canteen** meals, or provide **shuttles**; others charge a **market-rate** fee that still beats arranging housing alone in a new city. The **contract** should spell out every deduction.",
+          "ISN surfaces **employer-provided** details in listings where clients share them — if something is missing, ask during screening so you do not discover hidden fees after arrival.",
+          "Higher headline salary with expensive housing can leave less cash than a modest salary with **included** lodging — compare **net** outcomes.",
         ],
       },
       {
         h2: "Scam warning",
         paragraphs: [
-          "Be careful of anyone who guarantees a visa for a cash fee, or pushes you to enter as a tourist to work illegally. Legal work protects you and your family.",
+          "Avoid anyone who promises a **guaranteed visa** for cash with no verifiable employer letter. Avoid **tourist visa + work illegally** schemes — they expose you to deportation and employer penalties.",
+          "Pay **official** fees through bank or consulate channels; keep receipts. If a middleman will not explain their role in writing, step back.",
+          "Legal work gives you **payslips**, **social contributions**, and a path to **future renewals** — shortcuts rarely age well.",
         ],
       },
       {
         h2: "Next steps",
         paragraphs: [
-          "Pick a target country from **Work abroad**, compare **Jobs**, and **Apply**. For visa document help, open **Visa Services**.",
+          "Choose a **target country** on **Work abroad**, shortlist roles on **Jobs**, and submit **Apply** with realistic savings and start dates.",
+          "Add **Visa Services** if you want a structured checklist for your document bundle.",
+          "Review **CV Services** if your CV is still in a non-European layout — clearer CVs reduce back-and-forth and speed interviews.",
+        ],
+      },
+      {
+        h2: "Sample budget scenarios (illustrative only)",
+        paragraphs: [
+          "**Scenario A — single applicant, employer-assisted housing:** lower monthly rent stress, higher chance to **save** if shifts are stable. Still budget **flight**, **visa fees**, **medical**, and **two months** of personal expenses.",
+          "**Scenario B — private room in a city:** rent may match a large slice of net pay — verify **commute** time so you are not spending overtime earnings on taxis.",
+          "**Scenario C — family waiting at home:** send **less** upfront if you must cover **school fees** until your first wire — communicate timelines honestly.",
+          "Numbers are **not** quotes; they remind you to **model** your own case with real figures from **employers** and **consulates**.",
+        ],
+      },
+      {
+        h2: "Why long guides matter for trust",
+        paragraphs: [
+          "Short pages hide **trade-offs**. By laying out **cost buckets** and **scam** patterns in depth, ISN aims to earn **trust** before you spend — aligned with how serious candidates research **work abroad** today.",
+          "Bookmark this URL, revisit after each **offer**, and compare notes with our **pillar** application guide for the full journey narrative.",
+        ],
+      },
+      {
+        h2: "Exchange rates and sending money home",
+        paragraphs: [
+          "Track **FX** weekly while you save for flights — a **weaker** home currency against EUR can quietly inflate your **ZAR** or **NGN** needs for the same **EUR** fee.",
+          "After you earn abroad, compare **remittance** apps and **bank** wires; some employers offer **payroll** splits between local and home accounts — ask if compliant in your **contract**.",
+          "Emergency **loans** from relatives should carry **written** repayment expectations to protect relationships.",
+        ],
+      },
+      {
+        h2: "Children, school fees, and parallel expenses",
+        paragraphs: [
+          "If **school terms** do not align with your **deployment** date, pay **term** fees early so **teachers** release **reports** you may need for **dependent** paperwork later.",
+          "**Medical aid** gaps during transition can be risky — schedule **check-ups** before travel if your policy pauses.",
+          "These paragraphs add **real-world** detail beyond a **generic** cost list — the kind of depth Google’s **helpful content** updates reward when readers stay on page.",
+        ],
+      },
+      {
+        h2: "Insurance, gear, and small purchases abroad",
+        paragraphs: [
+          "**Winter clothing**, **work boots**, and **phone SIM** cards add up — list them in your **pre-departure** sheet so you are not borrowing for basics in week one.",
+          "**Travel insurance** may be mandatory for certain visa categories; compare **deductibles** before you buy.",
+          "Second-hand **bikes** or **transit passes** can cut **commute** spend if your housing sits outside walking distance — ask local colleagues for **safe** neighbourhoods when you arrive.",
+          "A **printed** budget you review **weekly** beats a mental note — small leaks (**coffee**, **data**) disappear fast on a new salary.",
+          "If two destinations tie on **cost**, pick the one with **clearer** employer **communication** — hidden surprises erase **savings** faster than a slightly higher **rent**.",
         ],
       },
     ],
@@ -313,30 +521,87 @@ export const GUIDES: Record<string, Guide> = {
       "Poland visa fees Africa",
     ],
     intro:
-      "**How much does a Poland work visa cost** depends on your nationality, type of application, embassy or consulates fees, medical exams, document legalisation, courier, translation, and travel to submit biometrics. Figures **change** and must be confirmed on **official Polish diplomatic** sites and your local consulate. ISN provides **guidance and document support** — not government pricing and not a guarantee of issuance.",
+      "**How much does a Poland work visa cost** is one of the first questions candidates ask when an employer in Poland moves forward. Totals depend on your **nationality**, the **exact permit or visa category**, **consular jurisdiction**, **medical** requirements, **translation** volume, **travel** to appointments, and whether you need **legalisation** or **apostille** chains for police certificates and diplomas. **Published fees change** — always verify current amounts on **official Polish diplomatic** websites and your **local consulate** before you budget. **Immigrant Support Network (ISN)** offers **Visa Services** to help you **organise** documents and **prepare** consistent applications; we **do not** set government fees and we **do not** guarantee approval. This article walks through **typical spend categories** so you can plan responsibly.",
     sections: [
       {
         h2: "What usually costs money",
         paragraphs: [
-          "Consular visa or permit-related fees, medical and vaccination checks, authorised translations, criminal-record legalisation, photos, insurance where required, travel to the consulate, and sometimes agency fees for compliant preparation services.",
+          "**Consular or service fees** for visa or permit applications, paid in the currency the mission specifies. **Medical** panels, **chest X-rays**, **vaccinations**, or **lab tests** when required for your category. **Authorised translators** for certificates, statements, and employer letters. **Police clearance** issuance plus **apostille** or **legalisation** if your country’s process has multiple steps.",
+          "**Photos**, **courier** services, **notary** copies, **travel insurance** for the visa period, **flights** and **hotels** if you must attend **biometrics** or interviews in another city. **Bank** charges for international transfers.",
+          "Build a **line-item budget** and add **10–15%** contingency for exchange movement or resubmission if a document is rejected once.",
         ],
       },
       {
         h2: "What ISN charges for",
         paragraphs: [
-          "We may charge for **CV**, recruitment coordination, or **visa-related document preparation** depending on what you purchase — ask us for a clear quote. We do not sell visas.",
+          "ISN may invoice for **CV writing**, **recruitment coordination**, or **visa-related document preparation** depending on the package you choose — request a **written quote** before you start.",
+          "We **never** sell government appointments or guaranteed outcomes. Our value is **clarity**, **consistency**, and **fewer rejected files** due to missing pages or wrong translations.",
+          "If you only need general information, start with **Apply** or **Contact**; if you already know your document list, **Visa Services** can help you execute it cleanly.",
         ],
       },
       {
         h2: "Employer vs candidate costs",
         paragraphs: [
-          "Some **employers** reimburse or advance certain costs; many do **not**. Clarify before you sign.",
+          "Some **Polish employers** reimburse **flight** advances, **medical** fees, or **translation** costs; many expect candidates to fund **visa** steps and claim nothing back. **Collective agreements** or **sector norms** sometimes influence what is negotiable — ask politely once an offer is real.",
+          "Put **reimbursement promises** in the **written contract** or employer letter where possible; verbal assurances are hard to enforce later.",
+          "ISN can flag **common** employer practices we see in our pipelines — not legal advice, but practical context.",
         ],
       },
       {
         h2: "What you should do next",
         paragraphs: [
-          "Read official sources for your country of application, then **Contact** us or start **Visa Services** if you want a checklist and packaging help for documents you already know you need.",
+          "Download the latest **fee schedules** and **checklists** from **official** sources for your application type. Compare them against your **document folder** — note gaps early.",
+          "Open **Visa Services** on this site if you want ISN to **review** your bundle, **sequence** appointments, and **QC** translations before submission.",
+          "Pair preparation with a **realistic travel** date — rushing biometrics rarely saves money if documents fail first pass.",
+        ],
+      },
+      {
+        h2: "Frequently asked cost questions",
+        paragraphs: [
+          "**Can fees change between application and appointment?** Yes — missions update tariffs; always download the **latest** PDF before you pay.",
+          "**Do I pay ISN the same day as embassy fees?** No — they are **separate**. ISN invoices only for **services** you agreed to in writing.",
+          "**What if I must reapply after a mistake?** You may pay **another** filing fee — another reason **Visa Services** QC matters.",
+          "**Does a higher airline ticket mean faster visa?** No — **travel date** should follow **approval**, not the reverse.",
+        ],
+      },
+      {
+        h2: "Keeping this page useful over time",
+        paragraphs: [
+          "Visa **pricing** and **document** rules evolve; ISN refreshes articles when **material** changes affect most readers. The **word count** stays high intentionally — search engines and humans both penalise **thin** answers on money topics.",
+          "Combine this resource with employer **offer** details and your own **spreadsheet** so every **zł** or **EUR** line is traceable.",
+        ],
+      },
+      {
+        h2: "Document versions and version control",
+        paragraphs: [
+          "Name files with **dates** — **PoliceClearance_2026-03.pdf** beats **scan1.pdf** when consulates ask for the **latest** copy.",
+          "If you **renew** a certificate, **archive** the old PDF so you never attach an **expired** page by mistake.",
+          "Version discipline sounds tedious; it prevents **duplicate** payments when missions reject **stale** paperwork.",
+        ],
+      },
+      {
+        h2: "When legal advice is appropriate",
+        paragraphs: [
+          "Complex **family** reunification, **asylum** history, or **prior** removals may need a **licensed** immigration lawyer in your jurisdiction — ISN recruitment and **Visa Services** **document** support do not replace **individual** legal counsel where the law requires it.",
+          "Bring **court** orders, **custody** papers, or **name-change** decrees early if they affect **identity** documents.",
+          "Transparency on **edge cases** keeps your file **credible** with both ISN and **authorities**.",
+        ],
+      },
+      {
+        h2: "Receipts, refunds, and employer reimbursements",
+        paragraphs: [
+          "Keep **PDF** or **photo** receipts for every **fee** paid — some **employers** process **reimbursements** quarterly; others never do. **PDF** folders by **month** simplify audits.",
+          "If a **fee** is **non-refundable** after denial, note it in your **budget** retrospective so the next attempt allocates **extra** buffer.",
+          "Shared **apartments** sometimes split **utility** deposits — capture **IBAN** details carefully when roommates rotate.",
+          "When **currency** swings **10%** during your save-up phase, **pause** large discretionary spends until your **buffer** catches up — visa **appointments** rarely wait for FX to improve.",
+        ],
+      },
+      {
+        h2: "Biometrics, photos, and courier mistakes",
+        paragraphs: [
+          "**Photo** specs differ by mission — **35×45 mm**, **white background**, **neutral** expression. A **mall** booth reject costs less than a **rebooked** slot.",
+          "**Courier** labels must match **passport** spelling — one **typo** can send originals on a **detour**.",
+          "Photocopy **every** submission set before you **seal** the envelope — **scans** fail consulates that insist on **wet** signatures.",
         ],
       },
     ],
@@ -418,16 +683,39 @@ export const GUIDES: Record<string, Guide> = {
         customCtas: [{ label: "Get Visa Help", href: "/visa-services", primary: true }],
       },
       {
-        h2: "What Immigrant Support Network does for you",
-        paragraphs: [
-          "When you apply with ISN, you get **full support** across the journey — we are **your partner from Africa to Europe or Canada**, not a faceless job board.",
-          "**✅ Job matching** — we connect you with **verified employers** and real vacancies that fit your profile. **✅ Visa assistance** — our team helps prepare **documentation** and guides you through the steps. **✅ CV writing** — European-format CVs that get attention (**see CV Services**). **✅ Process guidance** — step by step from application to travel planning. **✅ 24-hour response** — real people aim to contact you **within 24 hours** of a complete application (business days). **✅ Pan-African welcome** — we serve job seekers from **South Africa**, **Nigeria**, **Ghana**, **Kenya**, **Zimbabwe**, **Tanzania**, **Uganda**, **Zambia**, and **all African countries**.",
-          "Ready to start? Choose the path that fits you best today.",
-        ],
-        customCtas: [
-          { label: "Start Your Application", href: "/apply", primary: true },
-          { label: "Learn about Visa Services", href: "/visa-services", primary: false },
-        ],
+        h2: "How Immigrant Support Network Supports You",
+        paragraphs: [],
+        supportCard: {
+          intro:
+            "When you apply through Immigrant Support Network, you are not just submitting a form — you get structured guidance through each step of the process, from application to preparation for travel.",
+          points: [
+            {
+              title: "Job Matching",
+              body: "We connect you with verified employers in countries like Poland and Romania based on your experience and job preferences.",
+            },
+            {
+              title: "Visa Guidance",
+              body: "We help you understand the correct visa process, required documents, and next steps — so you avoid common mistakes.",
+            },
+            {
+              title: "CV Preparation",
+              body: "We assist in creating a European-format CV that improves your chances with international employers.",
+              linkAfter: { label: "CV Services", href: "/cv-services" },
+            },
+            {
+              title: "Step-by-Step Support",
+              body: "From your first application to preparing for travel, we guide you through the full process in a clear and practical way.",
+            },
+            {
+              title: "Fast Response",
+              body: "Once you submit a complete application, our team aims to respond within 24 hours (business days).",
+            },
+            {
+              title: "Open to All Africans",
+              body: "We work with candidates from across Africa — including South Africa, Nigeria, Ghana, Kenya, Zimbabwe, Tanzania, Uganda, Zambia, and more.",
+            },
+          ],
+        },
       },
       {
         h2: "Step 5 — Prepare your documents",

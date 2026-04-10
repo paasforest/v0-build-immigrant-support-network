@@ -1,7 +1,8 @@
 import Link from "next/link"
+import { Check } from "lucide-react"
 import RichParagraph from "@/components/RichParagraph"
 import GuideTableOfContents from "@/components/GuideTableOfContents"
-import type { Guide, SectionCtaButton } from "@/lib/guides-data"
+import type { Guide, SectionCtaButton, SupportHighlightPoint } from "@/lib/guides-data"
 import {
   estimateReadingMinutes,
   estimateWordCount,
@@ -33,6 +34,49 @@ function SectionCtaButtons({ buttons }: { buttons: SectionCtaButton[] }) {
           </Link>
         )
       })}
+    </div>
+  )
+}
+
+function SupportHighlightsCard({ intro, points }: { intro: string; points: SupportHighlightPoint[] }) {
+  return (
+    <div className="mt-4 rounded-xl border border-[#2a2a2a] bg-[#131313] p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] md:p-8">
+      <p className="text-[15px] leading-relaxed text-white/78">{intro}</p>
+      <ul className="mt-8 space-y-7">
+        {points.map((pt) => (
+          <li key={pt.title} className="flex gap-3.5">
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" strokeWidth={2.5} aria-hidden />
+              <div className="min-w-0">
+              <p className="font-medium text-white">{pt.title}</p>
+              <div className="mt-1.5 [&_p]:mb-0 [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-white/68">
+                <RichParagraph text={pt.body} />
+              </div>
+              {pt.linkAfter ? (
+                <Link
+                  href={pt.linkAfter.href}
+                  className="mt-2 inline-block text-sm font-medium text-gold/90 hover:text-gold hover:underline"
+                >
+                  {pt.linkAfter.label}
+                </Link>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function ProcessStartApplyCta() {
+  return (
+    <div className="mt-10 rounded-lg border border-white/[0.08] bg-[#0f0f0f] px-6 py-8 text-center md:px-8">
+      <p className="text-base text-white/80">Ready to start your process?</p>
+      <Link
+        href="/apply"
+        className="mt-5 inline-flex rounded-md bg-gold px-10 py-3 text-[15px] font-semibold text-[#0a0a0a] transition-colors hover:bg-gold-light"
+      >
+        Apply Now
+      </Link>
     </div>
   )
 }
@@ -102,9 +146,16 @@ export default function GuideArticleView({ guide, slug }: GuideArticleViewProps)
         return (
           <section key={section.h2} id={anchor} className="mb-10 scroll-mt-28">
             <h2 className="font-serif text-xl font-semibold text-gold md:text-2xl">{section.h2}</h2>
-            {section.paragraphs.map((p, i) => (
-              <RichParagraph key={i} text={p} />
-            ))}
+            {section.supportCard ? (
+              <>
+                <SupportHighlightsCard intro={section.supportCard.intro} points={section.supportCard.points} />
+                <ProcessStartApplyCta />
+              </>
+            ) : (
+              section.paragraphs.map((p, i) => (
+                <RichParagraph key={i} text={p} />
+              ))
+            )}
             {section.image ? (
               <figure className="my-8 overflow-hidden rounded-lg border border-[#2a2a2a]">
                 <img
