@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { guidesList } from "@/lib/guides-data"
+
+const PIN_FIRST_SLUG = "how-to-apply-work-abroad-from-africa"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
@@ -16,6 +18,12 @@ export const metadata: Metadata = {
 }
 
 export default function BlogPage() {
+  const sortedGuides = [...guidesList].sort((a, b) => {
+    if (a.slug === PIN_FIRST_SLUG) return -1
+    if (b.slug === PIN_FIRST_SLUG) return 1
+    return 0
+  })
+
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <section className="border-b border-[#2a2a2a] bg-gradient-to-b from-[#111111] to-[#0a0a0a] py-16 md:py-20">
@@ -43,16 +51,16 @@ export default function BlogPage() {
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-2xl font-semibold text-white">Latest guides</h2>
           <ul className="mt-6 space-y-4">
-            {guidesList.map((g) => (
+            {sortedGuides.map((g) => (
               <li key={g.slug}>
                 <article className="rounded-lg border border-[#2a2a2a] bg-[#111111] p-5 transition-colors hover:border-gold/40">
                   <h3 className="font-semibold text-white">
-                    <Link href={`/guides/${g.slug}`} className="hover:text-gold">
+                    <Link href={`/blog/${g.slug}`} className="hover:text-gold">
                       {g.title}
                     </Link>
                   </h3>
                   <p className="mt-2 text-sm text-white/60">{g.description}</p>
-                  <Link href={`/guides/${g.slug}`} className="mt-3 inline-block text-sm font-medium text-gold hover:underline">
+                  <Link href={`/blog/${g.slug}`} className="mt-3 inline-block text-sm font-medium text-gold hover:underline">
                     Read guide
                   </Link>
                 </article>

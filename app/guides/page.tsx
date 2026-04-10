@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 }
 
 const prioritySlugs = new Set([
+  "how-to-apply-work-abroad-from-africa",
   "jobs-in-poland-for-africans-2026",
   "how-to-get-a-job-in-romania-from-africa",
   "jobs-in-hungary-for-foreign-workers",
@@ -66,7 +67,7 @@ export default function GuidesHubPage() {
             {priority.map((g) => (
               <li key={g.slug}>
                 <Link
-                  href={`/guides/${g.slug}`}
+                  href={`/blog/${g.slug}`}
                   className="group block rounded-lg border border-[#2a2a2a] bg-[#111111] p-5 transition-colors hover:border-gold/50"
                 >
                   <span className="font-semibold text-white group-hover:text-gold">{g.title}</span>
@@ -81,7 +82,7 @@ export default function GuidesHubPage() {
             {rest.map((g) => (
               <li key={g.slug}>
                 <Link
-                  href={`/guides/${g.slug}`}
+                  href={`/blog/${g.slug}`}
                   className="group block rounded-lg border border-[#2a2a2a] bg-[#111111] p-5 transition-colors hover:border-gold/50"
                 >
                   <span className="font-semibold text-white group-hover:text-gold">{g.title}</span>

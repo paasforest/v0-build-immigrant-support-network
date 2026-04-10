@@ -674,7 +674,7 @@ export default function JobsPage() {
                       <div className="relative h-48 w-full shrink-0 sm:h-auto sm:w-56 md:w-64">
                         <img
                           src={(job as { imageUrl: string }).imageUrl}
-                          alt=""
+                          alt={`${job.title} — ${job.location}, job listing photo`}
                           className="h-full w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent sm:bg-gradient-to-t sm:from-black/40 sm:to-transparent" />

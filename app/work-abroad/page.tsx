@@ -78,7 +78,10 @@ export default function WorkAbroadPage() {
   return (
     <>
       {/* Full-width warehouse banner + headline */}
-      <section className="relative flex min-h-[42vh] items-center justify-center py-20 md:min-h-[48vh]">
+      <section
+        className="relative flex min-h-[42vh] items-center justify-center py-20 md:min-h-[48vh]"
+        aria-label="Warehouse and logistics work abroad — banner"
+      >
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -150,7 +153,11 @@ export default function WorkAbroadPage() {
                 key={index}
                 className="overflow-hidden rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] hover:border-gold/50 transition-all duration-300 group"
               >
-                <div className="relative h-44 w-full overflow-hidden">
+                <div
+                  className="relative h-44 w-full overflow-hidden"
+                  role="img"
+                  aria-label={`Work opportunities in ${country.name}: ${country.jobs.slice(0, 2).join(", ")} and related roles`}
+                >
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                     style={{ backgroundImage: `url('${country.imageUrl}')` }}

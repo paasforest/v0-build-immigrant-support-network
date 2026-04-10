@@ -12,6 +12,7 @@ export default function CountryCard({ name, flag, jobs, imageUrl }: CountryCardP
     <Link
       href="/work-abroad"
       className="group block overflow-hidden rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] hover:border-gold transition-all duration-300"
+      aria-label={`Work opportunities in ${name}: ${jobs.slice(0, 3).join(", ")}`}
     >
       <div className="relative h-36 w-full overflow-hidden">
         <div

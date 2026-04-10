@@ -18,7 +18,7 @@ const routes: {
   { path: "/about", changeFrequency: "monthly", priority: 0.8 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.75 },
   ...guideSlugs.map((slug) => ({
-    path: `/guides/${slug}`,
+    path: `/blog/${slug}`,
     changeFrequency: "weekly" as const,
     priority: 0.88,
   })),

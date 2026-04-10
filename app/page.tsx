@@ -167,20 +167,24 @@ export default function HomePage() {
             Free guides: <span className="text-gold">jobs & visas</span>
           </h2>
           <p className="mt-4 text-white/70">
-            Searching for{" "}
-            <Link href="/guides/jobs-in-poland-for-africans-2026" className="text-gold hover:underline">
+            New:{" "}
+            <Link href="/blog/how-to-apply-work-abroad-from-africa" className="text-gold hover:underline">
+              how to apply for work abroad from Africa (2026)
+            </Link>
+            . Searching for{" "}
+            <Link href="/blog/jobs-in-poland-for-africans-2026" className="text-gold hover:underline">
               jobs in Poland for Africans
             </Link>
             ,{" "}
-            <Link href="/guides/how-to-get-a-job-in-romania-from-africa" className="text-gold hover:underline">
+            <Link href="/blog/how-to-get-a-job-in-romania-from-africa" className="text-gold hover:underline">
               work in Romania from Africa
             </Link>
             ,{" "}
-            <Link href="/guides/poland-work-visa-cost" className="text-gold hover:underline">
+            <Link href="/blog/poland-work-visa-cost" className="text-gold hover:underline">
               Poland work visa costs
             </Link>
             , or the{" "}
-            <Link href="/guides/easiest-europe-countries-for-africans" className="text-gold hover:underline">
+            <Link href="/blog/easiest-europe-countries-for-africans" className="text-gold hover:underline">
               easiest countries in Europe for Africans
             </Link>
             ? Read plain-language guides — then{" "}

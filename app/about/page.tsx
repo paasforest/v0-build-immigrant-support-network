@@ -78,7 +78,7 @@ export default function AboutPage() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-[#2a2a2a] shadow-xl">
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                alt="Team collaboration"
+                alt="Immigrant Support Network team collaboration"
                 className="h-full w-full object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

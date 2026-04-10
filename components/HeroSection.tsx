@@ -2,7 +2,10 @@ import Link from "next/link"
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center">
+    <section
+      className="relative min-h-[90vh] flex items-center justify-center"
+      aria-label="African professionals working abroad — international careers hero"
+    >
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"

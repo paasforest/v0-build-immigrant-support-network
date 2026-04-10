@@ -60,11 +60,20 @@ export const metadata: Metadata = {
     title: 'Immigrant Support Network | Work Abroad & Visa Assistance',
     description: siteConfig.shortDescription,
     url: siteUrl,
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Immigrant Support Network — Jobs in Europe and Canada for Africans',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Immigrant Support Network',
     description: siteConfig.shortDescription,
+    images: ['/og-image.jpg'],
   },
 }
 
