@@ -93,7 +93,7 @@ const jobsData = {
           "Stable employment directly with the employer on a contract of mandate (umowa zlecenie) (employer)",
           "33.78 PLN gross per hour (~24.40 PLN net per hour) (employer)",
           "Sales commission and surcharge for night work are added to pay — the employer indicates this can bring earnings to roughly 25–26 PLN/hour net in practice",
-          "Free accommodation (employer)",
+          "Employer-provided accommodation (employer)",
           "Meals at low prices (employer): breakfast — 8 PLN; soup — 5 PLN; main course — 12 PLN",
         ],
         imageUrl:

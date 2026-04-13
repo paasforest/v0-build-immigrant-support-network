@@ -4,7 +4,7 @@ import { guidesList } from "@/lib/guides-data"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Free Guides — Jobs & Visas in Europe from Africa",
+  title: "Guides — Jobs & Visas in Europe from Africa",
   description: `${siteConfig.name}: practical guides on jobs in Poland, Romania, Hungary, visa costs, and applying for work abroad from Africa.`,
   alternates: { canonical: "/guides" },
   openGraph: {

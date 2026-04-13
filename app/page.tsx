@@ -164,7 +164,7 @@ export default function HomePage() {
       <section className="border-y border-[#2a2a2a] bg-[#0a0a0a] py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-serif text-2xl font-bold text-white md:text-3xl">
-            Free guides: <span className="text-gold">jobs & visas</span>
+            Guides: <span className="text-gold">jobs & visas</span>
           </h2>
           <p className="mt-4 text-white/70">
             New:{" "}
@@ -264,14 +264,17 @@ export default function HomePage() {
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#0a0a0a] mb-4">
             Ready to Work Abroad?
           </h2>
-          <p className="text-[#0a0a0a]/80 mb-8 max-w-2xl mx-auto">
+          <p className="mb-2 max-w-2xl mx-auto text-base font-medium text-[#0a0a0a]">
+            Free to submit your profile — R300 to activate matching.
+          </p>
+          <p className="text-[#0a0a0a]/80 mb-8 max-w-2xl mx-auto text-sm md:text-base">
             Take the first step towards your international career today.
           </p>
           <Link
             href="/apply"
             className="inline-block bg-[#0a0a0a] text-white px-8 py-4 rounded font-semibold hover:bg-[#1a1a1a] transition-all duration-300"
           >
-            Apply — Free Assessment
+            Start your application
           </Link>
         </div>
       </section>
