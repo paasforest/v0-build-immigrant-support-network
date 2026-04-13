@@ -87,6 +87,52 @@ function RadioOptionCards({
   )
 }
 
+/** Multi-select checkboxes with the same visible card treatment as radios (plain checkboxes were hard to see on white). */
+function CheckboxOptionCards({
+  options,
+  selectedIds,
+  onToggle,
+  className = "",
+}: {
+  options: { id: string; label: string }[]
+  selectedIds: string[]
+  onToggle: (id: string, checked: boolean) => void
+  /** e.g. grid-cols-1 for full-width stacks */
+  className?: string
+}) {
+  return (
+    <div className={`grid gap-2 sm:grid-cols-2 ${className}`} role="group">
+      {options.map(({ id, label }) => {
+        const checked = selectedIds.includes(id)
+        return (
+          <label
+            key={id}
+            className={`flex min-h-[48px] cursor-pointer items-center gap-3 rounded-lg border-2 px-4 py-3 transition-colors ${
+              checked
+                ? "border-[#C9A84C] bg-[#C9A84C]/12 shadow-[inset_0_0_0_1px_rgba(201,168,76,0.15)] ring-1 ring-[#C9A84C]/35"
+                : "border-neutral-200 bg-neutral-50 hover:border-neutral-300 hover:bg-white"
+            }`}
+          >
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => onToggle(id, e.target.checked)}
+              className={checkboxClass}
+            />
+            <span
+              className={`text-sm leading-snug text-[#0a0a0a] ${
+                checked ? "font-semibold" : "font-medium"
+              }`}
+            >
+              {label}
+            </span>
+          </label>
+        )
+      })}
+    </div>
+  )
+}
+
 function FieldErr({ msg }: { msg?: string }) {
   return msg ? <p className="mt-1 text-sm text-red-600">{msg}</p> : null
 }
@@ -310,23 +356,17 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Are you willing to work: (select all that apply)</span>
-              <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                {[
-                  ["night", "Night shifts"],
-                  ["overtime", "Overtime"],
-                  ["weekends", "Weekends"],
-                  ["rotating", "Rotating shifts"],
-                ].map(([id, lab]) => (
-                  <label key={id} className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={watch("shiftPreferences").includes(id)}
-                      onChange={(e) => toggleInArray("shiftPreferences", id, e.target.checked)}
-                      className={checkboxClass}
-                    />
-                    {lab}
-                  </label>
-                ))}
+              <div className="mt-2">
+                <CheckboxOptionCards
+                  options={[
+                    { id: "night", label: "Night shifts" },
+                    { id: "overtime", label: "Overtime" },
+                    { id: "weekends", label: "Weekends" },
+                    { id: "rotating", label: "Rotating shifts" },
+                  ]}
+                  selectedIds={watch("shiftPreferences")}
+                  onToggle={(id, checked) => toggleInArray("shiftPreferences", id, checked)}
+                />
               </div>
               <FieldErr msg={err("shiftPreferences")} />
             </div>
@@ -678,25 +718,19 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
             <h2 className="font-serif text-xl font-semibold text-[#0a0a0a] md:text-2xl">Where Do You Want to Work?</h2>
             <div>
               <span className={labelClass}>Preferred country (select all that apply)</span>
-              <div className="mt-2 grid gap-2 sm:grid-cols-2">
-                {[
-                  ["poland", "🇵🇱 Poland"],
-                  ["romania", "🇷🇴 Romania"],
-                  ["hungary", "🇭🇺 Hungary"],
-                  ["ireland", "🇮🇪 Ireland"],
-                  ["canada", "🇨🇦 Canada"],
-                  ["open", "🌍 Open to any destination"],
-                ].map(([id, lab]) => (
-                  <label key={id} className="flex cursor-pointer items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={watch("preferredCountries").includes(id)}
-                      onChange={(e) => toggleInArray("preferredCountries", id, e.target.checked)}
-                      className={checkboxClass}
-                    />
-                    {lab}
-                  </label>
-                ))}
+              <div className="mt-2">
+                <CheckboxOptionCards
+                  options={[
+                    { id: "poland", label: "🇵🇱 Poland" },
+                    { id: "romania", label: "🇷🇴 Romania" },
+                    { id: "hungary", label: "🇭🇺 Hungary" },
+                    { id: "ireland", label: "🇮🇪 Ireland" },
+                    { id: "canada", label: "🇨🇦 Canada" },
+                    { id: "open", label: "🌍 Open to any destination" },
+                  ]}
+                  selectedIds={watch("preferredCountries")}
+                  onToggle={(id, checked) => toggleInArray("preferredCountries", id, checked)}
+                />
               </div>
               <FieldErr msg={err("preferredCountries")} />
             </div>
