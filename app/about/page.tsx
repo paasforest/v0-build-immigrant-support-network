@@ -57,9 +57,13 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-white/70">
                 <p>
-                  Immigrant Support Network helps African candidates access legal work opportunities
-                  abroad and supports employers facing labour shortages. We bridge the gap between talent and
-                  opportunity.
+                  Immigrant Support Network maintains a database of pre-screened, document-ready African candidates
+                  with verified profiles — ready for international employer matching. We serve job seekers from South
+                  Africa, Nigeria, Ghana, Kenya, Zimbabwe, Tanzania, Uganda, Zambia and all African countries.
+                </p>
+                <p>
+                  Immigrant Support Network helps African candidates access legal work opportunities abroad and
+                  supports employers facing labour shortages. We bridge the gap between talent and opportunity.
                 </p>
                 <p>
                   Our team understands the challenges faced by those seeking international employment. We

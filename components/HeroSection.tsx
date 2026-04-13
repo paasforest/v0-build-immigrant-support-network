@@ -24,8 +24,9 @@ export default function HeroSection() {
           <span className="text-gold">&</span> Visa Assistance
         </h1>
         <p className="text-lg sm:text-xl text-white/80 max-w-3xl mx-auto mb-10 text-pretty">
-          Connecting African talent with international employers in Europe & Canada. Start your journey to a better
-          future today.
+          Connecting African talent with international employers in Europe & Canada. We maintain a database of
+          pre-screened, document-ready African candidates with verified profiles — ready for international employer
+          matching. Start your journey to a better future today.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link

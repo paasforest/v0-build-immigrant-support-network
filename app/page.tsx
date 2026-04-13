@@ -271,7 +271,7 @@ export default function HomePage() {
             href="/apply"
             className="inline-block bg-[#0a0a0a] text-white px-8 py-4 rounded font-semibold hover:bg-[#1a1a1a] transition-all duration-300"
           >
-            Apply Now
+            Apply — Free Assessment
           </Link>
         </div>
       </section>

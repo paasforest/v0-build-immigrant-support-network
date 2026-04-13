@@ -1,107 +1,134 @@
 "use client"
 
 import { useState, Suspense } from "react"
-import ApplicationForm from "@/components/ApplicationForm"
+import Link from "next/link"
+import CandidateApplicationForm from "@/components/CandidateApplicationForm"
+import { Check } from "lucide-react"
 
-function ApplicationFormWrapper({
-  onSuccess,
-}: {
-  onSuccess: (payload: { fullName: string }) => void
-}) {
+function FormFallback() {
   return (
-    <Suspense fallback={<div className="bg-white rounded-lg p-8 text-center text-gray-500">Loading form...</div>}>
-      <ApplicationForm onSuccess={onSuccess} />
-    </Suspense>
+    <div className="rounded-xl border border-[#2a2a2a] bg-white p-8 text-center text-[#0a0a0a]/60">Loading form…</div>
   )
 }
 
 export default function ApplyPage() {
   const [submitted, setSubmitted] = useState(false)
   const [applicantFullName, setApplicantFullName] = useState("")
+  const [applicantFirstName, setApplicantFirstName] = useState("")
+
+  const waProofHref = `https://wa.me/27774388845?text=${encodeURIComponent(
+    `Hi, I just applied and have made my R300 payment. My name is ${applicantFullName}.`
+  )}`
 
   if (submitted) {
-    const proofMessage = encodeURIComponent(
-      `Hi, I just submitted my application and made payment. Here is my proof of payment. Reference: ${applicantFullName}`
-    )
-    const whatsappProofHref = `https://wa.me/27774388845?text=${proofMessage}`
-
     return (
-      <section className="min-h-[80vh] flex items-center justify-center py-20 bg-[#0a0a0a]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#111111] p-8 md:p-12 rounded-lg border-2 border-gold">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gold/10 flex items-center justify-center">
-                <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+      <section className="min-h-[80vh] bg-[#0a0a0a] py-12 md:py-20">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-xl border border-neutral-200 bg-white p-6 shadow-lg md:p-10">
+            <div className="mb-8 text-center">
+              <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gold/15">
+                <Check className="h-10 w-10 text-gold" strokeWidth={2.5} aria-hidden />
               </div>
-              <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-4">
-                Application Submitted!
-              </h2>
-              <p className="text-white/70">
-                Your application has been emailed to our team. To complete your registration, please pay the R300
-                application fee using the details below.
+              <h2 className="font-serif text-2xl font-bold text-[#0a0a0a] md:text-3xl">Application Submitted</h2>
+              <p className="mt-4 text-left text-[15px] leading-relaxed text-[#0a0a0a]/80">
+                Thank you, <span className="font-semibold text-[#0a0a0a]">{applicantFirstName}</span>. Your application has
+                been received and added to our candidate database.
+              </p>
+              <p className="mt-3 text-left text-[15px] leading-relaxed text-[#0a0a0a]/80">
+                Due to high demand, only candidates who complete their registration and submit all required documents are
+                prioritised for employer matching.
+              </p>
+              <p className="mt-3 text-left text-[15px] leading-relaxed text-[#0a0a0a]/80">
+                Our team reviews applications daily. Shortlisted candidates are contacted within 24–48 hours.
               </p>
             </div>
 
-            <div className="bg-[#0a0a0a] border border-gold/30 rounded-lg p-6 mb-8">
-              <h3 className="text-lg font-semibold text-gold mb-4 text-center">Registration Fee: R300</h3>
-              <div className="space-y-3 text-white/80 text-sm">
-                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60 shrink-0">Bank</span>
-                  <span className="font-medium text-right">Absa</span>
-                </div>
-                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60 shrink-0">Account name</span>
-                  <span className="font-medium text-right">Immigrant Support Network</span>
-                </div>
-                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60 shrink-0">Account number</span>
-                  <span className="font-medium text-right tabular-nums">4115223741</span>
-                </div>
-                <div className="flex justify-between gap-4 border-b border-[#2a2a2a] pb-2">
-                  <span className="text-white/60 shrink-0">Branch code</span>
-                  <span className="font-medium text-right tabular-nums">632005</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-white/60">Reference:</span>
-                  <span className="font-medium text-gold">{applicantFullName || "Your Full Name"}</span>
-                </div>
-              </div>
-              <div className="mt-4 p-3 bg-gold/10 rounded text-center">
-                <p className="text-xs text-white/70">
-                  After payment, send proof of payment via WhatsApp to +27 77 438 8845 to confirm your registration.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="rounded-xl border-2 border-gold/50 bg-gold/5 p-6">
+              <h3 className="text-center font-serif text-lg font-semibold text-[#0a0a0a] md:text-xl">
+                Secure Your Place — R300 Registration
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#0a0a0a]/85">
+                To be included in our active matching pool, complete your <strong>R300</strong> registration payment via
+                EFT:
+              </p>
+              <ul className="mt-4 space-y-2 text-sm text-[#0a0a0a]">
+                <li className="flex justify-between gap-4 border-b border-neutral-200 pb-2">
+                  <span className="text-[#0a0a0a]/60">Bank</span>
+                  <span className="font-medium">Absa</span>
+                </li>
+                <li className="flex justify-between gap-4 border-b border-neutral-200 pb-2">
+                  <span className="text-[#0a0a0a]/60">Account name</span>
+                  <span className="max-w-[55%] text-right font-medium">Immigrant Support Network</span>
+                </li>
+                <li className="flex justify-between gap-4 border-b border-neutral-200 pb-2">
+                  <span className="text-[#0a0a0a]/60">Account number</span>
+                  <span className="font-mono font-medium tabular-nums">4115223741</span>
+                </li>
+                <li className="flex justify-between gap-4 border-b border-neutral-200 pb-2">
+                  <span className="text-[#0a0a0a]/60">Branch code</span>
+                  <span className="font-mono font-medium tabular-nums">632005</span>
+                </li>
+                <li className="flex justify-between gap-4 pt-1">
+                  <span className="text-[#0a0a0a]/60">Reference</span>
+                  <span className="text-right font-semibold text-gold">{applicantFullName || "Your Full Name"}</span>
+                </li>
+              </ul>
+              <p className="mt-4 text-center text-sm text-[#0a0a0a]/70">
+                After payment, send proof of payment via WhatsApp to confirm your registration:
+              </p>
               <a
-                href={whatsappProofHref}
+                href={waProofHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded font-semibold hover:bg-[#20BD5A] transition-all duration-300"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 py-3.5 text-base font-semibold text-white transition hover:opacity-95"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                Send Proof of Payment
+                Send Proof of Payment → +27774388845
               </a>
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitted(false)
-                  setApplicantFullName("")
-                }}
-                className="bg-[#1a1a1a] text-white px-6 py-3 rounded font-semibold border border-[#2a2a2a] hover:border-gold/50 transition-all duration-300"
-              >
-                Submit Another Application
-              </button>
             </div>
 
-            <p className="text-xs text-white/50 text-center mt-6">
-              Need help? Contact us on WhatsApp: +27 77 438 8845
+            <div className="mt-10">
+              <h3 className="text-center font-serif text-lg font-semibold text-[#0a0a0a]">While You Wait</h3>
+              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <Link
+                  href="/cv-services"
+                  className="rounded-lg border border-gold/40 bg-gold/10 px-4 py-4 text-center text-sm font-medium text-[#0a0a0a] hover:bg-gold/20"
+                >
+                  Get Your CV Written in European Format →
+                </Link>
+                <Link
+                  href="/visa-services"
+                  className="rounded-lg border border-gold/40 bg-gold/10 px-4 py-4 text-center text-sm font-medium text-[#0a0a0a] hover:bg-gold/20"
+                >
+                  Learn About the Visa Process →
+                </Link>
+                <Link
+                  href="/blog/how-to-apply-work-abroad-from-africa"
+                  className="rounded-lg border border-gold/40 bg-gold/10 px-4 py-4 text-center text-sm font-medium text-[#0a0a0a] hover:bg-gold/20"
+                >
+                  Read Our Work Abroad Guide →
+                </Link>
+              </div>
+            </div>
+
+            <p className="mt-8 text-center text-sm text-[#0a0a0a]/65">
+              Did you refer someone? Ask them to mention your name when they apply to qualify for priority processing.
             </p>
+
+            <p className="mt-6 border-t border-neutral-200 pt-6 text-center text-xs text-[#0a0a0a]/55">
+              We do not guarantee job placement or visa approval. We provide recruitment and application support services.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSubmitted(false)
+                setApplicantFullName("")
+                setApplicantFirstName("")
+              }}
+              className="mt-8 w-full rounded-lg border border-neutral-300 py-3 text-sm font-medium text-[#0a0a0a] hover:bg-neutral-50"
+            >
+              Submit another application
+            </button>
           </div>
         </div>
       </section>
@@ -110,26 +137,34 @@ export default function ApplyPage() {
 
   return (
     <>
-      <section className="py-16 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
-            Apply <span className="text-gold">Now</span>
-          </h1>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
-            Complete the form below to start your journey towards working abroad. Our team will review your application
-            and contact you shortly.
+      <section className="border-b border-[#2a2a2a] bg-[#0a0a0a] py-10 md:py-14">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+          <h1 className="font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">Candidate Application</h1>
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/75 md:text-lg">
+            Complete your profile below. Only shortlisted candidates will be contacted within 24–48 hours.
           </p>
+          <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-gold/35 bg-gold/10 px-4 py-4 text-left text-sm text-white/90 md:px-6">
+            <ul className="space-y-2">
+              <li>✔ Free to apply</li>
+              <li>✔ All African nationalities welcome</li>
+              <li>✔ Pre-screened candidates get priority matching</li>
+              <li>✔ R300 registration fee payable after shortlisting</li>
+            </ul>
+          </div>
         </div>
       </section>
 
-      <section className="py-12 pb-20 bg-[#0a0a0a]">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ApplicationFormWrapper
-            onSuccess={({ fullName }) => {
-              setApplicantFullName(fullName)
-              setSubmitted(true)
-            }}
-          />
+      <section className="bg-[#0a0a0a] py-10 pb-20 md:py-14">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
+          <Suspense fallback={<FormFallback />}>
+            <CandidateApplicationForm
+              onSuccess={({ fullName, firstName }) => {
+                setApplicantFullName(fullName)
+                setApplicantFirstName(firstName)
+                setSubmitted(true)
+              }}
+            />
+          </Suspense>
         </div>
       </section>
     </>

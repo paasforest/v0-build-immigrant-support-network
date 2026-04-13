@@ -122,7 +122,7 @@ export default function Navbar() {
               href="/apply"
               className="bg-gold text-[#0a0a0a] px-5 py-2 rounded font-semibold text-sm hover:bg-gold-light transition-all duration-300"
             >
-              Apply Now
+              Apply — Free Assessment
             </Link>
           </div>
 
@@ -205,7 +205,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="block mt-4 mx-4 text-center bg-gold text-[#0a0a0a] px-5 py-3 rounded font-semibold hover:bg-gold-light transition-all duration-300"
             >
-              Apply Now
+              Apply — Free Assessment
             </Link>
           </div>
         </div>

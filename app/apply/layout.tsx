@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
-  title: "Apply for Jobs Abroad",
-  description: `Apply for legal work abroad in Europe and Canada. ${siteConfig.name} connects candidates with vetted employers.`,
+  title: "Candidate Application",
+  description: `Multi-step candidate application for work abroad. ${siteConfig.name} — pre-screened matching for Europe and Canada.`,
   alternates: {
     canonical: "/apply",
   },
