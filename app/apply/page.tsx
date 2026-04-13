@@ -145,10 +145,10 @@ export default function ApplyPage() {
           </p>
           <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-gold/35 bg-gold/10 px-4 py-4 text-left text-sm text-white/90 md:px-6">
             <ul className="space-y-2">
-              <li>✔ Free to apply</li>
+              <li>✔ R300 registration fee</li>
               <li>✔ All African nationalities welcome</li>
               <li>✔ Pre-screened candidates get priority matching</li>
-              <li>✔ R300 registration fee payable after shortlisting</li>
+              <li>✔ Response within 24–48 hours</li>
             </ul>
           </div>
         </div>
