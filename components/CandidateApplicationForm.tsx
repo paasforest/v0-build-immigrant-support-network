@@ -1,6 +1,6 @@
 "use client"
 
-import { useForm } from "react-hook-form"
+import { useForm, type UseFormRegister } from "react-hook-form"
 import { useState } from "react"
 import Link from "next/link"
 import emailjs from "@emailjs/browser"
@@ -34,7 +34,58 @@ const inputClass =
   "mt-1 w-full rounded-lg border border-neutral-300 bg-white px-3 py-2.5 text-sm text-[#0a0a0a] placeholder:text-neutral-400 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
 const labelClass = "block text-sm font-medium text-[#0a0a0a]"
 const cardClass = "rounded-xl border border-neutral-200/80 bg-white p-5 shadow-sm md:p-8"
-const radioRow = "flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
+/** Native radios need explicit accent + card selection state — `text-gold` alone is often invisible on white. */
+const radioNativeClass =
+  "h-5 w-5 shrink-0 cursor-pointer border-2 border-neutral-500 accent-[#C9A84C] focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:ring-offset-2"
+
+const checkboxClass =
+  "h-5 w-5 shrink-0 cursor-pointer rounded border-2 border-neutral-500 accent-[#C9A84C] focus:outline-none focus:ring-2 focus:ring-[#C9A84C]/50 focus:ring-offset-1"
+
+function RadioOptionCards({
+  name,
+  value,
+  register,
+  options,
+  direction = "row",
+}: {
+  name: keyof ApplyCandidateFormValues
+  value: string
+  register: UseFormRegister<ApplyCandidateFormValues>
+  options: { value: string; label: string }[]
+  direction?: "row" | "column"
+}) {
+  const wrap =
+    direction === "column"
+      ? "flex flex-col gap-2"
+      : "flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3"
+  const alignItems = direction === "column" ? "items-start" : "items-center"
+  return (
+    <div className={wrap} role="radiogroup">
+      {options.map((opt) => {
+        const selected = value === opt.value
+        return (
+          <label
+            key={opt.value}
+            className={`flex min-h-[48px] cursor-pointer gap-3 rounded-lg border-2 px-4 py-3 transition-colors ${alignItems} ${
+              selected
+                ? "border-[#C9A84C] bg-[#C9A84C]/12 shadow-[inset_0_0_0_1px_rgba(201,168,76,0.15)] ring-1 ring-[#C9A84C]/35"
+                : "border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50/90"
+            } ${direction === "row" ? "sm:min-w-[132px] sm:flex-1" : "w-full"}`}
+          >
+            <input type="radio" value={opt.value} {...register(name)} className={`${radioNativeClass} ${direction === "column" ? "mt-0.5" : ""}`} />
+            <span
+              className={`text-sm leading-snug ${
+                selected ? "font-semibold text-[#0a0a0a]" : "font-medium text-[#0a0a0a]/85"
+              }`}
+            >
+              {opt.label}
+            </span>
+          </label>
+        )
+      })}
+    </div>
+  )
+}
 
 function FieldErr({ msg }: { msg?: string }) {
   return msg ? <p className="mt-1 text-sm text-red-600">{msg}</p> : null
@@ -196,15 +247,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Do you have a valid passport?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("hasPassport")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("hasPassport")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="hasPassport"
+                  value={hasPassport}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("hasPassport")} />
             </div>
@@ -240,17 +292,18 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Earliest availability to travel</span>
-              <div className="mt-2 flex flex-col gap-2">
-                {[
-                  ["immediately", "Immediately"],
-                  ["1_3_months", "1–3 months"],
-                  ["3_6_months", "3–6 months"],
-                ].map(([v, lab]) => (
-                  <label key={v} className="flex cursor-pointer items-center gap-2">
-                    <input type="radio" value={v} {...register("travelAvailability")} className="text-gold" />
-                    {lab}
-                  </label>
-                ))}
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="travelAvailability"
+                  value={watch("travelAvailability")}
+                  register={register}
+                  direction="column"
+                  options={[
+                    { value: "immediately", label: "Immediately" },
+                    { value: "1_3_months", label: "1–3 months" },
+                    { value: "3_6_months", label: "3–6 months" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("travelAvailability")} />
             </div>
@@ -269,7 +322,7 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
                       type="checkbox"
                       checked={watch("shiftPreferences").includes(id)}
                       onChange={(e) => toggleInArray("shiftPreferences", id, e.target.checked)}
-                      className="rounded border-neutral-300 text-gold"
+                      className={checkboxClass}
                     />
                     {lab}
                   </label>
@@ -283,15 +336,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Have you worked outside your country before?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("workedAbroad")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("workedAbroad")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="workedAbroad"
+                  value={workedAbroad}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("workedAbroad")} />
             </div>
@@ -339,15 +393,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
             </div>
             <div>
               <span className={labelClass}>Have you worked in a structured environment before?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("structuredEnvironment")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("structuredEnvironment")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="structuredEnvironment"
+                  value={watch("structuredEnvironment")}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("structuredEnvironment")} />
             </div>
@@ -379,15 +434,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Do you have any certifications or licences?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("hasCertifications")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("hasCertifications")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="hasCertifications"
+                  value={hasCertifications}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("hasCertifications")} />
             </div>
@@ -442,31 +498,32 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
                 </div>
                 <div>
                   <span className={labelClass}>Do you have a PDP (Professional Driving Permit)?</span>
-                  <div className={radioRow}>
-                    {[
-                      ["yes", "Yes"],
-                      ["no", "No"],
-                      ["in_progress", "In progress"],
-                    ].map(([v, lab]) => (
-                      <label key={v} className="flex cursor-pointer items-center gap-2">
-                        <input type="radio" value={v} {...register("hasPdp")} className="text-gold" />
-                        {lab}
-                      </label>
-                    ))}
+                  <div className="mt-2">
+                    <RadioOptionCards
+                      name="hasPdp"
+                      value={watch("hasPdp")}
+                      register={register}
+                      options={[
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" },
+                        { value: "in_progress", label: "In progress" },
+                      ]}
+                    />
                   </div>
                   <FieldErr msg={err("hasPdp")} />
                 </div>
                 <div>
                   <span className={labelClass}>Do you have international driving experience?</span>
-                  <div className={radioRow}>
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input type="radio" value="yes" {...register("internationalDriving")} className="text-gold" />
-                      Yes
-                    </label>
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input type="radio" value="no" {...register("internationalDriving")} className="text-gold" />
-                      No
-                    </label>
+                  <div className="mt-2">
+                    <RadioOptionCards
+                      name="internationalDriving"
+                      value={internationalDriving}
+                      register={register}
+                      options={[
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" },
+                      ]}
+                    />
                   </div>
                   <FieldErr msg={err("internationalDriving")} />
                 </div>
@@ -479,15 +536,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
                 )}
                 <div>
                   <span className={labelClass}>Have you driven long-distance routes?</span>
-                  <div className={radioRow}>
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input type="radio" value="yes" {...register("longDistance")} className="text-gold" />
-                      Yes
-                    </label>
-                    <label className="flex cursor-pointer items-center gap-2">
-                      <input type="radio" value="no" {...register("longDistance")} className="text-gold" />
-                      No
-                    </label>
+                  <div className="mt-2">
+                    <RadioOptionCards
+                      name="longDistance"
+                      value={longDistance}
+                      register={register}
+                      options={[
+                        { value: "yes", label: "Yes" },
+                        { value: "no", label: "No" },
+                      ]}
+                    />
                   </div>
                   <FieldErr msg={err("longDistance")} />
                 </div>
@@ -544,38 +602,36 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Do you have a police clearance certificate?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("policeClearance")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("policeClearance")} className="text-gold" />
-                  No
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="in_progress" {...register("policeClearance")} className="text-gold" />
-                  In progress
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="policeClearance"
+                  value={watch("policeClearance")}
+                  register={register}
+                  direction="column"
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                    { value: "in_progress", label: "In progress" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("policeClearance")} />
             </div>
 
             <div>
               <span className={labelClass}>Do you have a medical clearance certificate?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("medicalClearance")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("medicalClearance")} className="text-gold" />
-                  No
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="not_sure" {...register("medicalClearance")} className="text-gold" />
-                  Not sure if required
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="medicalClearance"
+                  value={watch("medicalClearance")}
+                  register={register}
+                  direction="column"
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                    { value: "not_sure", label: "Not sure if required" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("medicalClearance")} />
             </div>
@@ -593,19 +649,18 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
               <span className={labelClass}>
                 Are you able to cover initial costs such as passport fees, visa fees, and travel if required?
               </span>
-              <div className="mt-3 flex flex-col gap-3">
-                <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-neutral-200 p-3">
-                  <input type="radio" value="yes_ready" {...register("financialReady")} className="mt-1 text-gold" />
-                  <span>Yes — I am financially ready</span>
-                </label>
-                <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-neutral-200 p-3">
-                  <input type="radio" value="need_guidance" {...register("financialReady")} className="mt-1 text-gold" />
-                  <span>No — I need guidance on costs</span>
-                </label>
-                <label className="flex cursor-pointer items-start gap-2 rounded-lg border border-neutral-200 p-3">
-                  <input type="radio" value="more_info" {...register("financialReady")} className="mt-1 text-gold" />
-                  <span>I need more information first</span>
-                </label>
+              <div className="mt-3">
+                <RadioOptionCards
+                  name="financialReady"
+                  value={watch("financialReady")}
+                  register={register}
+                  direction="column"
+                  options={[
+                    { value: "yes_ready", label: "Yes — I am financially ready" },
+                    { value: "need_guidance", label: "No — I need guidance on costs" },
+                    { value: "more_info", label: "I need more information first" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("financialReady")} />
             </div>
@@ -637,7 +692,7 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
                       type="checkbox"
                       checked={watch("preferredCountries").includes(id)}
                       onChange={(e) => toggleInArray("preferredCountries", id, e.target.checked)}
-                      className="rounded border-neutral-300 text-gold"
+                      className={checkboxClass}
                     />
                     {lab}
                   </label>
@@ -669,15 +724,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Have you ever been denied a visa before?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("visaDenied")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("visaDenied")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="visaDenied"
+                  value={visaDenied}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("visaDenied")} />
             </div>
@@ -697,15 +753,16 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
 
             <div>
               <span className={labelClass}>Were you referred to ISN?</span>
-              <div className={radioRow}>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="yes" {...register("referred")} className="text-gold" />
-                  Yes
-                </label>
-                <label className="flex cursor-pointer items-center gap-2">
-                  <input type="radio" value="no" {...register("referred")} className="text-gold" />
-                  No
-                </label>
+              <div className="mt-2">
+                <RadioOptionCards
+                  name="referred"
+                  value={referred}
+                  register={register}
+                  options={[
+                    { value: "yes", label: "Yes" },
+                    { value: "no", label: "No" },
+                  ]}
+                />
               </div>
               <FieldErr msg={err("referred")} />
             </div>
@@ -733,7 +790,7 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
             <h2 className="font-serif text-xl font-semibold text-[#0a0a0a] md:text-2xl">Commitment & Final Question</h2>
 
             <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-neutral-200 p-4">
-              <input type="checkbox" {...register("commitmentAccepted")} className="mt-1 rounded text-gold" />
+              <input type="checkbox" {...register("commitmentAccepted")} className={`mt-1 ${checkboxClass}`} />
               <span className="text-sm text-[#0a0a0a]">
                 I confirm that I am serious about working abroad and ready to follow the full legal process including visa
                 applications, document preparation, employer interviews, and relocation.
