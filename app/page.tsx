@@ -164,32 +164,37 @@ export default function HomePage() {
       <section className="border-y border-[#2a2a2a] bg-[#0a0a0a] py-16">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <h2 className="font-serif text-2xl font-bold text-white md:text-3xl">
-            Guides: <span className="text-gold">jobs & visas</span>
+            Candidate resources:{" "}
+            <span className="text-gold">work abroad, visas and destinations</span>
           </h2>
-          <p className="mt-4 text-white/70">
-            New:{" "}
-            <Link href="/blog/how-to-apply-work-abroad-from-africa" className="text-gold hover:underline">
-              how to apply for work abroad from Africa (2026)
+          <p className="mt-4 text-[15px] leading-relaxed text-white/75 md:text-base">
+            Practical, up-to-date articles for African candidates exploring lawful employment in Europe and Canada—covering
+            application steps, documentation, and what to expect from the process.
+          </p>
+          <p className="mt-4 text-[15px] leading-relaxed text-white/75 md:text-base">
+            Begin with our{" "}
+            <Link href="/blog/how-to-apply-work-abroad-from-africa" className="font-medium text-gold hover:underline">
+              step-by-step guide to applying for work abroad from Africa (2026)
             </Link>
-            . Searching for{" "}
-            <Link href="/blog/jobs-in-poland-for-africans-2026" className="text-gold hover:underline">
-              jobs in Poland for Africans
+            . Related reading includes{" "}
+            <Link href="/blog/jobs-in-poland-for-africans-2026" className="font-medium text-gold hover:underline">
+              jobs in Poland for African candidates
             </Link>
             ,{" "}
-            <Link href="/blog/jobs-in-romania-for-africans-2026" className="text-gold hover:underline">
-              work in Romania from Africa
+            <Link href="/blog/jobs-in-romania-for-africans-2026" className="font-medium text-gold hover:underline">
+              working in Romania from Africa
             </Link>
             ,{" "}
-            <Link href="/blog/poland-work-visa-cost" className="text-gold hover:underline">
+            <Link href="/blog/poland-work-visa-cost" className="font-medium text-gold hover:underline">
               Poland work visa costs
             </Link>
-            , or the{" "}
-            <Link href="/blog/easiest-europe-countries-for-africans" className="text-gold hover:underline">
-              easiest countries in Europe for Africans
+            , and{" "}
+            <Link href="/blog/easiest-europe-countries-for-africans" className="font-medium text-gold hover:underline">
+              accessible European labour markets for African workers
             </Link>
-            ? Read plain-language guides — then{" "}
-            <Link href="/apply" className="text-gold hover:underline">
-              apply here
+            . When you are ready to move forward,{" "}
+            <Link href="/apply" className="font-medium text-gold hover:underline">
+              submit your candidate application
             </Link>
             .
           </p>
