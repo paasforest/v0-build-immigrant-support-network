@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 import { ChevronDown } from "lucide-react"
+import { REGISTRATION_FEE_ZAR, formatZarWithUsd } from "@/lib/pricing"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -122,7 +123,7 @@ export default function Navbar() {
               href="/apply"
               className="bg-gold text-[#0a0a0a] px-5 py-2 rounded font-semibold text-sm hover:bg-gold-light transition-all duration-300"
             >
-              Apply — R300 registration
+              Apply — {formatZarWithUsd(REGISTRATION_FEE_ZAR)}
             </Link>
           </div>
 
@@ -205,7 +206,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
               className="block mt-4 mx-4 text-center bg-gold text-[#0a0a0a] px-5 py-3 rounded font-semibold hover:bg-gold-light transition-all duration-300"
             >
-              Apply — R300 registration
+              Apply — {formatZarWithUsd(REGISTRATION_FEE_ZAR)}
             </Link>
           </div>
         </div>

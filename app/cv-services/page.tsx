@@ -3,62 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Check, FileText, Star, Clock, Shield, Award, ChevronDown } from "lucide-react"
-
-const packages = [
-  {
-    id: "basic",
-    name: "Basic CV",
-    price: "R250",
-    originalPrice: "R400",
-    description: "European format CV only",
-    features: [
-      "European format CV",
-      "Professional layout",
-      "1 revision included",
-      "PDF & Word formats",
-      "Delivered in 3-5 days",
-    ],
-    popular: false,
-  },
-  {
-    id: "professional",
-    name: "CV + Cover Letter",
-    price: "R400",
-    originalPrice: "R600",
-    description: "Best for serious applicants",
-    features: [
-      "European format CV",
-      "Premium professional layout",
-      "Custom cover letter",
-      "Unlimited revisions",
-      "PDF & Word formats",
-      "LinkedIn optimization tips",
-      "Delivered in 2-3 days",
-      "Priority support",
-    ],
-    popular: true,
-  },
-  {
-    id: "premium",
-    name: "Complete Package",
-    price: "R550",
-    originalPrice: "R800",
-    description: "CV + Cover Letter + LinkedIn",
-    features: [
-      "European format CV",
-      "Executive-level design",
-      "Custom cover letter",
-      "LinkedIn profile rewrite",
-      "Unlimited revisions",
-      "PDF & Word formats",
-      "Interview preparation guide",
-      "Delivered in 24-48 hours",
-      "1-on-1 consultation call",
-      "90-day support",
-    ],
-    popular: false,
-  },
-]
+import { CV_PACKAGES, CV_FROM_ZAR, formatZar, formatUsdNote } from "@/lib/pricing"
 
 const faqs = [
   {
@@ -121,8 +66,8 @@ export default function CVServicesPage() {
   const handleOrder = (packageId: string) => {
     setSelectedPackage(packageId)
     // In production, this would redirect to payment or WhatsApp
-    const pkg = packages.find((p) => p.id === packageId)
-    const message = `Hi! I'm interested in ordering the ${pkg?.name} (${pkg?.price}). Please send me the details.`
+    const pkg = CV_PACKAGES.find((p) => p.id === packageId)
+    const message = `Hi! I'm interested in ordering the ${pkg?.name} (${formatZar(pkg?.priceZar ?? 0)}). Please send me the details.`
     window.open(`https://wa.me/27774388845?text=${encodeURIComponent(message)}`, "_blank")
   }
 
@@ -206,13 +151,16 @@ export default function CVServicesPage() {
           <h2 className="font-serif text-3xl md:text-4xl text-white text-center mb-4">
             Choose Your <span className="text-gold">Package</span>
           </h2>
-          <p className="text-white/60 text-center mb-12 max-w-2xl mx-auto">
+          <p className="text-white/60 text-center mb-2 max-w-2xl mx-auto">
             Select the package that best fits your needs. All packages include a professionally
             written CV in European format.
           </p>
+          <p className="text-white/45 text-center text-sm mb-12 max-w-2xl mx-auto">
+            Prices from {formatZar(CV_FROM_ZAR)} ({formatUsdNote(CV_FROM_ZAR)}). Payment via EFT in ZAR.
+          </p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {packages.map((pkg) => (
+            {CV_PACKAGES.map((pkg) => (
               <div
                 key={pkg.id}
                 className={`relative bg-[#111111] border rounded-lg overflow-hidden transition-all duration-300 ${
@@ -230,8 +178,9 @@ export default function CVServicesPage() {
                   <h3 className="text-xl font-semibold text-white mb-1">{pkg.name}</h3>
                   <p className="text-white/60 text-sm mb-4">{pkg.description}</p>
                   <div className="mb-6">
-                    <span className="text-4xl font-bold text-gold">{pkg.price}</span>
-                    <span className="text-white/40 line-through ml-2">{pkg.originalPrice}</span>
+                    <span className="text-4xl font-bold text-gold">{formatZar(pkg.priceZar)}</span>
+                    <span className="text-white/40 line-through ml-2">{formatZar(pkg.originalPriceZar)}</span>
+                    <p className="text-white/50 text-sm mt-1">{formatUsdNote(pkg.priceZar)}</p>
                   </div>
                   <ul className="space-y-3 mb-6">
                     {pkg.features.map((feature, index) => (

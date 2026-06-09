@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import { CV_PACKAGES, CV_FROM_ZAR, formatZar, formatUsdNote } from "@/lib/pricing"
 
 export const metadata: Metadata = {
   title: "Work Abroad",
@@ -295,30 +296,31 @@ export default function WorkAbroadPage() {
               </div>
             </div>
             <div className="bg-[#0a0a0a] border border-[#2a2a2a] rounded-lg p-8">
-              <h3 className="text-white font-semibold text-xl mb-6">CV Packages from R250</h3>
+              <h3 className="text-white font-semibold text-xl mb-2">
+                CV Packages from {formatZar(CV_FROM_ZAR)}
+              </h3>
+              <p className="text-white/45 text-sm mb-6">{formatUsdNote(CV_FROM_ZAR)}</p>
               <div className="space-y-4">
-                <div className="flex justify-between items-center pb-4 border-b border-[#2a2a2a]">
-                  <div>
-                    <span className="text-white font-medium">Basic CV</span>
-                    <p className="text-white/50 text-sm">European format CV only</p>
+                {CV_PACKAGES.map((pkg, index) => (
+                  <div
+                    key={pkg.id}
+                    className={`flex justify-between items-center ${
+                      index < CV_PACKAGES.length - 1 ? "pb-4 border-b border-[#2a2a2a]" : ""
+                    }`}
+                  >
+                    <div>
+                      <span className="text-white font-medium">{pkg.name}</span>
+                      {pkg.popular && (
+                        <span className="ml-2 text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">Popular</span>
+                      )}
+                      <p className="text-white/50 text-sm">{pkg.description}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-gold font-bold">{formatZar(pkg.priceZar)}</span>
+                      <p className="text-white/45 text-xs">{formatUsdNote(pkg.priceZar)}</p>
+                    </div>
                   </div>
-                  <span className="text-gold font-bold">R250</span>
-                </div>
-                <div className="flex justify-between items-center pb-4 border-b border-[#2a2a2a]">
-                  <div>
-                    <span className="text-white font-medium">CV + Cover Letter</span>
-                    <span className="ml-2 text-xs bg-gold/20 text-gold px-2 py-0.5 rounded">Popular</span>
-                    <p className="text-white/50 text-sm">Best for serious applicants</p>
-                  </div>
-                  <span className="text-gold font-bold">R400</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-white font-medium">Complete Package</span>
-                    <p className="text-white/50 text-sm">CV + Cover Letter + LinkedIn</p>
-                  </div>
-                  <span className="text-gold font-bold">R550</span>
-                </div>
+                ))}
               </div>
             </div>
           </div>

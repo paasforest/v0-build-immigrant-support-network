@@ -260,7 +260,7 @@ export const GUIDES: Record<string, Guide> = {
       {
         h2: "How much does it cost?",
         paragraphs: [
-          "Typical costs include **ISN registration** (from **R300** — confirm current fees when you apply), optional **CV** packages, **visa-related fees**, **flights**, and **first-month living costs**.",
+          "Typical costs include **ISN registration** (**R550 / ~$30 USD** — confirm current fees when you apply), optional **CV** packages (from **R800 / ~$44 USD**), **visa-related fees**, **flights**, and **first-month living costs**.",
           "We help you **map a budget** so you are not surprised after arrival.",
         ],
       },
@@ -418,7 +418,7 @@ export const GUIDES: Record<string, Guide> = {
       {
         h2: "How much does it cost?",
         paragraphs: [
-          "Costs may include **ISN registration** (from **R300** — confirm when you apply), optional **CV** services, **visa-related fees**, **flights**, and **initial living expenses**.",
+          "Costs may include **ISN registration** (**R550 / ~$30 USD** — confirm when you apply), optional **CV** services (from **R800 / ~$44 USD**), **visa-related fees**, **flights**, and **initial living expenses**.",
           "We help you **plan clearly** so you are not surprised after arrival.",
         ],
       },
@@ -1073,7 +1073,7 @@ export const GUIDES: Record<string, Guide> = {
       {
         h2: "How much does it cost?",
         paragraphs: [
-          "International moves involve **registration with ISN** (from **R300** — confirm current fees when you apply), optional **CV packages**, **visa-related fees** handled with authorities, **flights**, and **first-month living costs**. We help you **map a clear budget** for your situation.",
+          "International moves involve **registration with ISN** (**R550 / ~$30 USD** — confirm current fees when you apply), optional **CV packages** (from **R800 / ~$44 USD**), **visa-related fees** handled with authorities, **flights**, and **first-month living costs**. We help you **map a clear budget** for your situation.",
           "**CV Services** and **Visa Services** are priced transparently — choose what you need; we never hide fees in fine print.",
           "Investing in **proper preparation** protects you from costly mistakes — **ISN helps you spend smart**, not twice.",
         ],

@@ -5,6 +5,7 @@ import { siteConfig, siteUrl } from "@/lib/site-config"
 import TrustBadges from "@/components/TrustBadges"
 import ServiceCard from "@/components/ServiceCard"
 import CountryCard from "@/components/CountryCard"
+import { REGISTRATION_FEE_ZAR, formatZarWithUsd } from "@/lib/pricing"
 
 const services = [
   {
@@ -270,7 +271,7 @@ export default function HomePage() {
             Ready to Work Abroad?
           </h2>
           <p className="mb-2 max-w-2xl mx-auto text-base font-medium text-[#0a0a0a]">
-            Free to submit your profile — R300 to activate matching.
+            Free to submit your profile — {formatZarWithUsd(REGISTRATION_FEE_ZAR)} to activate matching.
           </p>
           <p className="text-[#0a0a0a]/80 mb-8 max-w-2xl mx-auto text-sm md:text-base">
             Take the first step towards your international career today.

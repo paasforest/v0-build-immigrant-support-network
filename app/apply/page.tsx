@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react"
 import Link from "next/link"
 import CandidateApplicationForm from "@/components/CandidateApplicationForm"
+import { REGISTRATION_FEE_ZAR, formatZar, formatZarWithUsd, formatUsdNote } from "@/lib/pricing"
 import { Check } from "lucide-react"
 
 function FormFallback() {
@@ -17,7 +18,7 @@ export default function ApplyPage() {
   const [applicantFirstName, setApplicantFirstName] = useState("")
 
   const waProofHref = `https://wa.me/27774388845?text=${encodeURIComponent(
-    `Hi, I just applied and have made my R300 payment. My name is ${applicantFullName}.`
+    `Hi, I just applied and have made my ${formatZar(REGISTRATION_FEE_ZAR)} payment. My name is ${applicantFullName}.`
   )}`
 
   if (submitted) {
@@ -45,11 +46,11 @@ export default function ApplyPage() {
 
             <div className="rounded-xl border-2 border-gold/50 bg-gold/5 p-6">
               <h3 className="text-center font-serif text-lg font-semibold text-[#0a0a0a] md:text-xl">
-                Secure Your Place — R300 Registration
+                Secure Your Place — {formatZarWithUsd(REGISTRATION_FEE_ZAR)}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-[#0a0a0a]/85">
-                To be included in our active matching pool, complete your <strong>R300</strong> registration payment via
-                EFT:
+                To be included in our active matching pool, complete your{" "}
+                <strong>{formatZarWithUsd(REGISTRATION_FEE_ZAR)}</strong> registration payment via EFT:
               </p>
               <ul className="mt-4 space-y-2 text-sm text-[#0a0a0a]">
                 <li className="flex justify-between gap-4 border-b border-neutral-200 pb-2">
@@ -145,7 +146,9 @@ export default function ApplyPage() {
           </p>
           <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-gold/35 bg-gold/10 px-4 py-4 text-left text-sm text-white/90 md:px-6">
             <ul className="space-y-2">
-              <li>✔ R300 registration fee</li>
+              <li>
+                ✔ {formatZarWithUsd(REGISTRATION_FEE_ZAR)} registration fee
+              </li>
               <li>✔ All African nationalities welcome</li>
               <li>✔ Pre-screened candidates get priority matching</li>
               <li>✔ Response within 24–48 hours</li>

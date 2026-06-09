@@ -11,6 +11,7 @@ import {
   type ApplyCandidateFormValues,
 } from "@/lib/apply-candidate-schema"
 import { buildApplyEmailMessage } from "@/lib/build-apply-email-message"
+import { CV_FROM_ZAR, REGISTRATION_FEE_ZAR, formatZar, formatZarWithUsd } from "@/lib/pricing"
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ?? "service_yyl4r2x"
 const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_k6228dm"
@@ -706,7 +707,8 @@ export default function CandidateApplicationForm({ onSuccess }: Props) {
             </div>
             <GoldInfo>
               💡 Typical total costs range from <strong>R2,000 to R8,000</strong> depending on your destination. This includes:
-              R300 ISN registration fee, CV writing if needed (from R250), visa application fees, and flights. Our team
+              {formatZarWithUsd(REGISTRATION_FEE_ZAR)} ISN registration fee, CV writing if needed (from{" "}
+              {formatZarWithUsd(CV_FROM_ZAR)}), visa application fees, and flights. Our team
               provides a full cost breakdown for your specific destination after your application is reviewed.
             </GoldInfo>
           </div>
