@@ -5,33 +5,23 @@ import { siteConfig, siteUrl } from "@/lib/site-config"
 import TrustBadges from "@/components/TrustBadges"
 import ServiceCard from "@/components/ServiceCard"
 import CountryCard from "@/components/CountryCard"
-import PeopleShowcase from "@/components/PeopleShowcase"
-import TestimonialCard from "@/components/TestimonialCard"
-import SiteImage from "@/components/SiteImage"
 import { REGISTRATION_FEE_ZAR, formatZarWithUsd } from "@/lib/pricing"
-import { countries as countryImages, people } from "@/lib/site-images"
 
 const services = [
   {
     title: "Work Abroad Placements",
     description: "Access legal employment opportunities in Europe and Canada with our vetted employer network.",
     icon: "briefcase",
-    imageUrl: people.serviceJobs,
-    imageAlt: "African candidates ready for warehouse and logistics placement",
   },
   {
     title: "Visa Application Assistance",
     description: "Navigate the complex visa process with step-by-step guidance and document preparation support.",
     icon: "document",
-    imageUrl: people.serviceVisa,
-    imageAlt: "African candidate preparing visa and travel documents",
   },
   {
     title: "Employer Recruitment Support",
     description: "We help international employers find skilled, pre-screened candidates from Africa.",
     icon: "users",
-    imageUrl: people.serviceRecruitment,
-    imageAlt: "African candidates matched with international employers",
   },
 ]
 
@@ -40,46 +30,16 @@ const testimonials = [
     name: "David M.",
     location: "Kenya",
     quote: "ISN helped me secure a position in Poland. The process was smooth and professional.",
-    imageSrc: people.portraitDavid,
-    imageAlt: "David M. — successful candidate from Kenya",
   },
   {
     name: "Grace O.",
     location: "Nigeria",
     quote: "Their visa guidance was invaluable. I now work in Romania thanks to their support.",
-    imageSrc: people.portraitGrace,
-    imageAlt: "Grace O. — successful candidate from Nigeria",
   },
   {
     name: "Peter K.",
     location: "South Africa",
     quote: "Professional service from start to finish. Highly recommend to anyone seeking work abroad.",
-    imageSrc: people.portraitPeter,
-    imageAlt: "Peter K. — successful candidate from South Africa",
-  },
-]
-
-const steps = [
-  {
-    number: "01",
-    title: "Submit Your Application",
-    description: "Fill out our online form with your details and job preferences.",
-    imageSrc: people.stepApply,
-    imageAlt: "Candidate submitting application",
-  },
-  {
-    number: "02",
-    title: "Get Matched with Opportunities",
-    description: "Our team reviews your profile and connects you with suitable employers.",
-    imageSrc: people.stepMatch,
-    imageAlt: "Professional reviewing candidate profile",
-  },
-  {
-    number: "03",
-    title: "Begin Your Journey",
-    description: "Receive guidance on visa processes and prepare for your new opportunity.",
-    imageSrc: people.stepJourney,
-    imageAlt: "Candidate preparing for international travel",
   },
 ]
 
@@ -88,44 +48,57 @@ const countries = [
     name: "Poland",
     flag: "🇵🇱",
     jobs: ["Warehouse", "Food Production", "General Labour"],
-    imageUrl: countryImages.Poland,
+    imageUrl:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Romania",
     flag: "🇷🇴",
     jobs: ["Agriculture", "Factory Work"],
-    imageUrl: countryImages.Romania,
+    imageUrl:
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Hungary",
     flag: "🇭🇺",
     jobs: ["Logistics", "Manufacturing"],
-    imageUrl: countryImages.Hungary,
+    imageUrl:
+      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Lithuania",
     flag: "🇱🇹",
     jobs: ["Logistics", "Manufacturing", "General Labour"],
-    imageUrl: countryImages.Lithuania,
+    imageUrl:
+      "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Latvia",
     flag: "🇱🇻",
     jobs: ["Warehouse", "Food Production", "Services"],
-    imageUrl: countryImages.Latvia,
+    imageUrl:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "United Kingdom",
     flag: "🇬🇧",
     jobs: ["Seasonal Agricultural Work"],
-    imageUrl: countryImages["United Kingdom"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80",
   },
   {
     name: "Canada",
     flag: "🇨🇦",
     jobs: ["Drivers", "General Labour"],
-    imageUrl: countryImages.Canada,
+    imageUrl:
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=80",
   },
+]
+
+const steps = [
+  { number: "01", title: "Submit Your Application", description: "Fill out our online form with your details and job preferences." },
+  { number: "02", title: "Get Matched with Opportunities", description: "Our team reviews your profile and connects you with suitable employers." },
+  { number: "03", title: "Begin Your Journey", description: "Receive guidance on visa processes and prepare for your new opportunity." },
 ]
 
 export const metadata: Metadata = {
@@ -149,8 +122,6 @@ export default function HomePage() {
 
       {/* Trust Badges */}
       <TrustBadges />
-
-      <PeopleShowcase />
 
       {/* Services Overview */}
       <section className="py-20 bg-[#0a0a0a]">
@@ -255,14 +226,11 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="group text-center">
-                <div className="relative mx-auto mb-5 h-24 w-24 overflow-hidden rounded-full ring-2 ring-gold/30">
-                  <SiteImage src={step.imageSrc} alt={step.imageAlt} fill sizes="96px" />
-                </div>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-gold bg-gold/10 font-serif text-lg font-bold text-gold">
+              <div key={index} className="text-center group">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gold/10 border-2 border-gold text-gold font-serif text-2xl font-bold mb-6 group-hover:bg-gold group-hover:text-[#0a0a0a] transition-all duration-300">
                   {step.number}
                 </div>
-                <h3 className="mb-3 text-xl font-semibold text-white">{step.title}</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
                 <p className="text-white/60">{step.description}</p>
               </div>
             ))}
@@ -280,7 +248,17 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
+              <div
+                key={index}
+                className="bg-[#1a1a1a] p-6 rounded-lg border border-[#2a2a2a] hover:border-gold/50 transition-all duration-300"
+              >
+                <svg className="w-8 h-8 text-gold mb-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p className="text-white/80 mb-4 italic">&quot;{testimonial.quote}&quot;</p>
+                <div className="text-gold font-semibold">{testimonial.name}</div>
+                <div className="text-white/40 text-sm">{testimonial.location}</div>
+              </div>
             ))}
           </div>
         </div>
