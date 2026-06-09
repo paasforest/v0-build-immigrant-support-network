@@ -21,7 +21,7 @@ export default function CountryCard({ name, flag, jobs, imageUrl }: CountryCardP
           alt={`Workers and job opportunities in ${name}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="transition-transform duration-500 group-hover:scale-105"
+          className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/95 via-[#0a0a0a]/65 to-[#0a0a0a]/35" />
         <div className="relative z-10 flex h-full items-end p-5">

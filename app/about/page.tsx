@@ -43,8 +43,8 @@ export default function AboutPage() {
           </>
         }
         subtitle="Bridging the gap between African talent and international opportunity"
-        imageSrc={people.heroInternational}
-        imageAlt="Diverse international team supporting work abroad candidates"
+        imageSrc={people.heroCommunity}
+        imageAlt="African candidates supported by Immigrant Support Network"
       />
 
       {/* Mission + professional image */}

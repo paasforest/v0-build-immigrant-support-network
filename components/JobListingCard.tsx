@@ -22,6 +22,7 @@ export default function JobListingCard({ job, expanded, onToggle }: Props) {
               alt={`${job.title} — ${job.location}`}
               fill
               sizes="(max-width: 1024px) 100vw, 320px"
+              className="object-cover object-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-black/50 lg:via-transparent lg:to-transparent" />
             <div className="absolute left-3 top-3 flex flex-wrap gap-2">

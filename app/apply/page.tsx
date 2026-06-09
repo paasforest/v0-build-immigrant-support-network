@@ -144,8 +144,8 @@ export default function ApplyPage() {
         <div className="mx-auto grid max-w-6xl lg:grid-cols-2">
           <div className="relative hidden min-h-[320px] lg:block">
             <SiteImage
-              src={people.applyCandidate}
-              alt="African professional candidate completing a work abroad application"
+              src={people.heroCandidateSecondary}
+              alt="African female candidate completing a work abroad application"
               fill
               priority
               sizes="50vw"

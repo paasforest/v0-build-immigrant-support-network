@@ -88,10 +88,9 @@ export default function CVServicesPage() {
             Get a <span className="text-gold">European-Standard CV</span>
           </>
         }
-        subtitle="Stand out from the crowd with a professionally written CV that meets European employer expectations. Increase your chances of landing that dream job abroad."
+        subtitle="Stand out from the crowd with a professionally written CV that meets European employer expectations."
         imageSrc={people.cvProfessional}
-        imageAlt="Professional African candidate with a polished European-format CV"
-        overlay="medium"
+        imageAlt="African professional candidate with a European-format CV"
       />
 
       {/* Trust stats below hero */}

@@ -36,7 +36,7 @@ export default function JobsPage() {
         }
         subtitle="Browse verified vacancies across Europe and Canada — with pay rates, accommodation details, and requirements listed upfront."
         imageSrc={people.jobsHero}
-        imageAlt="Construction and general workers on an international job site"
+        imageAlt="African construction and general workers — job opportunities abroad"
       />
 
       <section className="border-b border-[#2a2a2a] bg-[#0a0a0a] py-8">

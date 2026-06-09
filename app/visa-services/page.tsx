@@ -62,7 +62,7 @@ export default function VisaServicesPage() {
         }
         subtitle="Navigate the complex visa process with confidence. Our experienced team provides guidance and support to help you prepare a strong visa application."
         imageSrc={people.visaJourney}
-        imageAlt="International candidate preparing for travel and visa documentation"
+        imageAlt="African candidate preparing documents for international travel and visa"
       />
 
       {/* Services Section */}

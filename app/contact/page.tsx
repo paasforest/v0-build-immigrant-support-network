@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import PageHero from "@/components/PageHero"
-import SiteImage from "@/components/SiteImage"
 import { people } from "@/lib/site-images"
 
 export default function ContactPage() {
@@ -36,7 +35,7 @@ export default function ContactPage() {
         }
         subtitle="Have questions? We're here to help. Reach out to us through any of the channels below."
         imageSrc={people.supportAdvisor}
-        imageAlt="Support advisor helping an international candidate"
+        imageAlt="African candidate receiving support from ISN"
       />
 
       {/* Contact Section */}
@@ -45,14 +44,6 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Details */}
             <div>
-              <div className="relative mb-8 hidden aspect-[16/10] overflow-hidden rounded-xl border border-[#2a2a2a] lg:block">
-                <SiteImage
-                  src={people.supportAdvisor}
-                  alt="ISN support team ready to assist candidates"
-                  fill
-                  sizes="50vw"
-                />
-              </div>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-8">
                 Get in Touch
               </h2>

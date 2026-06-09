@@ -17,21 +17,21 @@ const services = [
     description: "Access legal employment opportunities in Europe and Canada with our vetted employer network.",
     icon: "briefcase",
     imageUrl: people.serviceJobs,
-    imageAlt: "Warehouse worker ready for international placement",
+    imageAlt: "African candidates ready for warehouse and logistics placement",
   },
   {
     title: "Visa Application Assistance",
     description: "Navigate the complex visa process with step-by-step guidance and document preparation support.",
     icon: "document",
     imageUrl: people.serviceVisa,
-    imageAlt: "Candidate preparing visa and travel documents",
+    imageAlt: "African candidate preparing visa and travel documents",
   },
   {
     title: "Employer Recruitment Support",
     description: "We help international employers find skilled, pre-screened candidates from Africa.",
     icon: "users",
     imageUrl: people.serviceRecruitment,
-    imageAlt: "Diverse team connecting candidates with employers",
+    imageAlt: "African candidates matched with international employers",
   },
 ]
 

@@ -81,8 +81,8 @@ export default function WorkAbroadPage() {
           </>
         }
         subtitle="We connect pre-screened African candidates with legal employment opportunities in Europe and Canada. All placements follow proper work permit and visa procedures."
-        imageSrc={people.heroInternational}
-        imageAlt="Diverse international workers pursuing careers abroad"
+        imageSrc={people.heroWorkersGroup}
+        imageAlt="African workers preparing for legal employment abroad"
       />
 
       {/* Why Work Abroad */}
