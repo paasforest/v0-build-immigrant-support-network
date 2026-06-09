@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import PageHero from "@/components/PageHero"
+import { people } from "@/lib/site-images"
 
 const services = [
   {
@@ -52,20 +54,16 @@ export default function VisaServicesPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative py-24 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Visa Application <span className="text-gold">Assistance</span>
-            </h1>
-            <p className="text-lg text-white/70 max-w-3xl mx-auto">
-              Navigate the complex visa process with confidence. Our experienced team provides 
-              guidance and support to help you prepare a strong visa application.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title={
+          <>
+            Visa Application <span className="text-gold">Assistance</span>
+          </>
+        }
+        subtitle="Navigate the complex visa process with confidence. Our experienced team provides guidance and support to help you prepare a strong visa application."
+        imageSrc={people.visaJourney}
+        imageAlt="International candidate preparing for travel and visa documentation"
+      />
 
       {/* Services Section */}
       <section className="py-20 bg-[#111111]">

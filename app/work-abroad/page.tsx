@@ -1,6 +1,9 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import PageHero from "@/components/PageHero"
+import SiteImage from "@/components/SiteImage"
 import { CV_PACKAGES, CV_FROM_ZAR, formatZar, formatUsdNote } from "@/lib/pricing"
+import { countries as countryImages, people } from "@/lib/site-images"
 
 export const metadata: Metadata = {
   title: "Work Abroad",
@@ -20,24 +23,21 @@ const countries = [
     flag: "🇵🇱",
     jobs: ["Warehouse Operations", "Food Production", "General Labour", "Factory Work"],
     description: "Poland offers numerous opportunities in manufacturing and logistics sectors with competitive wages.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Poland,
   },
   {
     name: "Romania",
     flag: "🇷🇴",
     jobs: ["Agriculture", "Factory Work", "Food Processing", "Construction"],
     description: "Romania has growing demand for workers in agriculture and manufacturing industries.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Romania,
   },
   {
     name: "Hungary",
     flag: "🇭🇺",
     jobs: ["Logistics", "Manufacturing", "Assembly Line", "Warehouse"],
     description: "Hungary offers stable employment in its thriving manufacturing and logistics sectors.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Hungary,
   },
   {
     name: "Lithuania",
@@ -45,8 +45,7 @@ const countries = [
     jobs: ["Logistics", "Manufacturing", "Warehouse", "Food Processing"],
     description:
       "Lithuania’s growing logistics and manufacturing sectors offer opportunities for reliable workers in EU-regulated environments.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Lithuania,
   },
   {
     name: "Latvia",
@@ -54,53 +53,37 @@ const countries = [
     jobs: ["Warehouse", "Transport Support", "Hospitality", "Food Production"],
     description:
       "Latvia provides roles in logistics, services, and food-related industries, with demand in urban and coastal areas.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Latvia,
   },
   {
     name: "United Kingdom",
     flag: "🇬🇧",
     jobs: ["Seasonal Agricultural Work", "Food Packing", "Farm Work"],
     description: "The UK provides seasonal opportunities in agriculture with established worker programs.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages["United Kingdom"],
   },
   {
     name: "Canada",
     flag: "🇨🇦",
     jobs: ["Drivers", "General Labour", "Warehouse", "Construction Support"],
     description: "Canada offers diverse opportunities with pathways to permanent residency.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
+    imageUrl: countryImages.Canada,
   },
 ]
 
 export default function WorkAbroadPage() {
   return (
     <>
-      {/* Full-width warehouse banner + headline */}
-      <section
-        className="relative flex min-h-[42vh] items-center justify-center py-20 md:min-h-[48vh]"
-        aria-label="Warehouse and logistics work abroad — banner"
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2400&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-[#0a0a0a]/78" />
-        <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="mb-6 font-serif text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+      <PageHero
+        title={
+          <>
             International Work <span className="text-gold">Opportunities</span>
-          </h1>
-          <p className="mx-auto max-w-3xl text-lg text-white/85">
-            We connect pre-screened African candidates with legal employment opportunities in Europe and Canada. All
-            placements follow proper work permit and visa procedures.
-          </p>
-        </div>
-      </section>
+          </>
+        }
+        subtitle="We connect pre-screened African candidates with legal employment opportunities in Europe and Canada. All placements follow proper work permit and visa procedures."
+        imageSrc={people.heroInternational}
+        imageAlt="Diverse international workers pursuing careers abroad"
+      />
 
       {/* Why Work Abroad */}
       <section className="relative bg-[#111111] py-20">
@@ -154,14 +137,13 @@ export default function WorkAbroadPage() {
                 key={index}
                 className="overflow-hidden rounded-lg border border-[#2a2a2a] bg-[#1a1a1a] hover:border-gold/50 transition-all duration-300 group"
               >
-                <div
-                  className="relative h-44 w-full overflow-hidden"
-                  role="img"
-                  aria-label={`Work opportunities in ${country.name}: ${country.jobs.slice(0, 2).join(", ")} and related roles`}
-                >
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url('${country.imageUrl}')` }}
+                <div className="relative h-44 w-full overflow-hidden">
+                  <SiteImage
+                    src={country.imageUrl}
+                    alt={`Workers and opportunities in ${country.name}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/95 via-[#0a0a0a]/55 to-[#0a0a0a]/25" />
                   <div className="absolute bottom-0 left-0 flex items-center gap-3 p-5">

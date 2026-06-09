@@ -2,8 +2,11 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Check, FileText, Star, Clock, Shield, Award, ChevronDown } from "lucide-react"
+import { Check, FileText, Star, Clock, Shield, ChevronDown } from "lucide-react"
 import { CV_PACKAGES, CV_FROM_ZAR, formatZar, formatUsdNote } from "@/lib/pricing"
+import PageHero from "@/components/PageHero"
+import TestimonialCard from "@/components/TestimonialCard"
+import { people } from "@/lib/site-images"
 
 const faqs = [
   {
@@ -44,18 +47,24 @@ const testimonials = [
     location: "Kenya",
     text: "The professional CV helped me land a warehouse job in Poland within 2 weeks of applying. Worth every cent!",
     rating: 5,
+    imageSrc: people.portraitEmmanuel,
+    imageAlt: "Emmanuel K. from Kenya",
   },
   {
     name: "Grace M.",
     location: "South Africa",
     text: "I had no idea my CV was holding me back. The European format CV opened so many doors for me.",
     rating: 5,
+    imageSrc: people.portraitGraceCv,
+    imageAlt: "Grace M. from South Africa",
   },
   {
     name: "David O.",
     location: "Nigeria",
     text: "The premium package was excellent. The cover letter and interview tips really made a difference.",
     rating: 5,
+    imageSrc: people.portraitDavidCv,
+    imageAlt: "David O. from Nigeria",
   },
 ]
 
@@ -73,34 +82,33 @@ export default function CVServicesPage() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-b from-[#111111] to-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 bg-gold/10 text-gold px-4 py-2 rounded-full mb-6">
-            <Award className="w-4 h-4" />
-            <span className="text-sm font-medium">Professional CV Writing Service</span>
-          </div>
-          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+      <PageHero
+        title={
+          <>
             Get a <span className="text-gold">European-Standard CV</span>
-          </h1>
-          <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto mb-8">
-            Stand out from the crowd with a professionally written CV that meets European employer
-            expectations. Increase your chances of landing that dream job abroad.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-white/60">
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-gold" />
-              500+ CVs Created
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-gold" />
-              95% Success Rate
-            </span>
-            <span className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-gold" />
-              Satisfaction Guaranteed
-            </span>
-          </div>
+          </>
+        }
+        subtitle="Stand out from the crowd with a professionally written CV that meets European employer expectations. Increase your chances of landing that dream job abroad."
+        imageSrc={people.cvProfessional}
+        imageAlt="Professional African candidate with a polished European-format CV"
+        overlay="medium"
+      />
+
+      {/* Trust stats below hero */}
+      <section className="border-b border-[#2a2a2a] bg-[#111111] py-6">
+        <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-6 px-4 text-sm text-white/60">
+          <span className="flex items-center gap-2">
+            <Check className="h-4 w-4 text-gold" />
+            500+ CVs Created
+          </span>
+          <span className="flex items-center gap-2">
+            <Check className="h-4 w-4 text-gold" />
+            95% Success Rate
+          </span>
+          <span className="flex items-center gap-2">
+            <Check className="h-4 w-4 text-gold" />
+            Satisfaction Guaranteed
+          </span>
         </div>
       </section>
 
@@ -260,21 +268,15 @@ export default function CVServicesPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div
+              <TestimonialCard
                 key={index}
-                className="bg-[#111111] border border-[#2a2a2a] rounded-lg p-6"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-gold fill-gold" />
-                  ))}
-                </div>
-                <p className="text-white/70 mb-4 italic">&quot;{testimonial.text}&quot;</p>
-                <div>
-                  <p className="text-white font-semibold">{testimonial.name}</p>
-                  <p className="text-white/50 text-sm">{testimonial.location}</p>
-                </div>
-              </div>
+                quote={testimonial.text}
+                name={testimonial.name}
+                location={testimonial.location}
+                imageSrc={testimonial.imageSrc}
+                imageAlt={testimonial.imageAlt}
+                rating={testimonial.rating}
+              />
             ))}
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { MapPin, Clock, Euro, ChevronDown, Star, Users } from "lucide-react"
+import SiteImage from "@/components/SiteImage"
 import type { FlatJob } from "@/lib/jobs-data"
 
 type Props = {
@@ -16,10 +17,11 @@ export default function JobListingCard({ job, expanded, onToggle }: Props) {
       <button type="button" onClick={onToggle} className="w-full text-left">
         <div className="flex flex-col lg:flex-row lg:items-stretch">
           <div className="relative h-52 w-full shrink-0 lg:h-auto lg:w-72 xl:w-80">
-            <img
+            <SiteImage
               src={job.imageUrl}
               alt={`${job.title} — ${job.location}`}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 320px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-black/50 lg:via-transparent lg:to-transparent" />
             <div className="absolute left-3 top-3 flex flex-wrap gap-2">

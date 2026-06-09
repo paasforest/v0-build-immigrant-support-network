@@ -1,4 +1,7 @@
 import type { Metadata } from "next"
+import PageHero from "@/components/PageHero"
+import SiteImage from "@/components/SiteImage"
+import { people } from "@/lib/site-images"
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -33,19 +36,16 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative py-24 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              About <span className="text-gold">Immigrant Support Network</span>
-            </h1>
-            <p className="text-lg text-white/70 max-w-3xl mx-auto">
-              Bridging the gap between African talent and international opportunity
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title={
+          <>
+            About <span className="text-gold">Immigrant Support Network</span>
+          </>
+        }
+        subtitle="Bridging the gap between African talent and international opportunity"
+        imageSrc={people.heroInternational}
+        imageAlt="Diverse international team supporting work abroad candidates"
+      />
 
       {/* Mission + professional image */}
       <section className="py-20 bg-[#111111]">
@@ -80,10 +80,10 @@ export default function AboutPage() {
               </div>
             </div>
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg border border-[#2a2a2a] shadow-xl">
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                alt="Immigrant Support Network team collaboration"
-                className="h-full w-full object-cover"
+              <SiteImage
+                src={people.teamCollaboration}
+                alt="Immigrant Support Network team supporting international candidates"
+                fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>

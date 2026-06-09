@@ -1,6 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import PageHero from "@/components/PageHero"
+import SiteImage from "@/components/SiteImage"
+import { people } from "@/lib/site-images"
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -25,19 +28,16 @@ export default function ContactPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative py-24 bg-[#0a0a0a]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Contact <span className="text-gold">Us</span>
-            </h1>
-            <p className="text-lg text-white/70 max-w-3xl mx-auto">
-              Have questions? We&apos;re here to help. Reach out to us through any of the channels below.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title={
+          <>
+            Contact <span className="text-gold">Us</span>
+          </>
+        }
+        subtitle="Have questions? We're here to help. Reach out to us through any of the channels below."
+        imageSrc={people.supportAdvisor}
+        imageAlt="Support advisor helping an international candidate"
+      />
 
       {/* Contact Section */}
       <section className="py-20 bg-[#111111]">
@@ -45,6 +45,14 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Details */}
             <div>
+              <div className="relative mb-8 hidden aspect-[16/10] overflow-hidden rounded-xl border border-[#2a2a2a] lg:block">
+                <SiteImage
+                  src={people.supportAdvisor}
+                  alt="ISN support team ready to assist candidates"
+                  fill
+                  sizes="50vw"
+                />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-white mb-8">
                 Get in Touch
               </h2>

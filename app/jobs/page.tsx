@@ -4,7 +4,9 @@ import { useState } from "react"
 import Link from "next/link"
 import { Briefcase, Filter, ChevronDown } from "lucide-react"
 import JobListingCard from "@/components/JobListingCard"
+import PageHero from "@/components/PageHero"
 import { getAllJobs, getJobCountsByCountry, jobCountries, jobTypes } from "@/lib/jobs-data"
+import { people } from "@/lib/site-images"
 
 export default function JobsPage() {
   const [selectedCountry, setSelectedCountry] = useState("All Countries")
@@ -26,34 +28,34 @@ export default function JobsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       {/* Hero */}
-      <section className="relative bg-gradient-to-b from-[#111111] to-[#0a0a0a] py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="font-serif text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-              Available <span className="text-gold">Job Opportunities</span>
-            </h1>
-            <p className="mx-auto mt-5 max-w-3xl text-lg text-white/70 md:text-xl">
-              Browse verified vacancies across Europe and Canada — with pay rates, accommodation
-              details, and requirements listed upfront.
-            </p>
-            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href="/apply"
-                className="rounded-lg bg-gold px-8 py-4 font-semibold text-[#0a0a0a] transition hover:bg-gold-light"
-              >
-                Apply Now
-              </Link>
-              <Link
-                href="/cv-services"
-                className="rounded-lg border border-gold px-8 py-4 font-semibold text-gold transition hover:bg-gold hover:text-[#0a0a0a]"
-              >
-                Need a Professional CV?
-              </Link>
-            </div>
-          </div>
+      <PageHero
+        title={
+          <>
+            Available <span className="text-gold">Job Opportunities</span>
+          </>
+        }
+        subtitle="Browse verified vacancies across Europe and Canada — with pay rates, accommodation details, and requirements listed upfront."
+        imageSrc={people.jobsHero}
+        imageAlt="Construction and general workers on an international job site"
+      />
 
-          {/* Country quick-filter chips */}
-          <div className="mt-12 flex flex-wrap justify-center gap-3">
+      <section className="border-b border-[#2a2a2a] bg-[#0a0a0a] py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/apply"
+              className="rounded-lg bg-gold px-8 py-3 font-semibold text-[#0a0a0a] transition hover:bg-gold-light"
+            >
+              Apply Now
+            </Link>
+            <Link
+              href="/cv-services"
+              className="rounded-lg border border-gold px-8 py-3 font-semibold text-gold transition hover:bg-gold hover:text-[#0a0a0a]"
+            >
+              Need a Professional CV?
+            </Link>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
             <button
               type="button"
               onClick={() => setSelectedCountry("All Countries")}

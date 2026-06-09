@@ -5,6 +5,8 @@ import Link from "next/link"
 import CandidateApplicationForm from "@/components/CandidateApplicationForm"
 import { REGISTRATION_FEE_ZAR, formatZar, formatZarWithUsd, formatUsdNote } from "@/lib/pricing"
 import { Check } from "lucide-react"
+import SiteImage from "@/components/SiteImage"
+import { people } from "@/lib/site-images"
 
 function FormFallback() {
   return (
@@ -138,21 +140,31 @@ export default function ApplyPage() {
 
   return (
     <>
-      <section className="border-b border-[#2a2a2a] bg-[#0a0a0a] py-10 md:py-14">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">Candidate Application</h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/75 md:text-lg">
-            Complete your profile below. Only shortlisted candidates will be contacted within 24–48 hours.
-          </p>
-          <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-gold/35 bg-gold/10 px-4 py-4 text-left text-sm text-white/90 md:px-6">
-            <ul className="space-y-2">
-              <li>
-                ✔ {formatZarWithUsd(REGISTRATION_FEE_ZAR)} registration fee
-              </li>
-              <li>✔ All African nationalities welcome</li>
-              <li>✔ Pre-screened candidates get priority matching</li>
-              <li>✔ Response within 24–48 hours</li>
-            </ul>
+      <section className="border-b border-[#2a2a2a] bg-[#0a0a0a]">
+        <div className="mx-auto grid max-w-6xl lg:grid-cols-2">
+          <div className="relative hidden min-h-[320px] lg:block">
+            <SiteImage
+              src={people.applyCandidate}
+              alt="African professional candidate completing a work abroad application"
+              fill
+              priority
+              sizes="50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0a0a0a]/40" />
+          </div>
+          <div className="px-4 py-10 text-center sm:px-6 md:py-14 lg:text-left lg:px-8">
+            <h1 className="font-serif text-3xl font-bold text-white md:text-4xl lg:text-5xl">Candidate Application</h1>
+            <p className="mx-auto mt-4 max-w-xl text-base text-white/75 md:text-lg lg:mx-0">
+              Complete your profile below. Only shortlisted candidates will be contacted within 24–48 hours.
+            </p>
+            <div className="mx-auto mt-8 max-w-2xl rounded-xl border border-gold/35 bg-gold/10 px-4 py-4 text-left text-sm text-white/90 md:px-6 lg:mx-0">
+              <ul className="space-y-2">
+                <li>✔ {formatZarWithUsd(REGISTRATION_FEE_ZAR)} registration fee</li>
+                <li>✔ All African nationalities welcome</li>
+                <li>✔ Pre-screened candidates get priority matching</li>
+                <li>✔ Response within 24–48 hours</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
