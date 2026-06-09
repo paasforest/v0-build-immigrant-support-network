@@ -1,5 +1,3 @@
-import { imageForJobType } from "./site-images"
-
 export type JobListing = {
   id: string
   title: string
@@ -1083,7 +1081,6 @@ export function getAllJobs(): FlatJob[] {
   return Object.values(jobsData).flatMap((countryData) =>
     countryData.jobs.map((job) => ({
       ...job,
-      imageUrl: imageForJobType(job.type),
       country: countryData.country,
       flag: countryData.flag,
     }))
