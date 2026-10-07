@@ -98,7 +98,15 @@ export default function AboutPage() {
             <li>We do not guarantee visas, approvals or appointment dates.</li>
             <li>We do not ask for, or store, passwords for government or visa-centre portals.</li>
             <li>We do not represent ourselves as a government office, embassy, consulate or visa application centre.</li>
+            <li>We are not a law firm. Where a case needs a formal appeal or legal action, we will tell you to consult a qualified immigration lawyer.</li>
           </ul>
+          <p className="mt-6 text-sm text-white/60">
+            Read our{" "}
+            <Link href="/disclaimer" className="text-gold hover:underline">Disclaimer</Link>,{" "}
+            <Link href="/terms" className="text-gold hover:underline">Terms of Service</Link>,{" "}
+            <Link href="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link> and{" "}
+            <Link href="/refund-policy" className="text-gold hover:underline">Refund Policy</Link>.
+          </p>
         </div>
       </section>
 
