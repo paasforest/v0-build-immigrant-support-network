@@ -3,6 +3,8 @@ import Link from "next/link"
 import HeroSection from "@/components/HeroSection"
 import CtaBand from "@/components/CtaBand"
 import VisaDisclaimer from "@/components/VisaDisclaimer"
+import JsonLd from "@/components/JsonLd"
+import { faqLd } from "@/lib/structured-data"
 import { siteConfig, siteUrl } from "@/lib/site-config"
 import { applicationServices, problemServices, destinations } from "@/lib/visa-catalog"
 
@@ -95,6 +97,7 @@ function ServiceList({ items }: { items: { href: string; label: string; short: s
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={faqLd(faqs.map((f) => ({ q: f.q, a: f.a })))} />
       <HeroSection />
 
       {/* What we help with */}

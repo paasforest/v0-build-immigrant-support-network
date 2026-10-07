@@ -36,3 +36,19 @@ export function serviceLd({ name, description, path }: { name: string; descripti
     areaServed: { "@type": "Country", name: "South Africa" },
   }
 }
+
+export function articleLd({ title, description, path, published, updated }: { title: string; description: string; path: string; published: string; updated: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    description,
+    url: abs(path),
+    mainEntityOfPage: abs(path),
+    datePublished: published,
+    dateModified: updated,
+    inLanguage: "en-ZA",
+    author: { "@id": `${siteConfig.url}/#organization` },
+    publisher: { "@id": `${siteConfig.url}/#organization` },
+  }
+}
