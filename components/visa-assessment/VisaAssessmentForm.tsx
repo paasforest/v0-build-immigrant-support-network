@@ -23,7 +23,6 @@ import AssessmentConfirmation from "./AssessmentConfirmation"
 
 const cardClass = "rounded-xl border border-neutral-200/80 bg-white p-5 shadow-sm md:p-8"
 const THIS_YEAR = new Date().getFullYear()
-const TODAY = new Date().toISOString().slice(0, 10)
 
 const WORK_NOTICE =
   "Immigrant Support Network does not find or provide jobs. Work visa assistance is available only where you already have a genuine job offer and supporting employer documentation."
@@ -50,7 +49,18 @@ function isOneOf<T extends string>(list: readonly { value: T }[], value: string 
 
 export default function VisaAssessmentForm() {
   const searchParams = useSearchParams()
-  const [v, setValues] = useState<VisaAssessmentValues>(defaultVisaAssessmentValues)
+  // Pre-select answers from links such as /visa-assessment?type=refusal&destination=uk
+  const [v, setValues] = useState<VisaAssessmentValues>(() => {
+    const type = searchParams.get("type")
+    const destination = searchParams.get("destination")
+    const visa = searchParams.get("visa")
+    return {
+      ...defaultVisaAssessmentValues,
+      caseType: isOneOf(CASE_TYPES, type) ? type : "",
+      destination: isOneOf(DESTINATIONS, destination) ? destination : "",
+      visaType: isOneOf(VISA_TYPES, visa) ? visa : "",
+    }
+  })
   const [step, setStep] = useState(0)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [files, setFiles] = useState<Partial<Record<UploadSlot, File>>>({})
@@ -61,19 +71,6 @@ export default function VisaAssessmentForm() {
   const topRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const firstRender = useRef(true)
-
-  // Pre-select answers from links such as /visa-assessment?type=refusal&destination=uk
-  useEffect(() => {
-    const type = searchParams.get("type")
-    const destination = searchParams.get("destination")
-    const visa = searchParams.get("visa")
-    setValues((prev) => ({
-      ...prev,
-      caseType: isOneOf(CASE_TYPES, type) ? type : prev.caseType,
-      destination: isOneOf(DESTINATIONS, destination) ? destination : prev.destination,
-      visaType: isOneOf(VISA_TYPES, visa) ? visa : prev.visaType,
-    }))
-  }, [searchParams])
 
   useEffect(() => {
     if (firstRender.current) {

@@ -149,6 +149,7 @@ export default function Navbar() {
             className="p-2 text-white transition-all duration-300 hover:text-gold lg:hidden"
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               {isOpen ? (
@@ -161,6 +162,9 @@ export default function Navbar() {
         </div>
 
         <div
+          id="mobile-menu"
+          // Collapsed panel stays in the DOM for the animation; inert keeps its links out of tab order and the a11y tree.
+          inert={!isOpen}
           className={`overflow-y-auto transition-all duration-300 ease-in-out lg:hidden ${
             isOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"
           }`}
