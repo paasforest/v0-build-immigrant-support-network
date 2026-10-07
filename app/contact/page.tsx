@@ -1,30 +1,22 @@
-"use client"
-
-import { useState } from "react"
+import type { Metadata } from "next"
 import PageHero from "@/components/PageHero"
+import ContactForm from "@/components/ContactForm"
+import VisaDisclaimer from "@/components/VisaDisclaimer"
 import { people } from "@/lib/site-images"
+import { siteConfig, whatsappLink } from "@/lib/site-config"
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: `Contact ${siteConfig.name} about overseas visa applications and visa problems. Phone or WhatsApp ${siteConfig.phoneDisplay}, email ${siteConfig.email}.`,
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Immigrant Support Network",
+    description: "Questions about overseas visa applications, refusals, re-applications or document requests? Contact our team.",
+    url: "/contact",
+  },
+}
 
 export default function ContactPage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // UI only - no backend call
-    setSubmitted(true)
-  }
-
   return (
     <>
       <PageHero
@@ -33,7 +25,7 @@ export default function ContactPage() {
             Contact <span className="text-gold">Us</span>
           </>
         }
-        subtitle="Have questions? We're here to help. Reach out to us through any of the channels below."
+        subtitle="Questions about a visa application or a visa problem? Contact us below, or start a visa assessment so we can review your case."
         imageSrc={people.supportAdvisor}
         imageAlt="Person on a phone call"
       />
@@ -56,7 +48,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold mb-1">Phone</h3>
-                    <p className="text-white/60">+27 77 438 8845</p>
+                    <a href={`tel:${siteConfig.phoneE164}`} className="text-white/60 hover:text-gold">{siteConfig.phoneDisplay}</a>
                   </div>
                 </div>
 
@@ -68,7 +60,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold mb-1">Email</h3>
-                    <p className="text-white/60">info@immigrantsupportnetwork.co.za</p>
+                    <a href={`mailto:${siteConfig.email}`} className="break-all text-white/60 hover:text-gold">{siteConfig.email}</a>
                   </div>
                 </div>
 
@@ -81,12 +73,12 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold mb-1">Location</h3>
-                    <p className="text-white/60">South Africa</p>
+                    <p className="text-white/60">{siteConfig.location}</p>
                   </div>
                 </div>
 
                 <a
-                  href="https://wa.me/27774388845"
+                  href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 bg-[#25D366] text-white px-6 py-4 rounded-lg font-semibold hover:bg-[#20BD5A] transition-all duration-300 mt-4"
@@ -101,91 +93,11 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div>
-              {submitted ? (
-                <div className="bg-[#1a1a1a] p-8 rounded-lg border-2 border-gold text-center">
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gold/10 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
-                  <p className="text-white/60 mb-6">
-                    Thank you for reaching out. We&apos;ll get back to you as soon as possible.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false)
-                      setFormData({ name: "", email: "", message: "" })
-                    }}
-                    className="text-gold hover:text-gold-light transition-all duration-300"
-                  >
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="bg-[#1a1a1a] p-8 rounded-lg border border-[#2a2a2a]">
-                  <h2 className="font-serif text-2xl font-bold text-white mb-6">
-                    Send us a Message
-                  </h2>
-                  <div className="space-y-4">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-white mb-1">
-                        Your Name <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-[#111111] border border-[#2a2a2a] text-white focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300"
-                        placeholder="Enter your name"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-[#111111] border border-[#2a2a2a] text-white focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300"
-                        placeholder="your@email.com"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-white mb-1">
-                        Message <span className="text-red-500">*</span>
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={5}
-                        required
-                        value={formData.message}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg bg-[#111111] border border-[#2a2a2a] text-white focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent transition-all duration-300 resize-none"
-                        placeholder="How can we help you?"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full bg-gold text-[#0a0a0a] py-4 rounded-lg font-semibold hover:bg-gold-light transition-all duration-300"
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </form>
-              )}
+              <ContactForm />
             </div>
+          </div>
+          <div className="mt-12">
+            <VisaDisclaimer />
           </div>
         </div>
       </section>
