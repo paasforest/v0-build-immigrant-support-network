@@ -21,7 +21,7 @@ const menus: Menu[] = [
   {
     id: "destinations",
     label: "Destinations",
-    items: [...destinations],
+    items: [{ href: "/destinations", label: "All destinations", short: "Where we assist" }, ...destinations],
   },
 ]
 

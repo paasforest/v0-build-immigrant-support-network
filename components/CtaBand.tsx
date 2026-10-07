@@ -6,6 +6,8 @@ type CtaBandProps = {
   body?: string
   /** Pre-filled WhatsApp message for the secondary button */
   whatsappMessage?: string
+  /** Assessment link, optionally pre-selecting answers (e.g. /visa-assessment?type=refusal) */
+  assessmentHref?: string
 }
 
 /** Gold call-to-action band: primary → visa assessment, secondary → WhatsApp. */
@@ -13,6 +15,7 @@ export default function CtaBand({
   title = "Tell us about your visa situation",
   body = "Submit a short assessment. We review your case and contact you to explain how we can help, the scope of work and our quotation, before you decide whether to proceed.",
   whatsappMessage = "Hi ISN, I'd like to discuss my visa case.",
+  assessmentHref = "/visa-assessment",
 }: CtaBandProps) {
   return (
     <section className="bg-gold py-16">
@@ -21,7 +24,7 @@ export default function CtaBand({
         <p className="mx-auto mb-8 max-w-2xl text-[#0a0a0a]/80">{body}</p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <Link
-            href="/visa-assessment"
+            href={assessmentHref}
             className="inline-block rounded bg-[#0a0a0a] px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#1a1a1a]"
           >
             Get a Visa Assessment

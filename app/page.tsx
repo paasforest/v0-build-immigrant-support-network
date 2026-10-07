@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 const problemExtras = [
   {
-    href: "/visa-assessment",
+    href: "/visa-assessment?type=appointment_problem",
     label: "Appointment & application-centre problems",
     short: "Booking difficulties, rejected submissions or delays at a visa centre",
   },
   {
-    href: "/visa-assessment",
+    href: "/visa-assessment?type=complex_case",
     label: "Complex visa situations",
     short: "Previous refusals, urgent travel, family applications or unusual circumstances",
   },
