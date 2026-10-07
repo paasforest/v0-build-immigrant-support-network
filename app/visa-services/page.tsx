@@ -62,7 +62,7 @@ export default function VisaServicesPage() {
         }
         subtitle="Navigate the complex visa process with confidence. Our experienced team provides guidance and support to help you prepare a strong visa application."
         imageSrc={people.visaJourney}
-        imageAlt="African candidate preparing documents for international travel and visa"
+        imageAlt="Traveller preparing documents for a visa application"
       />
 
       {/* Services Section */}
@@ -213,7 +213,7 @@ export default function VisaServicesPage() {
             Get expert guidance on your visa application. Apply now to begin.
           </p>
           <Link
-            href="/apply"
+            href="/visa-assessment"
             className="inline-block bg-[#0a0a0a] text-white px-8 py-4 rounded font-semibold hover:bg-[#1a1a1a] transition-all duration-300"
           >
             Start Visa Process

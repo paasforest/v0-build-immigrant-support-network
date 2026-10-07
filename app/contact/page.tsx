@@ -35,7 +35,7 @@ export default function ContactPage() {
         }
         subtitle="Have questions? We're here to help. Reach out to us through any of the channels below."
         imageSrc={people.supportAdvisor}
-        imageAlt="African candidate receiving support from ISN"
+        imageAlt="Person on a phone call"
       />
 
       {/* Contact Section */}

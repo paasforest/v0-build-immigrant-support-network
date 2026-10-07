@@ -1,83 +1,82 @@
 import Link from "next/link"
+import VisaDisclaimer from "@/components/VisaDisclaimer"
+import { siteConfig, whatsappLink } from "@/lib/site-config"
+import { problemServices, destinations } from "@/lib/visa-catalog"
+
+const companyLinks = [
+  { href: "/visa-assessment", label: "Get a Visa Assessment" },
+  { href: "/visa-services", label: "Visa Services" },
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/guides", label: "Guides" },
+  { href: "/about", label: "About Us" },
+  { href: "/contact", label: "Contact" },
+]
+
+const legalLinks = [
+  { href: "/privacy-policy", label: "Privacy Policy" },
+  { href: "/terms", label: "Terms of Service" },
+  { href: "/refund-policy", label: "Refund Policy" },
+  { href: "/disclaimer", label: "Disclaimer" },
+]
+
+function LinkList({ title, links }: { title: string; links: { href: string; label: string }[] }) {
+  return (
+    <div>
+      <h2 className="mb-4 text-sm font-semibold text-white">{title}</h2>
+      <ul className="space-y-2">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} className="text-sm text-white/60 transition-all duration-300 hover:text-gold">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0a0a0a] border-t border-[#2a2a2a]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Company Info */}
-          <div>
-            <h3 className="text-gold font-serif text-xl font-bold mb-4">
-              Immigrant Support Network
-            </h3>
-            <p className="text-white/60 text-sm leading-relaxed">
-              Connecting African talent with international employers in Europe and Canada. 
-              We provide recruitment and visa application support services.
+    <footer className="border-t border-[#2a2a2a] bg-[#0a0a0a]">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <p className="mb-2 font-serif text-xl font-bold text-gold">{siteConfig.name}</p>
+            <p className="mb-4 text-sm font-medium text-white/80">{siteConfig.tagline}</p>
+            <p className="mb-6 text-sm leading-relaxed text-white/60">
+              Help with overseas visa applications and visa problems: refusals, re-applications, additional document
+              requests, verification and appointment issues.
             </p>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/jobs", label: "Jobs" },
-                { href: "/guides", label: "Guides" },
-                { href: "/blog", label: "Blog" },
-                { href: "/work-abroad", label: "Work Abroad" },
-                { href: "/visa-services", label: "Visa Services" },
-                { href: "/cv-services", label: "CV Services" },
-                { href: "/apply", label: "Apply" },
-                { href: "/about", label: "About Us" },
-                { href: "/contact", label: "Contact" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/60 hover:text-gold text-sm transition-all duration-300"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-2 text-sm text-white/60">
+              <li>
+                Phone / WhatsApp:{" "}
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="hover:text-gold">
+                  {siteConfig.phoneDisplay}
+                </a>
+              </li>
+              <li>
+                Email:{" "}
+                <a href={`mailto:${siteConfig.email}`} className="hover:text-gold">
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li>Location: {siteConfig.location}</li>
             </ul>
           </div>
 
-          {/* Contact Details */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Contact Details</h4>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-center gap-2 text-white/60">
-                <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                +27 77 438 8845
-              </li>
-              <li className="flex items-center gap-2 text-white/60">
-                <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                info@immigrantsupportnetwork.co.za
-              </li>
-              <li className="flex items-center gap-2 text-white/60">
-                <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                South Africa
-              </li>
-            </ul>
-          </div>
+          <LinkList title="Company" links={companyLinks} />
+          <LinkList
+            title="Visa problems & destinations"
+            links={[...problemServices.map((s) => ({ href: s.href, label: s.label })), ...destinations.map((d) => ({ href: d.href, label: d.label }))]}
+          />
+          <LinkList title="Legal" links={legalLinks} />
         </div>
 
-        {/* Disclaimer */}
-        <div className="mt-8 pt-8 border-t border-[#2a2a2a]">
-          <p className="text-white/40 text-xs text-center mb-4">
-            Disclaimer: We do not guarantee job placement or visa approval. We provide recruitment and application support services.
-          </p>
-          <p className="text-white/40 text-xs text-center">
-            &copy; {new Date().getFullYear()} Immigrant Support Network. All rights reserved.
+        <div className="mt-10 border-t border-[#2a2a2a] pt-8">
+          <VisaDisclaimer compact />
+          <p className="mt-4 text-xs text-white/40">
+            &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
         </div>
       </div>

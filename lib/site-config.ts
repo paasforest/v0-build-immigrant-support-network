@@ -11,7 +11,18 @@ export const siteUrl =
 export const siteConfig = {
   url: siteUrl,
   name: "Immigrant Support Network",
+  shortName: "ISN",
+  tagline: "Overseas Visa Assistance",
   shortDescription:
-    "Connecting African talent with international employers in Europe and Canada. Legal work placements and visa assistance.",
+    "Overseas visa assistance: help with Schengen, UK, USA and Canada visa applications, refusals, re-applications, document requests and difficult visa cases.",
   email: "info@immigrantsupportnetwork.co.za",
+  phoneDisplay: "+27 77 438 8845",
+  phoneE164: "+27774388845",
+  whatsappNumber: "27774388845",
+  location: "South Africa",
+}
+
+export function whatsappLink(message?: string): string {
+  const base = `https://wa.me/${siteConfig.whatsappNumber}`
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base
 }
