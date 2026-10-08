@@ -3,7 +3,7 @@ import { visaAssessmentSchema, uploadSlotsFor } from "@/lib/visa-assessment/sche
 import { pruneAnswers } from "@/lib/visa-assessment/prune"
 import { destinationLabel, summariseCase } from "@/lib/visa-assessment/summary"
 import { CASE_TYPES, VISA_TYPES, labelFor } from "@/lib/visa-assessment/options"
-import { validateUploads, UploadError } from "@/lib/server/uploads"
+import { readLimitedFormData, validateUploads, UploadError } from "@/lib/server/uploads"
 import { notifyStaff, sendApplicantConfirmation } from "@/lib/server/notify"
 import { clientKey, rateLimit } from "@/lib/server/rate-limit"
 import type { CaseStore } from "@/lib/server/case-store/types"
@@ -32,8 +32,9 @@ export async function handleVisaAssessment(request: Request, store: CaseStore | 
 
   let form: FormData
   try {
-    form = await request.formData()
-  } catch {
+    form = await readLimitedFormData(request)
+  } catch (err) {
+    if (err instanceof UploadError) return json(err.status, { error: err.message })
     return json(400, { error: "Invalid submission." })
   }
 

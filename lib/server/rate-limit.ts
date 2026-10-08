@@ -22,7 +22,15 @@ export function rateLimit(key: string, limit: number, windowMs: number): boolean
   return true
 }
 
+/**
+ * Identify the client for rate limiting.
+ * Prefer X-Real-IP, which the hosting edge (Railway, Vercel) sets to the connecting IP.
+ * The FIRST X-Forwarded-For entry is whatever the client sent, so never use it; if
+ * X-Real-IP is missing, fall back to the LAST entry, which the nearest proxy appends.
+ */
 export function clientKey(request: Request): string {
-  const forwarded = request.headers.get("x-forwarded-for")
-  return (forwarded?.split(",")[0] || request.headers.get("x-real-ip") || "unknown").trim()
+  const realIp = request.headers.get("x-real-ip")?.trim()
+  if (realIp) return realIp
+  const lastForwarded = request.headers.get("x-forwarded-for")?.split(",").pop()?.trim()
+  return lastForwarded || "unknown"
 }

@@ -38,6 +38,8 @@ const nextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          // Only an explicit SITE_ENV=production deployment may be indexed (see lib/indexing.ts).
+          ...(process.env.SITE_ENV === "production" ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]),
         ],
       },
     ]

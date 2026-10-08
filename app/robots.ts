@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
 import { siteUrl } from "@/lib/site-config"
+import { isIndexable } from "@/lib/indexing"
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,6 +10,8 @@ export default function robots(): MetadataRoute.Robots {
       // Form endpoints are not content.
       disallow: ["/api/"],
     },
-    sitemap: `${siteUrl}/sitemap.xml`,
+    // Non-production deployments stay crawlable so crawlers can see their noindex
+    // tags, but do not advertise a sitemap.
+    ...(isIndexable ? { sitemap: `${siteUrl}/sitemap.xml` } : {}),
   }
 }

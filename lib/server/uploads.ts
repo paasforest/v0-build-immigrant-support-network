@@ -39,6 +39,48 @@ export function sanitiseFileName(name: string): string {
 }
 
 /**
+ * Ceiling for the whole multipart request: up to 4 MB of files plus the answers and
+ * multipart framing. Hosts such as Railway do not cap request bodies, so this is what
+ * stops an oversized request from being read into memory.
+ */
+export const MAX_REQUEST_BYTES = Math.floor(4.5 * 1024 * 1024)
+
+const TOO_LARGE = "Attached files are too large. The combined limit is 4 MB."
+
+/**
+ * Parse a multipart body without ever holding more than `limit` bytes of it.
+ * Rejects at once on a declared Content-Length over the limit, and stops reading a
+ * body (e.g. chunked, no Content-Length) as soon as it passes the limit.
+ */
+export async function readLimitedFormData(request: Request, limit = MAX_REQUEST_BYTES): Promise<FormData> {
+  const declared = Number(request.headers.get("content-length") ?? 0)
+  if (declared > limit) throw new UploadError(TOO_LARGE, 413)
+  if (!request.body) return request.formData()
+
+  let received = 0
+  let exceeded = false
+  const limited = request.body.pipeThrough(
+    new TransformStream<Uint8Array, Uint8Array>({
+      transform(chunk, controller) {
+        received += chunk.byteLength
+        if (received > limit) {
+          exceeded = true
+          controller.error(new UploadError(TOO_LARGE, 413))
+        } else {
+          controller.enqueue(chunk)
+        }
+      },
+    })
+  )
+  try {
+    return await new Response(limited, { headers: { "content-type": request.headers.get("content-type") ?? "" } }).formData()
+  } catch (err) {
+    if (exceeded) throw new UploadError(TOO_LARGE, 413)
+    throw err
+  }
+}
+
+/**
  * Validate uploaded files: only slots that apply to this case, real PDF/JPEG/PNG content,
  * non-empty, and a combined size within the limit.
  */

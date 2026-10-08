@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import SeoJsonLd from '@/components/SeoJsonLd'
 import { siteConfig, siteUrl } from '@/lib/site-config'
+import { isIndexable } from '@/lib/indexing'
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -27,11 +28,9 @@ export const metadata: Metadata = {
   description: siteConfig.shortDescription,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true },
-  },
+  robots: isIndexable
+    ? { index: true, follow: true, googleBot: { index: true, follow: true } }
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   openGraph: {
     type: 'website',
     locale: 'en_ZA',
