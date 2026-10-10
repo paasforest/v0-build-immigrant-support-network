@@ -7,8 +7,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // Form endpoints are not content.
-      disallow: ["/api/"],
+      // Form endpoints and the staff dashboard are not content.
+      disallow: ["/api/", "/admin"],
     },
     // Non-production deployments stay crawlable so crawlers can see their noindex
     // tags, but do not advertise a sitemap.

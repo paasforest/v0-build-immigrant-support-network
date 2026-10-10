@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import SeoJsonLd from '@/components/SeoJsonLd'
+import PublicOnly from '@/components/PublicOnly'
 import { siteConfig, siteUrl } from '@/lib/site-config'
 import { isIndexable } from '@/lib/indexing'
 
@@ -64,13 +65,17 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${playfair.variable}`} data-scroll-behavior="smooth">
       <body className="font-sans antialiased bg-[#0a0a0a] text-white min-h-screen flex flex-col">
         <SeoJsonLd />
-        <Navbar />
+        <PublicOnly>
+          <Navbar />
+        </PublicOnly>
         <main className="flex-1">
           {children}
         </main>
-        <Footer />
-        <WhatsAppButton />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <PublicOnly>
+          <Footer />
+          <WhatsAppButton />
+          {process.env.NODE_ENV === 'production' && <Analytics />}
+        </PublicOnly>
       </body>
     </html>
   )
