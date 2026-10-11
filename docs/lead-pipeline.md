@@ -70,15 +70,32 @@ See `.env.example`. Server-only secrets: `SUPABASE_SERVICE_ROLE_KEY`,
 `NEXT_PUBLIC_SITE_URL` is used for the links in staff emails: on a staging
 deployment it **must** be the staging URL, or staging emails will link to production.
 
-## Before going live (not done by this change)
+Leads received before this release show the staff alert as **Pending** (delivery was
+not tracked then), so they also appear under the "Staff alert not confirmed sent" filter.
 
-1. Create a **separate staging** Supabase project; apply both migrations there.
-2. Deploy this branch to a non-indexed staging deployment pointing at it, with Resend
-   sending only to test inboxes (or Resend's `delivered@resend.dev` /
-   `bounced@resend.dev` test addresses) and `NEXT_PUBLIC_SITE_URL` set to the staging URL.
-3. Run the staging checks in the pull request's test plan.
-4. Only then apply `20261011000000_lead_pipeline_admin.sql` to production, add the
-   staff allow-list rows, set the production variables, and deploy.
+## Release order
+
+The migration must be applied **before** the code is deployed: the new code cannot
+save assessments without the new columns (every submission would fail with "nothing
+was saved"). The current code keeps working after the migration, which is what makes
+this order and the rollback below safe.
+
+1. **Check prerequisites** (no changes): the production service already has
+   `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`; it also needs `RESEND_API_KEY`,
+   `NOTIFY_FROM_EMAIL`, `CASE_NOTIFY_EMAIL` and `NEXT_PUBLIC_SITE_URL` (the live
+   `https://` address) for alerts and staff sign-in. Turnstile: set both keys or neither.
+2. **Migrate**: in the Supabase SQL editor, run the whole of
+   `supabase/migrations/20261011000000_lead_pipeline_admin.sql` between `begin;` and
+   `commit;`, then run `notify pgrst, 'reload schema';` so the API sees the new columns
+   and tables at once. It is additive and safe to run again.
+3. **Add staff**: `insert into public.staff_users (email, name) values (...)` (lower-case).
+4. **Deploy**: merge the pull request; the host deploys `main`.
+5. **Smoke test**: sign in at `/admin/login`; submit one assessment using your own
+   email address; confirm it appears with the staff alert **Sent**; open its document.
+
+**Rollback**: revert the merge on `main` (the host redeploys the previous code). Leave
+the migration in place: the previous code works with it, and keeping it preserves the
+case history and notification records written in the meantime.
 
 ## Local development
 

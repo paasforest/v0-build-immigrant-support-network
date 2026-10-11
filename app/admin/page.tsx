@@ -68,7 +68,7 @@ export default async function AdminLeadsPage({ searchParams }: { searchParams: P
             </label>
             <label className="flex items-center gap-2 pb-1.5 text-sm">
               <input type="checkbox" name="notify" value="problem" defaultChecked={notifyProblem} />
-              Email alert not delivered
+              Staff alert not confirmed sent
             </label>
             <button type="submit" className="rounded-md bg-neutral-900 px-4 py-1.5 text-sm font-medium text-white hover:bg-neutral-700">
               Apply

@@ -1,6 +1,7 @@
 -- Immigrant Support Network: lead pipeline and staff admin dashboard.
 -- Additive only: no existing column or row is changed or dropped.
--- Apply AFTER 20261007000000_visa_cases.sql, first on a staging project.
+-- Apply AFTER 20261007000000_visa_cases.sql and BEFORE deploying the code that uses it
+-- (release order: docs/lead-pipeline.md). The current code keeps working once it is applied.
 --
 -- Security model (unchanged): every table has row-level security ENABLED and NO
 -- policies, and the public API roles are revoked, so only the server (service-role
@@ -47,11 +48,16 @@ create table if not exists public.visa_case_events (
 create index if not exists visa_case_events_case_idx on public.visa_case_events (case_id, created_at);
 
 create or replace function public.reject_visa_case_event_change() returns trigger
-language plpgsql as $$
+language plpgsql
+set search_path = ''
+as $$
 begin
   raise exception 'visa_case_events is append-only';
 end;
 $$;
+
+-- Only ever runs as a trigger; the public API roles have no reason to call it.
+revoke execute on function public.reject_visa_case_event_change() from public, anon, authenticated;
 
 -- History rows are never edited. (Rows are removed only together with their case,
 -- through the foreign key's ON DELETE CASCADE; the website never deletes cases.)
