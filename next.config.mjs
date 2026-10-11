@@ -42,6 +42,18 @@ const nextConfig = {
           ...(process.env.SITE_ENV === "production" ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow" }]),
         ],
       },
+      // Staff dashboard: never indexed, cached or leaked to other sites through the Referer
+      // header (sign-in links carry a one-time token in the URL). "same-origin", not
+      // "no-referrer": with no-referrer, browsers send `Origin: null` on the dashboard's own
+      // form posts, which the CSRF check (rightly) refuses.
+      ...["/admin", "/admin/:path*", "/api/admin/:path*"].map((source) => ({
+        source,
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          { key: "Referrer-Policy", value: "same-origin" },
+          { key: "Cache-Control", value: "no-store" },
+        ],
+      })),
     ]
   },
   async redirects() {

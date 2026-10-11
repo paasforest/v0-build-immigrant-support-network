@@ -1,7 +1,7 @@
 import "server-only"
 import path from "node:path"
 import { LocalCaseStore } from "./local"
-import { SupabaseCaseStore } from "./supabase"
+import { createSupabaseCaseStore } from "./supabase"
 import type { CaseStore } from "./types"
 
 export * from "./types"
@@ -19,8 +19,12 @@ export function getCaseStore(): CaseStore | null {
   const url = process.env.SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (url && key) {
-    cached = new SupabaseCaseStore(url, key, process.env.SUPABASE_CASE_BUCKET || "case-documents")
+    cached = createSupabaseCaseStore(url, key, process.env.SUPABASE_CASE_BUCKET || "case-documents")
   } else if (process.env.CASE_STORE === "local" || process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === "production") {
+      // A container's disk is wiped on redeploy: leads stored here would be lost.
+      console.warn("[case-store] CASE_STORE=local in production: cases are written to local disk and are NOT persistent")
+    }
     cached = new LocalCaseStore(path.resolve(process.env.CASE_STORE_DIR || ".data"))
   } else {
     cached = null

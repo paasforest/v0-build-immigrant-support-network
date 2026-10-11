@@ -20,6 +20,17 @@ import {
   CheckboxCards, CheckboxField, FileField, MonthYearField, RadioCards, SelectField, TextAreaField, TextField, formatBytes,
 } from "./fields"
 import AssessmentConfirmation from "./AssessmentConfirmation"
+import TurnstileWidget, { TURNSTILE_SITE_KEY } from "./TurnstileWidget"
+
+function newSubmissionId(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") return crypto.randomUUID()
+  // Fallback for older browsers: an RFC 4122 version-4 UUID from getRandomValues.
+  const b = crypto.getRandomValues(new Uint8Array(16))
+  b[6] = (b[6] & 0x0f) | 0x40
+  b[8] = (b[8] & 0x3f) | 0x80
+  const h = Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("")
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`
+}
 
 const cardClass = "rounded-xl border border-neutral-200/80 bg-white p-5 shadow-sm md:p-8"
 const THIS_YEAR = new Date().getFullYear()
@@ -68,6 +79,11 @@ export default function VisaAssessmentForm() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [reference, setReference] = useState<string | null>(null)
+  // One id per form session: if a response is lost and the visitor presses Submit again,
+  // the server returns the case it already saved instead of creating a duplicate.
+  const [submissionId] = useState(newSubmissionId)
+  const [turnstileToken, setTurnstileToken] = useState("")
+  const [turnstileReset, setTurnstileReset] = useState(0)
   const topRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const firstRender = useRef(true)
@@ -128,18 +144,25 @@ export default function VisaAssessmentForm() {
       setSubmitError("Attached files are larger than 4 MB in total. Remove or replace a file and try again.")
       return
     }
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
+      setSubmitError("Please complete the security check above the Submit button.")
+      return
+    }
     setSubmitting(true)
     setSubmitError(null)
     try {
       const body = new FormData()
       body.append("payload", JSON.stringify(v))
+      body.append("submissionId", submissionId)
+      if (turnstileToken) body.append("turnstileToken", turnstileToken)
       for (const s of slots) {
         const f = files[s.slot]
         if (f) body.append(`file:${s.slot}`, f, f.name)
       }
       const res = await fetch("/api/visa-assessment", { method: "POST", body })
       const data = (await res.json().catch(() => ({}))) as { reference?: string; error?: string; fieldErrors?: Record<string, string> }
-      if (res.status === 201 && data.reference) {
+      // 201 = saved now; 200 = this same submission was already saved earlier.
+      if ((res.status === 201 || res.status === 200) && data.reference) {
         setReference(data.reference)
         topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
         return
@@ -150,8 +173,11 @@ export default function VisaAssessmentForm() {
         if (firstStep >= 0) setStep(firstStep)
       }
       setSubmitError(data.error ?? "We could not submit your assessment. Nothing has been saved. Please try again.")
+      // A security-check token is single-use: get a fresh one for the next attempt.
+      if (TURNSTILE_SITE_KEY) setTurnstileReset((n) => n + 1)
     } catch {
       setSubmitError("We could not reach our server. Check your internet connection and try again. Your answers are still here.")
+      if (TURNSTILE_SITE_KEY) setTurnstileReset((n) => n + 1)
     } finally {
       setSubmitting(false)
     }
@@ -659,6 +685,12 @@ export default function VisaAssessmentForm() {
           </div>
         )}
       </div>
+
+      {step === STEP_TITLES.length - 1 && TURNSTILE_SITE_KEY ? (
+        <div className="mt-4">
+          <TurnstileWidget onToken={setTurnstileToken} resetSignal={turnstileReset} />
+        </div>
+      ) : null}
 
       {submitError ? (
         <div className="mt-4" role="alert">
